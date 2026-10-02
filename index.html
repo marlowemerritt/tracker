@@ -283,7 +283,7 @@
       <input type="text" id="editMilestoneModalName">
     </div>
     <div class="editor-field">
-      <label>Date (YYYY-MM-DD)</label>
+      <label>Date</label>
       <input type="date" id="editMilestoneModalDate">
     </div>
     <div class="editor-buttons">
@@ -414,7 +414,12 @@
 
   function formatDate(d) {
     if (!d) return "";
-    var date = new Date(d);
+    var parts = d.split('-');
+    if (parts.length === 3) {
+      var date = new Date(parts[0], parts[1] - 1, parts[2]);
+    } else {
+      var date = new Date(d);
+    }
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   }
 
