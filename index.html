@@ -93,6 +93,12 @@
   .tl-bar.planned { background: transparent; }
   .tl-ms { position: absolute; top: 14px; width: 12px; height: 12px; margin-left: -6px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
   .tl-ms.done { background: var(--ink); }
+  .tl-start { position: absolute; top: 11px; margin-left: -9px; height: 18px; display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); font-size: 11px; white-space: nowrap; }
+  .tl-start::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--other); border: 3px solid var(--card); box-shadow: 0 0 0 2px var(--other); flex-shrink: 0; }
+  .tl-start.benefits-me::before { box-shadow: 0 0 0 2px var(--benefits-me); } .tl-start.payer-global::before { background: var(--payer-global); box-shadow: 0 0 0 2px var(--payer-global); }
+  .tl-start.insights::before { background: var(--insights); box-shadow: 0 0 0 2px var(--insights); } .tl-start.channel-partners::before { background: var(--channel-partners); box-shadow: 0 0 0 2px var(--channel-partners); }
+  .tl-launch { position: absolute; top: 6px; height: 28px; width: 2px; background: var(--ink); }
+  .tl-launch span { position: absolute; top: -1px; left: 3px; font-size: 10px; font-weight: 700; background: var(--card); padding: 0 3px; border-radius: 2px; white-space: nowrap; }
   .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
   .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 11px; font-weight: 700; color: var(--today); }
   .tl-legend { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
@@ -120,7 +126,7 @@
   .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
   .btn.danger { color: #9b2f1f; border-color: #e3b5ac; }
   .btn.small { padding: 2px 9px; font-size: 12px; }
-  .card-actions { margin-top: 10px; }
+  .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
 
   dialog { border: 0; border-radius: 12px; padding: 0; width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 24px); box-shadow: 0 12px 40px rgba(0,0,0,.25); color: var(--ink); }
   dialog::backdrop { background: rgba(0,0,0,.4); }
@@ -163,7 +169,7 @@
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
     <section id="timeline-section" class="first">
       <h2>Timeline</h2>
-      <p class="hint">Solid bars are active work, dashed bars are planned. Diamonds are milestones (filled when done). Select a bar to jump to its card.</p>
+      <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
       <div class="timeline"><div class="tl" id="tl"></div></div>
     </section>
 
@@ -225,7 +231,11 @@
     <label class="f" id="w-stage">Stage<select id="f-stage"></select></label>
     <div class="f2" id="w-dates">
       <label class="f">Start date<input type="date" id="f-start"></label>
-      <label class="f">End date<input type="date" id="f-end"></label>
+      <label class="f">Design deliverable date<input type="date" id="f-end"></label>
+    </div>
+    <div class="f2" id="w-launch">
+      <label class="f">Launch date<input type="date" id="f-launch"></label>
+      <label class="f" id="w-dqa">Design QA status<select id="f-dqa"></select></label>
     </div>
     <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
     <label class="f">Summary<textarea id="f-summary"></textarea></label>
@@ -257,18 +267,22 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 1,
+      "priority": 4,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
       "end": "2026-10-02",
       "summary": "",
       "milestones": [
-        { "name": "Review with Eng", "date": "2026-09-29", "done": false }
+        { "name": "Review with Eng", "date": "2026-09-29", "done": true },
+        { "name": "Eng handoff + kickoff", "date": "2026-10-02", "done": true }
       ],
       "links": [
         { "label": "Figma", "url": "https://www.figma.com/design/QwTzl25BwpBF0usRzcBYso/Global--T2-Direct-WPO-Scheduling?node-id=36-2&t=0dr75q8ge9MeYFGE-1" }
-      ]
+      ],
+      "concern": "",
+      "launch": "2027-01-01",
+      "dqa": "In progress"
     },
     {
       "id": "necl-marketing-planner",
@@ -294,18 +308,19 @@
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
-      "lane": "active",
-      "priority": 3,
-      "status": "Needs Support",
-      "stage": "Discovery",
-      "start": "2026-10-01",
-      "end": "2026-10-31",
+      "lane": "backlog",
+      "priority": 4,
+      "stage": "Iteration",
+      "start": "2026-10-12",
       "summary": "",
       "concern": "",
       "milestones": [],
       "links": [
-        { "label": "Loom", "url": "https://www.loom.com/share/edef73816c8c4e95a7b534dd363c48c2" }
-      ]
+        { "label": "Loom", "url": "https://www.loom.com/share/edef73816c8c4e95a7b534dd363c48c2" },
+        { "label": "FIGMA NOT STARTED", "url": "https://www.figma.com/design/4N4xDu3kMLZVghXxt7m4Lr/Gottma-V2?node-id=0-1&t=e01PJakubeOMt0iP-1" },
+        { "label": "Andy/Arpna Figma", "url": "https://www.figma.com/design/I8L1Z1TELyObB37104XsrJ/Marketplace?node-id=5448-26030&t=6B2nHYd1mflMBOPe-1" }
+      ],
+      "end": "2026-10-23"
     },
     {
       "id": "ibx-remediation",
@@ -317,19 +332,58 @@
       "summary": "IBX escalation, scoping with team.",
       "links": [
         { "label": "Escalation doc", "url": "https://docs.google.com/document/d/133gkVZtF1mLDJlFHpuYmUJ6hQKLRXhbdfQoeO8_aXJw/edit" }
-      ]
+      ],
+      "concern": "",
+      "milestones": []
     },
     {
-      "id": "tbd-benefits-me",
-      "name": "Project TBD 1",
-      "pod": "benefits-me",
+      "id": "thoughtful-integration-into-marketplace",
+      "name": "Thoughtful Integration into Marketplace",
+      "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 2,
+      "priority": 3,
+      "summary": "",
+      "concern": "",
+      "milestones": [],
+      "links": [
+        { "label": "Slack channel", "url": "https://springhealth.enterprise.slack.com/archives/C0C56V7QX0C" },
+        { "label": "WoW Partnership", "url": "https://docs.google.com/document/d/1ax2PtB6SFuqGurP3M7zF7BKdaM42C1LzMtw_sLshxEA/edit?tab=t.0#heading=h.h0ywwt2g0yqo" }
+      ],
+      "stage": "Awaiting kickoff"
+    },
+    {
+      "id": "business-review-builder",
+      "name": "Business review builder",
+      "pod": "insights",
+      "lane": "active",
+      "priority": 3,
+      "summary": "",
+      "concern": "",
+      "milestones": [],
+      "links": [
+        { "label": "PRD", "url": "https://springhealth.atlassian.net/wiki/x/HoB9-Q" }
+      ],
       "stage": "Awaiting kickoff",
-      "start": "2026-10-10",
-      "end": "2026-11-15",
-      "summary": "Waiting on requirements.",
-      "links": []
+      "start": "2026-10-02",
+      "end": "2026-10-30",
+      "status": "On Track"
+    },
+    {
+      "id": "provider-membership-summary-on-coverage-tab",
+      "name": "Provider: Membership summary on Coverage tab",
+      "pod": "payer-global",
+      "lane": "done",
+      "priority": 1,
+      "summary": "Live experiment now",
+      "concern": "",
+      "milestones": [],
+      "links": [
+        { "label": "Figma", "url": "https://www.figma.com/design/WiOn70FFcmaXFtUUxl6KF9/Coverage-tab--Add-cost-in-membership-summary?node-id=548-90473&t=NV9vxrAqXlVK2sT5-1" }
+      ],
+      "start": "2026-09-14",
+      "end": "2026-09-18",
+      "stage": "Complete",
+      "completed": "2026-09-25"
     }
   ]
 }
@@ -345,6 +399,8 @@
   if (ADMIN) {
     try { var draft = localStorage.getItem(DRAFT_KEY); if (draft) DATA = JSON.parse(draft); } catch (e) { /* use published */ }
   }
+  var DQA = ["In progress", "Issues open", "Passed"];
+  var DQA_CLASS = { "In progress": "awaiting-review", "Issues open": "blocked", "Passed": "on-track" };
   var KINDS = ["Bug", "Learning", "Support", "Other"];
   var STAGES = ["Awaiting kickoff", "Discovery", "Iteration", "Finalizing specs", "Development", "DQA", "Complete"];
   var STATUS_CLASS = { "On Track": "on-track", "Needs Support": "needs-support", "Awaiting review": "awaiting-review", "Blocked": "blocked" };
@@ -381,6 +437,16 @@
     return { text: Math.abs(left) + (left === -1 ? " day" : " days") + " past end date", warn: true };
   }
 
+  function launchText(item) {
+    var d = daysBetween(today, pd(item.launch));
+    var when = d > 1 ? d + " days away" : d === 1 ? "tomorrow" : d === 0 ? "today" : Math.abs(d) + (d === -1 ? " day ago" : " days ago");
+    return fmt(item.launch) + " - " + when;
+  }
+
+  function dqaPill(item) {
+    return item.dqa ? el("span", "pill " + (DQA_CLASS[item.dqa] || "awaiting-review"), "Design QA: " + item.dqa) : null;
+  }
+
   function nextMilestone(item) {
     var open = (item.milestones || []).filter(function (m) { return !m.done; });
     open.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
@@ -395,7 +461,7 @@
     else if (item.status === "Needs Support" || item.status === "Blocked") {
       out.push(item.status === "Blocked" ? "Blocked. Details to be added." : "Flagged as needing support. Details to be added.");
     }
-    if (daysBetween(today, pd(item.end)) < 0) out.push("End date " + fmt(item.end) + " has passed and the project is still open.");
+    if (daysBetween(today, pd(item.end)) < 0) out.push("Design deliverable date " + fmt(item.end) + " has passed and the project is still open.");
     (item.milestones || []).forEach(function (m) {
       if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push('Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.');
     });
@@ -431,6 +497,8 @@
 
     var meta = el("div", "meta");
     meta.appendChild(el("span", "pod", podName(item.pod)));
+    var qa = dqaPill(item);
+    if (qa) meta.appendChild(qa);
     card.appendChild(meta);
 
     var idx = Math.max(0, STAGES.indexOf(item.stage));
@@ -449,10 +517,16 @@
 
     var due = dueInfo(item);
     var dates = el("div", "row");
-    dates.appendChild(el("span", "k", "Dates: "));
-    dates.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end) + " - "));
+    dates.appendChild(el("span", "k", "Design deliverable: "));
+    dates.appendChild(document.createTextNode(fmt(item.end) + " - "));
     dates.appendChild(el("span", due.warn ? "warn" : null, due.text));
     card.appendChild(dates);
+    if (item.launch) {
+      var lr = el("div", "row");
+      lr.appendChild(el("span", "k", "Launch: "));
+      lr.appendChild(document.createTextNode(launchText(item)));
+      card.appendChild(lr);
+    }
 
     var next = nextMilestone(item);
     if (next) {
@@ -495,6 +569,12 @@
     b.type = "button";
     b.onclick = function () { openEditor(item); };
     wrap.appendChild(b);
+    if (item.lane === "backlog") {
+      var mv = el("button", "btn small primary", "Move to Top priorities");
+      mv.type = "button";
+      mv.onclick = function () { openEditor(item, "active"); };
+      wrap.appendChild(mv);
+    }
     parent.appendChild(wrap);
   }
 
@@ -527,13 +607,27 @@
     meta.appendChild(el("span", "pod", podName(item.pod)));
     if (item.stage) meta.appendChild(el("span", "pod", item.stage));
     if (extra) meta.appendChild(el("span", "pod", extra));
+    var qa2 = dqaPill(item);
+    if (qa2) meta.appendChild(qa2);
     body.appendChild(meta);
     if (item.summary) body.appendChild(el("p", "summary", item.summary));
+    if (item.start && !item.end && !extra) {
+      var sr = el("div", "row");
+      sr.appendChild(el("span", "k", "Start: "));
+      sr.appendChild(document.createTextNode(fmt(item.start) + " - design handoff TBD"));
+      body.appendChild(sr);
+    }
     if (item.start && item.end && !extra) {
       var r = el("div", "row");
-      r.appendChild(el("span", "k", "Planned: "));
+      r.appendChild(el("span", "k", "Planned design: "));
       r.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end)));
       body.appendChild(r);
+    }
+    if (item.launch && !extra) {
+      var lr2 = el("div", "row");
+      lr2.appendChild(el("span", "k", "Launch: "));
+      lr2.appendChild(document.createTextNode(launchText(item)));
+      body.appendChild(lr2);
     }
     if (item.concern) {
       var cr = el("div", "row");
@@ -609,12 +703,12 @@
   function renderTimeline() {
     var tl = document.getElementById("tl");
     tl.textContent = "";
-    var rows = items("active").sort(byPriority).concat(items("backlog").filter(function (i) { return i.start && i.end; }).sort(byPriority));
+    var rows = items("active").sort(byPriority).concat(items("backlog").filter(function (i) { return i.start; }).sort(byPriority));
     if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
     tl.style.paddingLeft = "";
 
     var starts = rows.map(function (i) { return pd(i.start); }).concat([today]);
-    var ends = rows.map(function (i) { return pd(i.end); }).concat([today]);
+    var ends = rows.map(function (i) { return pd(i.launch || i.end || i.start); }).concat([today]);
     var min = new Date(Math.min.apply(null, starts) - 7 * DAY);
     var max = new Date(Math.max.apply(null, ends) + 14 * DAY);
     var span = max - min;
@@ -640,12 +734,28 @@
       name.title = item.name;
       name.appendChild(el("span", null, item.name));
       row.appendChild(name);
-      var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : item.stage);
-      bar.href = "#" + item.id;
-      bar.style.left = pct(pd(item.start)) + "%";
-      bar.style.width = Math.max(1, pct(pd(item.end)) - pct(pd(item.start))) + "%";
-      bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
-      row.appendChild(bar);
+      if (item.end) {
+        var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : item.stage);
+        bar.href = "#" + item.id;
+        bar.style.left = pct(pd(item.start)) + "%";
+        bar.style.width = Math.max(1, pct(pd(item.end)) - pct(pd(item.start))) + "%";
+        bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
+        row.appendChild(bar);
+      } else {
+        var dot = el("a", "tl-start " + item.pod);
+        dot.href = "#" + item.id;
+        dot.style.left = pct(pd(item.start)) + "%";
+        dot.title = item.name + ": starts " + fmt(item.start) + ", design handoff TBD";
+        dot.appendChild(el("span", null, "Starts " + fmt(item.start) + " - handoff TBD"));
+        row.appendChild(dot);
+      }
+      if (item.launch) {
+        var fl = el("div", "tl-launch");
+        fl.style.left = pct(pd(item.launch)) + "%";
+        fl.title = "Launch - " + fmt(item.launch);
+        fl.appendChild(el("span", null, "Launch"));
+        row.appendChild(fl);
+      }
       (item.milestones || []).forEach(function (ms) {
         var d = el("div", "tl-ms" + (ms.done ? " done" : ""));
         d.style.left = pct(pd(ms.date)) + "%";
@@ -769,22 +879,26 @@
     $("w-stage").hidden = lane === "done" || lane === "ongoing";
     $("w-kind").hidden = lane !== "ongoing";
     $("w-dates").hidden = lane === "ongoing";
+    $("w-launch").hidden = lane === "ongoing";
+    $("w-dqa").hidden = lane !== "active" && lane !== "done";
     $("w-completed").hidden = lane !== "done";
   }
 
-  function openEditor(item) {
+  function openEditor(item, toLane) {
     editing = item;
-    $("dlg-title").textContent = item ? "Edit project" : "Add project";
+    $("dlg-title").textContent = toLane ? "Move to Top priorities" : item ? "Edit project" : "Add project";
     $("f-delete").hidden = !item;
     var it = item || { lane: "active", pod: "other", status: "On Track", stage: "Awaiting kickoff", milestones: [], links: [] };
     $("f-name").value = it.name || "";
     $("f-pod").value = it.pod;
-    $("f-lane").value = it.lane;
+    $("f-lane").value = toLane || it.lane;
     $("f-priority").value = it.priority || "";
     $("f-status").value = it.status || "On Track";
     $("f-kind").value = it.kind || "Bug";
-    $("f-stage").value = it.stage || "Awaiting kickoff";
-    $("f-start").value = it.start || "";
+    $("f-stage").value = STAGES.indexOf(it.stage) > -1 || (it.stage === "Scoping" && !toLane) ? it.stage : "Awaiting kickoff";
+    $("f-launch").value = it.launch || "";
+    $("f-dqa").value = it.dqa || "";
+    $("f-start").value = it.start || (toLane ? iso(today) : "");
     $("f-end").value = it.end || "";
     $("f-completed").value = it.completed || "";
     $("f-summary").value = it.summary || "";
@@ -832,12 +946,14 @@
     it.priority = prio > 0 ? prio : DATA.items.filter(function (i) { return i.lane === lane; }).length + 1;
     it.summary = $("f-summary").value.trim(); it.concern = $("f-concern").value.trim();
     it.milestones = milestones; it.links = links;
+    var launch = $("f-launch").value;
+    if (launch) it.launch = launch; else delete it.launch;
     if (start) it.start = start; else delete it.start;
     if (end) it.end = end; else delete it.end;
-    if (lane === "ongoing") { it.kind = $("f-kind").value; delete it.status; delete it.stage; delete it.start; delete it.end; delete it.completed; }
-    else if (lane === "active") { it.status = $("f-status").value; it.stage = $("f-stage").value; delete it.completed; }
-    else if (lane === "backlog") { it.stage = $("f-stage").value; delete it.status; delete it.completed; }
-    else { it.stage = "Complete"; delete it.status; it.completed = $("f-completed").value || iso(today); }
+    if (lane === "ongoing") { it.kind = $("f-kind").value; delete it.status; delete it.stage; delete it.start; delete it.end; delete it.launch; delete it.dqa; delete it.completed; }
+    else if (lane === "active") { it.status = $("f-status").value; it.stage = $("f-stage").value; delete it.completed; if ($("f-dqa").value) it.dqa = $("f-dqa").value; else delete it.dqa; }
+    else if (lane === "backlog") { it.stage = $("f-stage").value; delete it.status; delete it.completed; delete it.dqa; }
+    else { it.stage = "Complete"; delete it.status; if ($("f-dqa").value) it.dqa = $("f-dqa").value; else delete it.dqa; it.completed = $("f-completed").value || iso(today); }
     if (!editing) DATA.items.push(it);
     $("dlg").close();
     currentTab = lane === "active" || lane === "ongoing" ? "overview" : lane === "backlog" ? "backlog" : "done";
@@ -847,6 +963,7 @@
   if (ADMIN) {
     Object.keys(DATA.pods).forEach(function (k) { opt($("f-pod"), k, DATA.pods[k]); });
     KINDS.forEach(function (k) { opt($("f-kind"), k); });
+    opt($("f-dqa"), "", "Not set"); DQA.forEach(function (d) { opt($("f-dqa"), d); });
     Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s); });
     ["Scoping"].concat(STAGES.slice(0, -1)).forEach(function (s) { opt($("f-stage"), s); });
     $("f-lane").onchange = syncLaneFields;
