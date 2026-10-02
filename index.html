@@ -1,1066 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Timeline & Pipeline</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priorities and pipeline - Marlowe Merritt</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf9f7; --card: #fff; --line: #e5e3de; --ink: #2b2a28; --muted: #6b6a64;
+    --brand: #1f6f5c; --brand-dark: #185a4a; --today: #c4523f;
+    --benefits-me: #1f6f5c; --payer-global: #a9622b; --insights: #3d7f95; --channel-partners: #7b68a6; --other: #7a7972;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 20px 48px; background: var(--bg); color: var(--ink); line-height: 1.4;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  a { color: var(--brand); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+  header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: flex-end; margin-bottom: 16px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 14px; max-width: 640px; }
+  .updated { color: var(--muted); font-size: 13px; white-space: nowrap; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 20px; font-size: 13px; }
+  .filters span.label { color: var(--muted); margin-right: 2px; }
+  .chip { font: inherit; font-size: 13px; padding: 4px 12px; border-radius: 999px; border: 1px solid #cfcbc2; background: var(--card); color: var(--ink); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 8px; }
+  .stat { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .stat:hover { border-color: #b9b5aa; }
+  .stat .n { font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .stat .t { font-size: 13px; color: var(--muted); }
+  .stat.alert .n { color: #9b2f1f; }
+
+  section { margin-top: 28px; }
+  h2 { font-size: 16px; margin: 0 0 4px; }
+  h2 .count { color: var(--muted); font-weight: 400; }
+  .hint { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .empty { color: var(--muted); font-size: 13px; font-style: italic; padding: 12px 0; }
+
+  .attention { background: #fff6f4; border: 1px solid #f0c9c1; border-radius: 10px; padding: 4px 14px; }
+  .attention-item { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #f3dcd6; font-size: 14px; }
+  .attention-item:last-child { border-bottom: 0; }
+  .attention-item a { font-weight: 600; }
+  .attention-item .why { color: #5c2a22; flex: 1 1 280px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--other); border-radius: 10px; padding: 14px 16px; scroll-margin-top: 16px; }
+  .card:target { box-shadow: 0 0 0 2px var(--brand); }
+  .card.benefits-me { border-left-color: var(--benefits-me); } .card.payer-global { border-left-color: var(--payer-global); }
+  .card.insights { border-left-color: var(--insights); } .card.channel-partners { border-left-color: var(--channel-partners); }
+  .card-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+  .prio { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
+  .card h3 { font-size: 15px; margin: 2px 0 6px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
+  .pod { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eeece6; color: #46453f; }
+  .pill { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+  .pill::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 6px; }
+  .pill.on-track { background: #e3f1ec; color: #17594a; }
+  .pill.needs-support { background: #fdebd9; color: #8a4a12; }
+  .pill.awaiting-review { background: #e8e4f3; color: #4d3f7f; }
+  .pill.blocked { background: #fbe3df; color: #9b2f1f; }
+
+  .stepper { display: flex; gap: 3px; margin: 2px 0 4px; }
+  .stepper i { flex: 1; height: 6px; border-radius: 3px; background: #e5e3de; }
+  .stepper i.done { background: var(--brand); } .stepper i.current { background: #4fae97; }
+  .stage-label { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .stage-label b { color: var(--ink); }
+
+  .row { font-size: 13px; margin-top: 6px; }
+  .row .k { color: var(--muted); }
+  .warn { color: #9b2f1f; font-weight: 600; }
+  .summary { font-size: 13px; margin: 0 0 8px; }
+  .links { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .ms { list-style: none; margin: 4px 0 0; padding: 0; font-size: 12px; }
+  .ms li { display: flex; gap: 6px; padding: 2px 0; }
+  .ms .box { width: 14px; flex-shrink: 0; color: var(--brand); font-weight: 700; }
+  .ms li.done { color: var(--muted); text-decoration: line-through; }
+
+  .backlog { display: grid; gap: 8px; }
+  .backlog .card { display: grid; grid-template-columns: auto 1fr; gap: 0 14px; align-items: start; }
+  .backlog .rank { font-size: 20px; font-weight: 700; color: #a9a89f; min-width: 28px; }
+  .backlog h3 { margin: 0 0 4px; }
+
+  .timeline { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  .tl { position: relative; min-width: 760px; padding-left: 190px; }
+  .tl-head { position: relative; height: 28px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  .tl-month { position: absolute; top: 0; bottom: 0; padding: 6px 6px; border-left: 1px solid var(--line); }
+  .tl-row { position: relative; height: 40px; border-bottom: 1px solid #f0eee9; }
+  .tl-row:last-child { border-bottom: 0; }
+  .tl-name { position: absolute; left: -190px; width: 190px; padding: 0 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; font-weight: 600; text-decoration: none; color: var(--ink); overflow: hidden; }
+  .tl-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tl-bar { position: absolute; top: 9px; height: 22px; border-radius: 4px; background: var(--other); color: #fff; font-size: 11px; padding: 0 7px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-decoration: none; }
+  .tl-bar.planned { background: transparent; border: 2px dashed var(--other); color: var(--ink); }
+  .tl-bar.benefits-me { background: var(--benefits-me); border-color: var(--benefits-me); } .tl-bar.payer-global { background: var(--payer-global); border-color: var(--payer-global); }
+  .tl-bar.insights { background: var(--insights); border-color: var(--insights); } .tl-bar.channel-partners { background: var(--channel-partners); border-color: var(--channel-partners); }
+  .tl-bar.planned { background: transparent; }
+  .tl-ms { position: absolute; top: 14px; width: 12px; height: 12px; margin-left: -6px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
+  .tl-ms.done { background: var(--ink); }
+  .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
+  .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 11px; font-weight: 700; color: var(--today); }
+  .tl-legend { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+
+  footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  footer p { margin: 0 0 6px; }
+
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
+</style>
 </head>
 <body>
-<style>
-  :root { color-scheme: light; }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: #faf9f7;
-    color: #2b2a28;
-    padding: 20px;
-  }
-  h1 { font-size: 20px; margin: 0 0 8px; }
-  h2 { font-size: 16px; margin: 20px 0 12px; }
-  .sub { color: #71706b; font-size: 13px; margin-bottom: 16px; }
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Priorities and pipeline</h1>
+      <div class="sub">What is on Marlowe Merritt's plate: what is in flight, what needs help, what is queued next, and what has shipped.</div>
+    </div>
+    <div class="updated" id="updated"></div>
+  </header>
 
-  .controls { margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .controls input, .controls select, .controls button { font-size: 13px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd9d1; }
-  .controls select { background: #fff; }
-  .controls button { background: #1f6f5c; color: #fff; border: none; cursor: pointer; }
-  .controls button:hover { background: #185a4a; }
+  <div class="filters" id="filters" role="group" aria-label="Filter by pod"></div>
 
-  .section-title { font-size: 14px; font-weight: 700; color: #2b2a28; margin: 20px 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e5e3de; }
+  <div class="stats" id="stats"></div>
 
-  .view-toggle { display: flex; gap: 6px; align-items: center; font-size: 12px; }
-  .view-toggle-btn { padding: 4px 10px; border: 1px solid #ddd9d1; background: #fff; border-radius: 4px; cursor: pointer; font-size: 12px; }
-  .view-toggle-btn.active { background: #1f6f5c; color: #fff; border-color: #1f6f5c; }
+  <section id="attention-section">
+    <h2>Needs attention <span class="count" id="attention-count"></span></h2>
+    <p class="hint">Flagged by me, or automatically when an end date or milestone has passed without being closed out.</p>
+    <div id="attention"></div>
+  </section>
 
-  .status-badge { display: none; }
-  .status-badge.on-track { background: #4caf50; }
-  .status-badge.needs-support { background: #ff9800; }
+  <section id="active-section">
+    <h2>In progress <span class="count" id="active-count"></span></h2>
+    <p class="hint">Ordered by priority. The bar shows how far each project has moved through its stages.</p>
+    <div class="grid" id="active"></div>
+  </section>
 
-  .pipeline-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .pipeline-card { background: #fff; border: 1px solid #e5e3de; border-radius: 8px; padding: 12px; }
-  .pipeline-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 8px; }
-  .pipeline-card-name { font-weight: 600; font-size: 13px; flex: 1; display: flex; align-items: center; }
-  .pipeline-card-pod { font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: #e6f2ee; color: #1f6f5c; display: inline-block; flex-shrink: 0; }
-  .pipeline-card-status { font-size: 12px; color: #a9622b; font-weight: 600; margin-bottom: 6px; }
-  .pipeline-card-notes { font-size: 12px; color: #8b8a84; margin-bottom: 6px; line-height: 1.3; }
-  .pipeline-card-actions { display: flex; gap: 4px; }
-  .pipeline-card-actions button { padding: 4px 8px; font-size: 11px; border: none; border-radius: 4px; cursor: pointer; }
-  .pipeline-card-actions .edit { background: #1f6f5c; color: #fff; }
-  .pipeline-card-actions .edit:hover { background: #185a4a; }
-  .pipeline-card-actions .delete { background: #c4523f; color: #fff; }
-  .pipeline-card-actions .delete:hover { background: #a83a2a; }
-  .pipeline-card-actions .launch { background: #4a90a4; color: #fff; }
-  .pipeline-card-actions .launch:hover { background: #37677d; }
+  <section id="timeline-section">
+    <h2>Timeline</h2>
+    <p class="hint">Solid bars are active work, dashed bars are planned. Diamonds are milestones (filled when done). Select a bar to jump to its card.</p>
+    <div class="timeline"><div class="tl" id="tl"></div></div>
+  </section>
 
-  .main-wrapper { display: flex; gap: 16px; }
-  .gantt-section { flex: 1; min-width: 0; }
-  .detail-panel { width: 280px; background: #fff; border: 1px solid #e5e3de; border-radius: 10px; padding: 16px; max-height: 80vh; overflow-y: auto; }
-  .detail-panel.empty { color: #a9a89f; font-style: italic; font-size: 13px; }
-  .detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
-  .detail-pod { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; background: #e6f2ee; color: #1f6f5c; }
-  .detail-dates { font-size: 12px; color: #8b8a84; margin-bottom: 12px; }
-  .detail-milestone { font-size: 12px; padding: 6px 8px; background: #f1efe9; margin-bottom: 6px; border-radius: 4px; }
-  .detail-links { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e3de; }
-  .detail-links h4 { margin: 0 0 6px; font-size: 12px; font-weight: 600; }
-  .detail-link { font-size: 12px; margin-bottom: 4px; }
-  .detail-link a { color: #1f6f5c; text-decoration: none; }
-  .detail-link a:hover { text-decoration: underline; }
-  .detail-actions { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e3de; }
-  .detail-actions button { padding: 6px 12px; background: #1f6f5c; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-  .detail-actions button:hover { background: #185a4a; }
-  .milestone-checkbox { margin-right: 6px; cursor: pointer; accent-color: #1f6f5c; }
-  .milestone-completed { text-decoration: line-through; color: #a9a89f; }
+  <section id="backlog-section">
+    <h2>Up next (backlog) <span class="count" id="backlog-count"></span></h2>
+    <p class="hint">Queued or being scoped, in priority order. Nothing here has kicked off yet.</p>
+    <div class="backlog" id="backlog"></div>
+  </section>
 
-  .gantt-wrapper { overflow-x: auto; }
-  .gantt { display: flex; min-width: 100%; }
-  .gantt-labels { flex-shrink: 0; width: 220px; border-right: 1px solid #e5e3de; display: none; }
-  .gantt-labels.visible { display: block; }
-  .gantt-labels .row { padding: 12px 12px; border-bottom: 1px solid #e5e3de; font-size: 13px; min-height: 48px; display: flex; flex-direction: column; justify-content: center; }
-  .gantt-labels .project { font-weight: 600; color: #2b2a28; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-  .gantt-labels .project:hover { color: #1f6f5c; }
-  .gantt-labels .pod-group { padding: 12px 12px 4px 12px; border-bottom: 1px solid #e5e3de; font-size: 12px; font-weight: 600; color: #71706b; display: flex; align-items: center; gap: 4px; cursor: pointer; user-select: none; }
-  .gantt-labels .pod-group:hover { color: #2b2a28; }
-  .gantt-labels .pod-toggle { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; font-size: 10px; color: #a9a89f; }
-  .gantt-labels .pod-projects { display: none; }
-  .gantt-labels .pod-projects.expanded { display: block; }
-  .gantt-labels .project-nested { padding-left: 24px; font-size: 12px; min-height: 40px; }
+  <section id="done-section">
+    <h2>Completed <span class="count" id="done-count"></span></h2>
+    <div class="backlog" id="done"></div>
+  </section>
 
-  .gantt-timeline { flex: 1; position: relative; background: linear-gradient(to right, #fff 0%, #fff 1px, transparent 1px); background-size: 100px 100%; border-left: 1px solid #e5e3de; }
-  .gantt-timeline .header { display: flex; min-height: 40px; border-bottom: 1px solid #e5e3de; padding: 4px 0; font-size: 11px; color: #71706b; }
-  .gantt-timeline .month-label { flex: 1; text-align: center; padding: 8px 4px; border-right: 1px solid #f0ebe5; font-weight: 600; }
-  .gantt-timeline .row { position: relative; min-height: 48px; border-bottom: 1px solid #e5e3de; padding: 6px 4px; }
-  .gantt-timeline .bar-container { position: relative; width: 100%; height: 28px; }
-  .gantt-timeline .project-bar {
-    position: absolute; top: 0; height: 20px; border-radius: 4px; background: #1f6f5c;
-    color: #fff; font-size: 11px; padding: 2px 6px; cursor: pointer; overflow: hidden;
-    white-space: nowrap; text-overflow: ellipsis; display: flex; align-items: center;
-  }
-  .gantt-timeline .project-bar:hover { opacity: 0.9; }
-  .gantt-timeline .milestone-bar {
-    position: absolute; top: 22px; height: 12px; background: #8b8a84; border-radius: 2px;
-    color: transparent; font-size: 0; padding: 0; cursor: help;
-  }
-  .gantt-timeline .milestone-indicator {
-    position: absolute; top: 22px; width: 6px; height: 6px; border-radius: 50%;
-    background: #8b8a84; cursor: help;
-  }
-
-  .project-bar.benefits-me { background: #1f6f5c; }
-  .project-bar.payer-global { background: #a9622b; }
-  .project-bar.insights { background: #4a90a4; }
-  .project-bar.channel-partners { background: #7b68a6; }
-  .project-bar.other { background: #999999; }
-
-  .today-line { position: absolute; top: 0; width: 2px; background: #c4523f; opacity: 0.7; z-index: 10; }
-
-  .editor-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
-  .editor-modal.active { display: flex; }
-  .editor-content { background: #fff; border-radius: 10px; padding: 20px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
-  .editor-content h2 { margin: 0 0 16px; font-size: 16px; }
-  .editor-field { margin-bottom: 12px; }
-  .editor-field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
-  .editor-field input, .editor-field select, .editor-field textarea { width: 100%; padding: 6px 8px; border: 1px solid #ddd9d1; border-radius: 4px; font-size: 13px; font-family: inherit; }
-  .editor-milestones { margin: 16px 0; padding: 12px; background: #f1efe9; border-radius: 6px; }
-  .editor-milestones h3 { margin: 0 0 8px; font-size: 13px; }
-  .milestone-item { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; font-size: 12px; }
-  .milestone-item input[type=checkbox] { accent-color: #1f6f5c; }
-  .milestone-item span { flex: 1; }
-  .milestone-item button { padding: 2px 6px; font-size: 11px; background: #c4523f; color: #fff; border: none; border-radius: 3px; cursor: pointer; }
-  .milestone-item button:hover { background: #a83a2a; }
-  .add-milestone-btn { font-size: 12px; padding: 4px 8px; background: #1f6f5c; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-  .add-milestone-btn:hover { background: #185a4a; }
-  .editor-buttons { display: flex; gap: 8px; margin-top: 16px; }
-  .editor-buttons button { flex: 1; padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-  .editor-buttons .save { background: #1f6f5c; color: #fff; }
-  .editor-buttons .save:hover { background: #185a4a; }
-  .editor-buttons .cancel { background: #e5e3de; }
-  .editor-buttons .cancel:hover { background: #ddd9d1; }
-  .editor-buttons .delete { background: #c4523f; color: #fff; }
-  .editor-buttons .delete:hover { background: #a83a2a; }
-
-  @media (max-width: 1200px) {
-    .main-wrapper { flex-direction: column; }
-    .detail-panel { width: 100%; max-height: none; }
-  }
-</style>
-
-<h1>Project timeline & pipeline</h1>
-<div class="sub">Track projects from intake through kickoff. Pipeline section for scoping, detail panel for gantt projects.</div>
-
-<div class="controls">
-  <input type="text" id="newProjectName" placeholder="New project name...">
-  <select id="newProjectType">
-    <option value="pipeline">Add to Pipeline</option>
-    <option value="gantt">Add to Gantt</option>
-  </select>
-  <button onclick="openNewProjectForm()">+ New Project</button>
-  <button onclick="exportData()" style="background: #a9622b;">Download Data</button>
+  <footer>
+    <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
+    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
+  </footer>
 </div>
 
-<!-- GANTT SECTION -->
-<div>
-  <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 12px;">
-    <div class="section-title" style="margin: 0; padding-bottom: 0; border: none;">Timeline: Active projects</div>
-    <div class="view-toggle" style="gap: 12px;">
-      <button class="view-toggle-btn" id="toggleLeftRail" onclick="toggleLeftRail()" style="background: #f0ebe5; color: #2b2a28;">Show List</button>
-      <span style="color: #a9a89f;">Group by:</span>
-      <button class="view-toggle-btn" id="viewByPod" onclick="switchView('pod')">Pod</button>
-      <button class="view-toggle-btn active" id="viewByProject" onclick="switchView('flat')">Project</button>
-    </div>
-  </div>
-  <div class="main-wrapper">
-    <div class="gantt-section">
-      <div class="gantt-wrapper">
-        <div class="gantt">
-          <div class="gantt-labels" id="labels"></div>
-          <div class="gantt-timeline" id="timeline">
-            <div class="header" id="header"></div>
-            <div id="bars"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="detail-panel" id="detailPanel">
-      <div style="color: #a9a89f; font-style: italic; font-size: 13px;">Click a project to see details</div>
-    </div>
-  </div>
-</div>
-
-<!-- PIPELINE SECTION -->
-<div id="pipelineSection">
-  <div class="section-title">Pipeline: Pre-kickoff projects</div>
-  <div class="pipeline-grid" id="pipelineGrid"></div>
-</div>
-
-<!-- EDITOR MODAL -->
-<div class="editor-modal" id="editorModal">
-  <div class="editor-content">
-    <h2 id="editorTitle">Edit Project</h2>
-    <div class="editor-field">
-      <label>Project Name</label>
-      <input type="text" id="editorName">
-    </div>
-    <div class="editor-field">
-      <label>Pod</label>
-      <select id="editorPod">
-        <option value="benefits-me">Benefits / ME</option>
-        <option value="payer-global">Payer & Global Experience</option>
-        <option value="insights">Insights</option>
-        <option value="channel-partners">Channel Partners</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div class="editor-field" id="pipelineStatusField" style="display: none;">
-      <label>Status</label>
-      <select id="editorPipelineStatus">
-        <option value="Scoping">Scoping</option>
-        <option value="Design Review">Design Review</option>
-        <option value="Awaiting Approval">Awaiting Approval</option>
-        <option value="Ready for Kickoff">Ready for Kickoff</option>
-      </select>
-    </div>
-    <div class="editor-field" id="projectStatusField" style="display: none;">
-      <label>Priority/Status</label>
-      <select id="editorProjectStatus">
-        <option value="On Track">On Track</option>
-        <option value="Needs Support">Needs Support</option>
-        <option value="Awaiting review">Awaiting review</option>
-        <option value="Blocked">Blocked</option>
-      </select>
-    </div>
-    <div class="editor-field" id="projectStageField" style="display: none;">
-      <label>Project stage</label>
-      <select id="editorProjectStage">
-        <option value="Awaiting kickoff">Awaiting kickoff</option>
-        <option value="Discovery">Discovery</option>
-        <option value="Iteration">Iteration</option>
-        <option value="Finalizing specs">Finalizing specs</option>
-        <option value="Development">Development</option>
-        <option value="DQA">DQA</option>
-        <option value="Complete">Complete</option>
-      </select>
-    </div>
-    <div class="editor-field">
-      <label id="notesLabel" style="display: none;">Notes</label>
-      <textarea id="editorNotes" style="display: none; min-height: 60px;"></textarea>
-    </div>
-    <div class="editor-field" id="pipelineLinksField" style="display: none;">
-      <label>Links</label>
-      <textarea id="editorPipelineLinks" style="min-height: 80px; font-size: 12px;" placeholder="Add links for this project. Format: URL|Label&#10;Example: https://www.figma.com/...|Figma Design"></textarea>
-      <div style="font-size: 11px; color: #8b8a84; margin-top: 4px;">Format: URL|Label (one per line)</div>
-    </div>
-    <div class="editor-field" id="dateStartField" style="display: none;">
-      <label>Start Date</label>
-      <input type="date" id="editorStart">
-    </div>
-    <div class="editor-field" id="dateEndField" style="display: none;">
-      <label>End Date</label>
-      <input type="date" id="editorEnd">
-    </div>
-    <div class="editor-milestones" id="milestonesSection" style="display: none;">
-      <h3>Milestones</h3>
-      <div id="editorMilestonesList"></div>
-      <button class="add-milestone-btn" onclick="addNewMilestone()">+ Add Milestone</button>
-    </div>
-    <div class="editor-field" id="linksField" style="display: none;">
-      <label>Links (URL|Label, ...)</label>
-      <textarea id="editorLinks" style="min-height: 60px;"></textarea>
-    </div>
-    <div class="editor-buttons">
-      <button class="save" onclick="saveProjectEdit()">Save</button>
-      <button class="cancel" onclick="closeEditor()">Cancel</button>
-      <button class="delete" onclick="deleteProject()">Delete</button>
-    </div>
-  </div>
-</div>
-
-<!-- MILESTONE EDIT MODAL -->
-<div class="editor-modal" id="editMilestoneModal">
-  <div class="editor-content" style="max-width: 400px;">
-    <h2>Edit Milestone</h2>
-    <div class="editor-field">
-      <label>Milestone Name</label>
-      <input type="text" id="editMilestoneModalName">
-    </div>
-    <div class="editor-field">
-      <label>Date</label>
-      <input type="date" id="editMilestoneModalDate">
-    </div>
-    <div class="editor-buttons">
-      <button class="save" onclick="saveMilestoneEdit()">Save</button>
-      <button class="cancel" onclick="cancelMilestoneEdit()">Cancel</button>
-    </div>
-  </div>
-</div>
+<script id="tracker-data" type="application/json">
+{
+  "updated": "2026-10-02",
+  "pods": {
+    "benefits-me": "Benefits / ME",
+    "payer-global": "Payer & Global Experience",
+    "insights": "Insights",
+    "channel-partners": "Channel Partners",
+    "other": "Other"
+  },
+  "items": [
+    {
+      "id": "wpo-direct-scheduling",
+      "name": "Global T2: WPO Direct Scheduling",
+      "pod": "payer-global",
+      "lane": "active",
+      "priority": 1,
+      "status": "On Track",
+      "stage": "Development",
+      "start": "2026-09-09",
+      "end": "2026-10-02",
+      "summary": "",
+      "milestones": [
+        { "name": "Review with Eng", "date": "2026-09-29", "done": false }
+      ],
+      "links": [
+        { "label": "Figma", "url": "https://www.figma.com/design/QwTzl25BwpBF0usRzcBYso/Global--T2-Direct-WPO-Scheduling?node-id=36-2&t=0dr75q8ge9MeYFGE-1" }
+      ]
+    },
+    {
+      "id": "necl-marketing-planner",
+      "name": "NECL Marketing Planner",
+      "pod": "insights",
+      "lane": "active",
+      "priority": 2,
+      "status": "On Track",
+      "stage": "Iteration",
+      "start": "2026-09-14",
+      "end": "2026-10-09",
+      "summary": "",
+      "milestones": [
+        { "name": "Review with Marketing", "date": "2026-10-01", "done": false },
+        { "name": "Review with Eng", "date": "2026-10-02", "done": false },
+        { "name": "Kickoff", "date": "2026-10-05", "done": false }
+      ],
+      "links": [
+        { "label": "Figma", "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=106-26462&t=n0Wg9ixbdVON37jw-1" }
+      ]
+    },
+    {
+      "id": "gottman-marketplace",
+      "name": "Adding Gottman into Marketplace",
+      "pod": "channel-partners",
+      "lane": "active",
+      "priority": 3,
+      "status": "Needs Support",
+      "stage": "Discovery",
+      "start": "2026-10-01",
+      "end": "2026-10-31",
+      "summary": "",
+      "concern": "",
+      "milestones": [],
+      "links": [
+        { "label": "Loom", "url": "https://www.loom.com/share/edef73816c8c4e95a7b534dd363c48c2" }
+      ]
+    },
+    {
+      "id": "ibx-remediation",
+      "name": "IBX Remediation Plan",
+      "pod": "payer-global",
+      "lane": "backlog",
+      "priority": 1,
+      "stage": "Scoping",
+      "summary": "IBX escalation, scoping with team.",
+      "links": [
+        { "label": "Escalation doc", "url": "https://docs.google.com/document/d/133gkVZtF1mLDJlFHpuYmUJ6hQKLRXhbdfQoeO8_aXJw/edit" }
+      ]
+    },
+    {
+      "id": "tbd-benefits-me",
+      "name": "Project TBD 1",
+      "pod": "benefits-me",
+      "lane": "backlog",
+      "priority": 2,
+      "stage": "Awaiting kickoff",
+      "start": "2026-10-10",
+      "end": "2026-11-15",
+      "summary": "Waiting on requirements.",
+      "links": []
+    }
+  ]
+}
+</script>
 
 <script>
 (function () {
-  var STORE_KEY = "gantt_tracker_v3";
+  var DATA = JSON.parse(document.getElementById("tracker-data").textContent);
+  var STAGES = ["Awaiting kickoff", "Discovery", "Iteration", "Finalizing specs", "Development", "DQA", "Complete"];
+  var STATUS_CLASS = { "On Track": "on-track", "Needs Support": "needs-support", "Awaiting review": "awaiting-review", "Blocked": "blocked" };
+  var DAY = 86400000;
+  var podFilter = "all";
 
-  function load() {
-    try { var raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : null; }
-    catch (e) { return null; }
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  function pd(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function daysBetween(a, b) { return Math.round((b - a) / DAY); }
+  function fmt(s) { return pd(s).toLocaleDateString("en-US", { month: "short", day: "numeric" }); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
+  function podName(k) { return DATA.pods[k] || k; }
+  function byPriority(a, b) { return (a.priority || 99) - (b.priority || 99); }
+  function safeUrl(u) { return /^https?:\/\//i.test(u || ""); }
 
-  function save(data) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
-    catch (e) { }
-  }
-
-  var defaultData = {
-    pipeline: [
-      {
-        id: "p4",
-        name: "IBX Remediation Plan",
-        pod: "payer-global",
-        status: "Scoping",
-        notes: "IBX escalation, scoping with team",
-        links: [
-          { label: "Escalation doc", url: "https://docs.google.com/document/d/133gkVZtF1mLDJlFHpuYmUJ6hQKLRXhbdfQoeO8_aXJw/edit" }
-        ]
-      }
-    ],
-    projects: [
-      {
-        id: "p1",
-        name: "Global T2: WPO Direct Scheduling",
-        pod: "payer-global",
-        status: "On Track",
-        stage: "Development",
-        startDate: "2026-09-09",
-        endDate: "2026-10-02",
-        milestones: [
-          { id: "m1", name: "Review with Eng", date: "2026-09-29" }
-        ],
-        links: [
-          { label: "Figma", url: "https://www.figma.com/design/QwTzl25BwpBF0usRzcBYso/Global--T2-Direct-WPO-Scheduling?node-id=36-2&t=0dr75q8ge9MeYFGE-1" }
-        ]
-      },
-      {
-        id: "p2",
-        name: "NECL Marketing Planner",
-        pod: "insights",
-        status: "On Track",
-        stage: "Iteration",
-        startDate: "2026-09-14",
-        endDate: "2026-10-09",
-        milestones: [
-          { id: "m2", name: "Review with Marketing", date: "2026-10-01", completed: false },
-          { id: "m3", name: "Review with Eng", date: "2026-10-02", completed: false },
-          { id: "m4", name: "Kickoff", date: "2026-10-05", completed: false }
-        ],
-        links: [
-          { label: "Figma", url: "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=106-26462&t=n0Wg9ixbdVON37jw-1" }
-        ]
-      },
-      {
-        id: "pl1",
-        name: "Project TBD 1",
-        pod: "benefits-me",
-        status: "On Track",
-        stage: "Awaiting kickoff",
-        startDate: "2026-10-10",
-        endDate: "2026-11-15",
-        notes: "Waiting on requirements",
-        milestones: [],
-        links: []
-      },
-      {
-        id: "p3",
-        name: "Adding Gottman into Marketplace",
-        pod: "channel-partners",
-        status: "Needs Support",
-        stage: "Discovery",
-        startDate: "2026-10-01",
-        endDate: "2026-10-31",
-        notes: "",
-        milestones: [],
-        links: [
-          { label: "Loom", url: "https://www.loom.com/share/edef73816c8c4e95a7b534dd363c48c2" }
-        ]
-      }
-    ]
-  };
-
-  var data = load() || defaultData;
-  var selectedProject = null;
-  var editorMode = "gantt"; // or "pipeline"
-  var viewMode = "flat"; // or "pod" - flat shows all projects, pod groups by pod
-  var expandedPods = {}; // track which pods are expanded
-  var leftRailVisible = false; // track left rail visibility
-
-  var today = new Date();
-  var minDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-  var maxDate = new Date(today.getFullYear(), today.getMonth() + 6, 0);
-
-  function daysInRange(start, end) {
-    var s = new Date(start);
-    var e = new Date(end);
-    return Math.floor((e - s) / (1000 * 60 * 60 * 24));
-  }
-
-  function percentFromStart(date) {
-    var d = new Date(date);
-    var total = daysInRange(minDate, maxDate);
-    var offset = daysInRange(minDate, d);
-    return Math.max(0, Math.min(100, (offset / total) * 100));
-  }
-
-  function percentWidth(start, end) {
-    var total = daysInRange(minDate, maxDate);
-    var proj = daysInRange(start, end);
-    return Math.max(1, (proj / total) * 100);
-  }
-
-  function formatDate(d) {
-    if (!d) return "";
-    var parts = d.split('-');
-    if (parts.length === 3) {
-      var date = new Date(parts[0], parts[1] - 1, parts[2]);
-    } else {
-      var date = new Date(d);
-    }
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  }
-
-  function selectProject(project) {
-    selectedProject = project;
-    renderDetailPanel();
-  }
-
-  window.openNewProjectForm = function () {
-    editorMode = document.getElementById("newProjectType").value;
-    selectedProject = null;
-    document.getElementById("editorTitle").textContent = editorMode === "pipeline" ? "New Pipeline Project" : "New Gantt Project";
-    document.getElementById("editorName").value = "";
-    document.getElementById("editorPod").value = "benefits-me";
-
-    if (editorMode === "pipeline") {
-      document.getElementById("pipelineStatusField").style.display = "block";
-      document.getElementById("projectStatusField").style.display = "none";
-      document.getElementById("notesLabel").style.display = "block";
-      document.getElementById("editorNotes").style.display = "block";
-      document.getElementById("pipelineLinksField").style.display = "block";
-      document.getElementById("dateStartField").style.display = "none";
-      document.getElementById("dateEndField").style.display = "none";
-      document.getElementById("milestonesSection").style.display = "none";
-      document.getElementById("linksField").style.display = "none";
-      document.getElementById("editorPipelineStatus").value = "Scoping";
-      document.getElementById("editorNotes").value = "";
-      document.getElementById("editorPipelineLinks").value = "";
-    } else {
-      document.getElementById("pipelineStatusField").style.display = "none";
-      document.getElementById("projectStatusField").style.display = "block";
-      document.getElementById("projectStageField").style.display = "block";
-      document.getElementById("notesLabel").style.display = "block";
-      document.getElementById("editorNotes").style.display = "block";
-      document.getElementById("pipelineLinksField").style.display = "none";
-      document.getElementById("dateStartField").style.display = "block";
-      document.getElementById("dateEndField").style.display = "block";
-      document.getElementById("milestonesSection").style.display = "block";
-      document.getElementById("linksField").style.display = "block";
-      document.getElementById("editorStart").value = "";
-      document.getElementById("editorEnd").value = "";
-      document.getElementById("editorProjectStatus").value = "On Track";
-      document.getElementById("editorProjectStage").value = "Awaiting kickoff";
-      document.getElementById("editorMilestonesList").innerHTML = "";
-      document.getElementById("editorLinks").value = "";
-      document.getElementById("editorNotes").value = "";
-    }
-    document.getElementById("editorModal").classList.add("active");
-  };
-
-  window.editPipelineItem = function (item) {
-    editorMode = "pipeline";
-    selectedProject = item;
-    document.getElementById("editorTitle").textContent = "Edit Pipeline Project";
-    document.getElementById("editorName").value = item.name;
-    document.getElementById("editorPod").value = item.pod;
-    document.getElementById("editorPipelineStatus").value = item.status;
-    document.getElementById("editorNotes").value = item.notes || "";
-
-    var linksStr = (item.links || []).map(function (l) { return l.url + '|' + l.label; }).join('\n');
-    document.getElementById("editorPipelineLinks").value = linksStr;
-
-    document.getElementById("pipelineStatusField").style.display = "block";
-    document.getElementById("projectStatusField").style.display = "none";
-    document.getElementById("notesLabel").style.display = "block";
-    document.getElementById("editorNotes").style.display = "block";
-    document.getElementById("pipelineLinksField").style.display = "block";
-    document.getElementById("dateStartField").style.display = "none";
-    document.getElementById("dateEndField").style.display = "none";
-    document.getElementById("milestonesSection").style.display = "none";
-    document.getElementById("linksField").style.display = "none";
-
-    document.getElementById("editorModal").classList.add("active");
-  };
-
-  window.launchToGantt = function (pipelineItem) {
-    if (!confirm("Move to Gantt? You'll need to set dates and milestones.")) return;
-    data.pipeline = data.pipeline.filter(function (p) { return p.id !== pipelineItem.id; });
-    data.projects.push({
-      id: "p" + Date.now(),
-      name: pipelineItem.name,
-      pod: pipelineItem.pod,
-      status: "On Track",
-      startDate: new Date().toISOString().split('T')[0],
-      endDate: "",
-      milestones: [],
-      links: []
-    });
-    save(data);
-    render();
-  };
-
-  window.deletePipelineItem = function (item) {
-    if (!confirm("Delete this pipeline item?")) return;
-    data.pipeline = data.pipeline.filter(function (p) { return p.id !== item.id; });
-    save(data);
-    render();
-  };
-
-  window.exportData = function () {
-    var timestamp = new Date().toISOString().split('T')[0];
-    var filename = "tracker_data_" + timestamp + ".json";
-    var dataToExport = {
-      projects: data.projects || [],
-      pipeline: data.pipeline || []
-    };
-    var json = JSON.stringify(dataToExport, null, 2);
-    var blob = new Blob([json], { type: "application/json" });
-    var url = URL.createObjectURL(blob);
-    var link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
-  window.selectProject = selectProject;
-
-  window.switchView = function (mode) {
-    viewMode = mode;
-    if (mode === "pod") {
-      document.getElementById("viewByPod").classList.add("active");
-      document.getElementById("viewByProject").classList.remove("active");
-    } else {
-      document.getElementById("viewByPod").classList.remove("active");
-      document.getElementById("viewByProject").classList.add("active");
-    }
-    expandedPods = {}; // reset expanded state when switching views
-    renderRows();
-  };
-
-  window.toggleLeftRail = function () {
-    leftRailVisible = !leftRailVisible;
-    var labels = document.getElementById("labels");
-    var btn = document.getElementById("toggleLeftRail");
-    if (leftRailVisible) {
-      labels.classList.add("visible");
-      btn.textContent = "Hide List";
-      btn.style.background = "#1f6f5c";
-      btn.style.color = "#fff";
-    } else {
-      labels.classList.remove("visible");
-      btn.textContent = "Show List";
-      btn.style.background = "#f0ebe5";
-      btn.style.color = "#2b2a28";
-    }
-  };
-
-  window.togglePod = function (podName) {
-    expandedPods[podName] = !expandedPods[podName];
-    renderRows();
-  };
-
-  window.toggleMilestone = function (projectId, milestoneIdx) {
-    var project = data.projects.find(function (p) { return p.id === projectId; });
-    if (!project || !project.milestones[milestoneIdx]) return;
-    project.milestones[milestoneIdx].completed = !project.milestones[milestoneIdx].completed;
-    save(data);
-    renderDetailPanel();
-  };
-
-  window.editProject = function () {
-    if (!selectedProject) return;
-    editorMode = "gantt";
-    var p = selectedProject;
-    document.getElementById("editorTitle").textContent = "Edit Gantt Project";
-    document.getElementById("editorName").value = p.name;
-    document.getElementById("editorPod").value = p.pod;
-    document.getElementById("editorStart").value = p.startDate;
-    document.getElementById("editorEnd").value = p.endDate;
-    document.getElementById("editorProjectStatus").value = p.status || "On Track";
-    document.getElementById("editorProjectStage").value = p.stage || "Awaiting kickoff";
-    document.getElementById("editorNotes").value = p.notes || "";
-
-    document.getElementById("pipelineStatusField").style.display = "none";
-    document.getElementById("projectStatusField").style.display = "block";
-    document.getElementById("projectStageField").style.display = "block";
-    document.getElementById("notesLabel").style.display = "block";
-    document.getElementById("editorNotes").style.display = "block";
-    document.getElementById("dateStartField").style.display = "block";
-    document.getElementById("dateEndField").style.display = "block";
-    document.getElementById("milestonesSection").style.display = "block";
-    document.getElementById("linksField").style.display = "block";
-
-    var linksStr = (p.links || []).map(function (l) { return l.url + '|' + l.label; }).join(', ');
-    document.getElementById("editorLinks").value = linksStr;
-
-    renderMilestonesList();
-    document.getElementById("editorModal").classList.add("active");
-  };
-
-  var editorNewMilestoneId = 0;
-
-  function renderMilestonesList() {
-    var p = selectedProject;
-    var list = document.getElementById("editorMilestonesList");
-    list.innerHTML = "";
-    (p.milestones || []).forEach(function (m, idx) {
-      var div = document.createElement("div");
-      div.className = "milestone-item";
-      var cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = m.completed;
-      cb.onchange = function () { m.completed = cb.checked; };
-      var span = document.createElement("span");
-      span.textContent = m.name + " (" + formatDate(m.date) + ")";
-      span.style.flex = "1";
-      var editBtn = document.createElement("button");
-      editBtn.textContent = "Edit";
-      editBtn.style.padding = "4px 8px";
-      editBtn.style.fontSize = "12px";
-      editBtn.style.background = "#4a90a4";
-      editBtn.style.color = "#fff";
-      editBtn.style.border = "none";
-      editBtn.style.borderRadius = "4px";
-      editBtn.style.cursor = "pointer";
-      editBtn.style.marginLeft = "6px";
-      editBtn.onclick = function () { editMilestone(idx); };
-      var delBtn = document.createElement("button");
-      delBtn.textContent = "Remove";
-      delBtn.style.padding = "4px 8px";
-      delBtn.style.fontSize = "12px";
-      delBtn.style.background = "#c4523f";
-      delBtn.style.color = "#fff";
-      delBtn.style.border = "none";
-      delBtn.style.borderRadius = "4px";
-      delBtn.style.cursor = "pointer";
-      delBtn.style.marginLeft = "4px";
-      delBtn.onclick = function () { p.milestones.splice(idx, 1); renderMilestonesList(); };
-      div.appendChild(cb);
-      div.appendChild(span);
-      div.appendChild(editBtn);
-      div.appendChild(delBtn);
-      list.appendChild(div);
+  function items(lane) {
+    return DATA.items.filter(function (i) {
+      return i.lane === lane && (podFilter === "all" || i.pod === podFilter);
     });
   }
 
-  var editingMilestoneIdx = -1;
-
-  function editMilestone(idx) {
-    editingMilestoneIdx = idx;
-    var m = selectedProject.milestones[idx];
-    document.getElementById("editMilestoneModalName").value = m.name;
-    document.getElementById("editMilestoneModalDate").value = m.date;
-    document.getElementById("editMilestoneModal").classList.add("active");
+  function dueInfo(item) {
+    var left = daysBetween(today, pd(item.end));
+    if (left > 1) return { text: left + " days left", warn: false };
+    if (left === 1) return { text: "1 day left", warn: false };
+    if (left === 0) return { text: "Due today", warn: false };
+    return { text: Math.abs(left) + (left === -1 ? " day" : " days") + " past end date", warn: true };
   }
 
-  window.saveMilestoneEdit = function () {
-    var m = selectedProject.milestones[editingMilestoneIdx];
-    var newName = document.getElementById("editMilestoneModalName").value.trim();
-    var newDate = document.getElementById("editMilestoneModalDate").value.trim();
-    if (!newName || !newDate) {
-      alert("Name and date required");
-      return;
+  function nextMilestone(item) {
+    var open = (item.milestones || []).filter(function (m) { return !m.done; });
+    open.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    return open[0] || null;
+  }
+
+  function attentionFor(item) {
+    var out = [];
+    if (item.lane !== "active") return out;
+    if (item.status === "Needs Support" || item.status === "Blocked") {
+      out.push(item.concern || (item.status === "Blocked" ? "Blocked. Details to be added." : "Flagged as needing support. Details to be added."));
     }
-    m.name = newName;
-    m.date = newDate;
-    document.getElementById("editMilestoneModal").classList.remove("active");
-    renderMilestonesList();
-  };
-
-  window.cancelMilestoneEdit = function () {
-    document.getElementById("editMilestoneModal").classList.remove("active");
-  };
-
-  window.addNewMilestone = function () {
-    if (!selectedProject) return;
-    selectedProject.milestones.push({
-      id: "m" + (++editorNewMilestoneId),
-      name: "New milestone",
-      date: selectedProject.endDate,
-      completed: false
+    if (daysBetween(today, pd(item.end)) < 0) out.push("End date " + fmt(item.end) + " has passed and the project is still open.");
+    (item.milestones || []).forEach(function (m) {
+      if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push('Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.');
     });
-    renderMilestonesList();
-  };
+    return out;
+  }
 
-  window.saveProjectEdit = function () {
-    var name = document.getElementById("editorName").value.trim();
-    if (!name) { alert("Project name required"); return; }
+  function pill(status) {
+    return el("span", "pill " + (STATUS_CLASS[status] || "on-track"), status);
+  }
 
-    if (editorMode === "pipeline") {
-      // Parse links
-      var links = [];
-      var linksStr = document.getElementById("editorPipelineLinks").value.trim();
-      if (linksStr) {
-        linksStr.split('\n').forEach(function (line) {
-          var parts = line.split('|');
-          if (parts.length === 2 && parts[0].trim() && parts[1].trim()) {
-            links.push({ url: parts[0].trim(), label: parts[1].trim() });
-          }
-        });
-      }
+  function linksBlock(item) {
+    var good = (item.links || []).filter(function (l) { return safeUrl(l.url); });
+    if (!good.length) return null;
+    var box = el("div", "links");
+    good.forEach(function (l) {
+      var a = el("a", null, l.label);
+      a.href = l.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      box.appendChild(a);
+    });
+    return box;
+  }
 
-      if (!selectedProject) {
-        data.pipeline.push({
-          id: "pl" + Date.now(),
-          name: name,
-          pod: document.getElementById("editorPod").value,
-          status: document.getElementById("editorPipelineStatus").value,
-          notes: document.getElementById("editorNotes").value,
-          links: links
-        });
-      } else {
-        selectedProject.name = name;
-        selectedProject.pod = document.getElementById("editorPod").value;
-        selectedProject.status = document.getElementById("editorPipelineStatus").value;
-        selectedProject.notes = document.getElementById("editorNotes").value;
-        selectedProject.links = links;
-      }
-    } else {
-      if (!selectedProject) {
-        var start = document.getElementById("editorStart").value;
-        var end = document.getElementById("editorEnd").value;
-        if (!start || !end) { alert("Start and end dates required"); return; }
-        data.projects.push({
-          id: "p" + Date.now(),
-          name: name,
-          pod: document.getElementById("editorPod").value,
-          status: document.getElementById("editorProjectStatus").value,
-          stage: document.getElementById("editorProjectStage").value,
-          startDate: start,
-          endDate: end,
-          notes: document.getElementById("editorNotes").value,
-          milestones: [],
-          links: []
-        });
-      } else {
-        selectedProject.name = name;
-        selectedProject.pod = document.getElementById("editorPod").value;
-        selectedProject.status = document.getElementById("editorProjectStatus").value;
-        selectedProject.stage = document.getElementById("editorProjectStage").value;
-        selectedProject.startDate = document.getElementById("editorStart").value;
-        selectedProject.endDate = document.getElementById("editorEnd").value;
-        selectedProject.notes = document.getElementById("editorNotes").value;
-        var linksStr = document.getElementById("editorLinks").value.trim();
-        selectedProject.links = [];
-        if (linksStr) {
-          linksStr.split(',').forEach(function (pair) {
-            var parts = pair.trim().split('|');
-            if (parts[0] && parts[1]) {
-              selectedProject.links.push({ url: parts[0].trim(), label: parts[1].trim() });
-            }
-          });
-        }
-      }
+  function activeCard(item) {
+    var card = el("article", "card " + item.pod);
+    card.id = item.id;
+    var top = el("div", "card-top");
+    var left = el("div");
+    left.appendChild(el("div", "prio", "PRIORITY " + item.priority));
+    left.appendChild(el("h3", null, item.name));
+    top.appendChild(left);
+    top.appendChild(pill(item.status));
+    card.appendChild(top);
+
+    var meta = el("div", "meta");
+    meta.appendChild(el("span", "pod", podName(item.pod)));
+    card.appendChild(meta);
+
+    var idx = Math.max(0, STAGES.indexOf(item.stage));
+    var stepper = el("div", "stepper");
+    stepper.setAttribute("role", "img");
+    stepper.setAttribute("aria-label", "Stage " + (idx + 1) + " of " + STAGES.length + ": " + item.stage);
+    STAGES.forEach(function (s, n) { stepper.appendChild(el("i", n < idx ? "done" : n === idx ? "current" : "")); });
+    card.appendChild(stepper);
+    var lbl = el("div", "stage-label");
+    lbl.appendChild(document.createTextNode("Stage: "));
+    lbl.appendChild(el("b", null, item.stage));
+    lbl.appendChild(document.createTextNode(" (" + (idx + 1) + " of " + STAGES.length + ")"));
+    card.appendChild(lbl);
+
+    if (item.summary) card.appendChild(el("p", "summary", item.summary));
+
+    var due = dueInfo(item);
+    var dates = el("div", "row");
+    dates.appendChild(el("span", "k", "Dates: "));
+    dates.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end) + " - "));
+    dates.appendChild(el("span", due.warn ? "warn" : null, due.text));
+    card.appendChild(dates);
+
+    var next = nextMilestone(item);
+    if (next) {
+      var nm = el("div", "row");
+      nm.appendChild(el("span", "k", "Next milestone: "));
+      var late = daysBetween(today, pd(next.date)) < 0;
+      nm.appendChild(document.createTextNode(next.name + " (" + fmt(next.date) + ")"));
+      if (late) nm.appendChild(el("span", "warn", " - overdue"));
+      card.appendChild(nm);
     }
 
-    closeEditor();
-    save(data);
-    render();
-  };
-
-  window.closeEditor = function () {
-    document.getElementById("editorModal").classList.remove("active");
-  };
-
-  window.deleteProject = function () {
-    if (!selectedProject || !confirm("Delete this project?")) return;
-    if (editorMode === "pipeline") {
-      data.pipeline = data.pipeline.filter(function (p) { return p.id !== selectedProject.id; });
-    } else {
-      data.projects = data.projects.filter(function (p) { return p.id !== selectedProject.id; });
+    if ((item.milestones || []).length) {
+      var ul = el("ul", "ms");
+      item.milestones.forEach(function (m) {
+        var li = el("li", m.done ? "done" : "");
+        li.appendChild(el("span", "box", m.done ? "✓" : "○"));
+        li.appendChild(el("span", null, m.name + " (" + fmt(m.date) + ")"));
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
     }
-    selectedProject = null;
-    closeEditor();
-    save(data);
-    render();
-    renderDetailPanel();
-  };
+
+    var links = linksBlock(item);
+    if (links) card.appendChild(links);
+    return card;
+  }
+
+  function listCard(item, rank, extra) {
+    var card = el("article", "card " + item.pod);
+    card.id = item.id;
+    card.appendChild(el("div", "rank", extra ? "✓" : String(rank)));
+    var body = el("div");
+    body.appendChild(el("h3", null, item.name));
+    var meta = el("div", "meta");
+    meta.appendChild(el("span", "pod", podName(item.pod)));
+    if (item.stage) meta.appendChild(el("span", "pod", item.stage));
+    if (extra) meta.appendChild(el("span", "pod", extra));
+    body.appendChild(meta);
+    if (item.summary) body.appendChild(el("p", "summary", item.summary));
+    if (item.start && item.end && !extra) {
+      var r = el("div", "row");
+      r.appendChild(el("span", "k", "Planned: "));
+      r.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end)));
+      body.appendChild(r);
+    }
+    var links = linksBlock(item);
+    if (links) body.appendChild(links);
+    card.appendChild(body);
+    return card;
+  }
+
+  function fill(id, nodes, emptyText) {
+    var box = document.getElementById(id);
+    box.textContent = "";
+    if (!nodes.length) { box.appendChild(el("div", "empty", emptyText)); return; }
+    nodes.forEach(function (n) { box.appendChild(n); });
+  }
+
+  function renderFilters() {
+    var box = document.getElementById("filters");
+    box.textContent = "";
+    box.appendChild(el("span", "label", "Pod:"));
+    var keys = ["all"].concat(Object.keys(DATA.pods).filter(function (k) {
+      return DATA.items.some(function (i) { return i.pod === k; });
+    }));
+    keys.forEach(function (k) {
+      var b = el("button", "chip", k === "all" ? "All pods" : podName(k));
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(podFilter === k));
+      b.onclick = function () { podFilter = k; render(); };
+      box.appendChild(b);
+    });
+  }
+
+  function renderTimeline() {
+    var tl = document.getElementById("tl");
+    tl.textContent = "";
+    var rows = items("active").sort(byPriority).concat(items("backlog").filter(function (i) { return i.start && i.end; }).sort(byPriority));
+    if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
+    tl.style.paddingLeft = "";
+
+    var starts = rows.map(function (i) { return pd(i.start); }).concat([today]);
+    var ends = rows.map(function (i) { return pd(i.end); }).concat([today]);
+    var min = new Date(Math.min.apply(null, starts) - 7 * DAY);
+    var max = new Date(Math.max.apply(null, ends) + 14 * DAY);
+    var span = max - min;
+    function pct(d) { return ((d - min) / span) * 100; }
+
+    var head = el("div", "tl-head");
+    var m = new Date(min.getFullYear(), min.getMonth() + 1, 1);
+    var first = el("div", "tl-month", min.toLocaleDateString("en-US", { month: "short" }));
+    first.style.left = "0"; first.style.borderLeft = "0";
+    head.appendChild(first);
+    while (m < max) {
+      var lab = el("div", "tl-month", m.toLocaleDateString("en-US", { month: "short", year: m.getMonth() === 0 ? "numeric" : undefined }));
+      lab.style.left = pct(m) + "%";
+      head.appendChild(lab);
+      m = new Date(m.getFullYear(), m.getMonth() + 1, 1);
+    }
+    tl.appendChild(head);
+
+    rows.forEach(function (item) {
+      var row = el("div", "tl-row");
+      var name = el("a", "tl-name");
+      name.href = "#" + item.id;
+      name.title = item.name;
+      name.appendChild(el("span", null, item.name));
+      row.appendChild(name);
+      var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : item.stage);
+      bar.href = "#" + item.id;
+      bar.style.left = pct(pd(item.start)) + "%";
+      bar.style.width = Math.max(1, pct(pd(item.end)) - pct(pd(item.start))) + "%";
+      bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
+      row.appendChild(bar);
+      (item.milestones || []).forEach(function (ms) {
+        var d = el("div", "tl-ms" + (ms.done ? " done" : ""));
+        d.style.left = pct(pd(ms.date)) + "%";
+        d.title = ms.name + " - " + fmt(ms.date) + (ms.done ? " (done)" : "");
+        row.appendChild(d);
+      });
+      tl.appendChild(row);
+    });
+
+    var line = el("div", "tl-today");
+    line.style.left = "calc(190px + (100% - 190px) * " + (pct(today) / 100) + ")";
+    if (window.matchMedia("(max-width: 560px)").matches) line.style.left = "calc(120px + (100% - 120px) * " + (pct(today) / 100) + ")";
+    tl.appendChild(line);
+  }
 
   function render() {
-    renderPipeline();
-    renderHeader();
-    renderRows();
-    if (selectedProject && !editorMode) renderDetailPanel();
-  }
+    var upd = pd(DATA.updated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    document.getElementById("updated").textContent = "Last updated " + upd;
+    renderFilters();
 
-  function renderPipeline() {
-    var grid = document.getElementById("pipelineGrid");
-    grid.innerHTML = "";
-    (data.pipeline || []).forEach(function (item) {
-      var card = document.createElement("div");
-      card.className = "pipeline-card";
-      var header = document.createElement("div");
-      header.className = "pipeline-card-header";
-      var nameSpan = document.createElement("div");
-      nameSpan.className = "pipeline-card-name";
-      nameSpan.textContent = item.name;
-      var pod = document.createElement("span");
-      pod.className = "pipeline-card-pod";
-      pod.textContent = item.pod;
-      header.appendChild(nameSpan);
-      header.appendChild(pod);
-      card.appendChild(header);
+    var active = items("active").sort(byPriority);
+    var backlog = items("backlog").sort(byPriority);
+    var done = items("done").sort(function (a, b) { return (b.completed || "") < (a.completed || "") ? -1 : 1; });
+    var flags = [];
+    active.forEach(function (i) { attentionFor(i).forEach(function (why) { flags.push({ item: i, why: why }); }); });
 
-      var status = document.createElement("div");
-      status.className = "pipeline-card-status";
-      status.textContent = "Status: " + (item.status || "TBD");
-      card.appendChild(status);
-
-      if (item.notes) {
-        var notes = document.createElement("div");
-        notes.className = "pipeline-card-notes";
-        notes.textContent = item.notes;
-        card.appendChild(notes);
-      }
-
-      // Render links for pipeline items
-      if (item.links && item.links.length > 0) {
-        var linksDiv = document.createElement("div");
-        linksDiv.style.marginTop = "8px";
-        linksDiv.style.paddingTop = "8px";
-        linksDiv.style.borderTop = "1px solid #e5e3de";
-        linksDiv.style.fontSize = "12px";
-        item.links.forEach(function (link) {
-          if (link.url && link.url !== "#" && link.url.length > 0) {
-            var linkEl = document.createElement("div");
-            linkEl.style.marginBottom = "4px";
-            var anchor = document.createElement("a");
-            anchor.href = link.url;
-            anchor.target = "_blank";
-            anchor.title = link.url;
-            anchor.textContent = link.label;
-            anchor.style.color = "#1f6f5c";
-            anchor.style.textDecoration = "none";
-            anchor.style.cursor = "pointer";
-            anchor.onmouseover = function() { this.style.textDecoration = "underline"; };
-            anchor.onmouseout = function() { this.style.textDecoration = "none"; };
-            linkEl.appendChild(anchor);
-            linksDiv.appendChild(linkEl);
-          } else {
-            var linkEl = document.createElement("div");
-            linkEl.style.marginBottom = "4px";
-            linkEl.textContent = link.label + " (TBD)";
-            linksDiv.appendChild(linkEl);
-          }
-        });
-        card.appendChild(linksDiv);
-      }
-
-      var actions = document.createElement("div");
-      actions.className = "pipeline-card-actions";
-      var editBtn = document.createElement("button");
-      editBtn.className = "edit";
-      editBtn.textContent = "Edit";
-      editBtn.onclick = function () { window.editPipelineItem(item); };
-      var launchBtn = document.createElement("button");
-      launchBtn.className = "launch";
-      launchBtn.textContent = "Launch to Gantt";
-      launchBtn.onclick = function () { window.launchToGantt(item); };
-      var delBtn = document.createElement("button");
-      delBtn.className = "delete";
-      delBtn.textContent = "Delete";
-      delBtn.onclick = function () { window.deletePipelineItem(item); };
-      actions.appendChild(editBtn);
-      actions.appendChild(launchBtn);
-      actions.appendChild(delBtn);
-      card.appendChild(actions);
-
-      grid.appendChild(card);
+    var stats = document.getElementById("stats");
+    stats.textContent = "";
+    [["In progress", active.length, "#active-section", false], ["Needs attention", flags.length, "#attention-section", flags.length > 0],
+     ["Up next", backlog.length, "#backlog-section", false], ["Completed", done.length, "#done-section", false]].forEach(function (s) {
+      var a = el("a", "stat" + (s[3] ? " alert" : ""));
+      a.href = s[2];
+      a.appendChild(el("div", "n", String(s[1])));
+      a.appendChild(el("div", "t", s[0]));
+      stats.appendChild(a);
     });
-  }
 
-  function renderDetailPanel() {
-    var panel = document.getElementById("detailPanel");
-    if (!selectedProject) {
-      panel.innerHTML = '<div style="color: #a9a89f; font-style: italic; font-size: 13px;">Click a project to see details</div>';
-      return;
-    }
-    var p = selectedProject;
-    var podNames = { "benefits-me": "Benefits / ME", "payer-global": "Payer & Global Experience", "insights": "Insights", "channel-partners": "Channel Partners", "other": "Other" };
-    var html = '<h3>' + p.name + '</h3>';
-    html += '<div class="detail-pod">' + (podNames[p.pod] || p.pod) + '</div>';
-    html += '<div style="font-size: 12px; color: #71706b; margin-bottom: 8px;">Status: ' + (p.status || "TBD") + '</div>';
-    html += '<div class="detail-dates">Start: ' + formatDate(p.startDate) + ' - End: ' + formatDate(p.endDate) + '</div>';
+    document.getElementById("attention-count").textContent = "(" + flags.length + ")";
+    document.getElementById("active-count").textContent = "(" + active.length + ")";
+    document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
+    document.getElementById("done-count").textContent = "(" + done.length + ")";
 
-    if (p.milestones && p.milestones.length > 0) {
-      html += '<div><strong style="font-size: 12px;">Milestones</strong></div>';
-      p.milestones.forEach(function (m, idx) {
-        var isCompleted = m.completed ? true : false;
-        html += '<div class="detail-milestone' + (isCompleted ? ' milestone-completed' : '') + '">';
-        html += '<input type="checkbox" class="milestone-checkbox" ' + (isCompleted ? 'checked' : '') + ' onclick="toggleMilestone(\'' + p.id + '\', ' + idx + ')">';
-        html += m.name + ' (' + formatDate(m.date) + ')';
-        html += '</div>';
-      });
-    }
-
-    if (p.links && p.links.length > 0) {
-      html += '<div class="detail-links"><h4>Links</h4>';
-      p.links.forEach(function (link) {
-        if (link.url && link.url !== "#" && link.url.length > 0) {
-          html += '<div class="detail-link"><a href="' + link.url + '" target="_blank" title="' + link.url + '">' + link.label + '</a></div>';
-        } else {
-          html += '<div class="detail-link">' + link.label + ' (TBD)</div>';
-        }
-      });
-      html += '</div>';
-    }
-
-    html += '<div class="detail-actions"><button onclick="editProject()">Edit</button></div>';
-    panel.innerHTML = html;
-  }
-
-  function renderHeader() {
-    var header = document.getElementById("header");
-    header.innerHTML = "";
-    var current = new Date(minDate);
-    while (current < maxDate) {
-      var monthName = current.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-      var daysInMonth = new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate();
-      var nextMonth = new Date(current.getFullYear(), current.getMonth() + 1, 1);
-      var daysToNextMonth = Math.ceil(daysInRange(current, nextMonth) / daysInMonth) * daysInMonth;
-      var label = document.createElement("div");
-      label.className = "month-label";
-      label.textContent = monthName;
-      label.style.flex = daysToNextMonth / daysInRange(minDate, maxDate);
-      header.appendChild(label);
-      current = nextMonth;
-    }
-  }
-
-  function getStatusBadgeClass(status) {
-    if (status === "Needs Support") return "needs-support";
-    return "on-track";
-  }
-
-  function renderRows() {
-    var labels = document.getElementById("labels");
-    var bars = document.getElementById("bars");
-    labels.innerHTML = "";
-    bars.innerHTML = "";
-
-    if (viewMode === "pod") {
-      // Group by pod
-      var podNames = { "benefits-me": "Benefits / ME", "payer-global": "Payer & Global Experience", "insights": "Insights", "channel-partners": "Channel Partners", "other": "Other" };
-      var pods = {};
-      data.projects.forEach(function (p) {
-        var pod = p.pod || "other";
-        if (!pods[pod]) pods[pod] = [];
-        pods[pod].push(p);
-      });
-
-      Object.keys(pods).sort().forEach(function (podKey) {
-        var projects = pods[podKey];
-        var podLabel = document.createElement("div");
-        podLabel.className = "pod-group";
-        var toggle = document.createElement("span");
-        toggle.className = "pod-toggle";
-        toggle.textContent = expandedPods[podKey] ? "v" : ">";
-        toggle.onclick = function (e) { e.stopPropagation(); window.togglePod(podKey); };
-        podLabel.appendChild(toggle);
-        var podName = document.createElement("span");
-        podName.textContent = podNames[podKey] || podKey;
-        podName.style.cursor = "pointer";
-        podName.onclick = function () { window.togglePod(podKey); };
-        podLabel.appendChild(podName);
-        labels.appendChild(podLabel);
-
-        var podProjects = document.createElement("div");
-        podProjects.className = "pod-projects" + (expandedPods[podKey] ? " expanded" : "");
-
-        projects.forEach(function (project) {
-          var label = document.createElement("div");
-          label.className = "row project-nested";
-          var projName = document.createElement("div");
-          projName.className = "project";
-          var badge = document.createElement("span");
-          badge.className = "status-badge " + getStatusBadgeClass(project.status);
-          projName.appendChild(badge);
-          projName.appendChild(document.createTextNode(project.name));
-          projName.onclick = function () { selectProject(project); };
-          label.appendChild(projName);
-          podProjects.appendChild(label);
-        });
-        labels.appendChild(podProjects);
-      });
-
-      // Render bars for ALL projects (bars should always be visible on timeline)
-      Object.keys(pods).forEach(function (podKey) {
-        pods[podKey].forEach(function (project) {
-          renderProjectBar(project, bars);
-        });
-      });
-    } else {
-      // Flat view
-      data.projects.forEach(function (project) {
-        var label = document.createElement("div");
-        label.className = "row";
-        var projName = document.createElement("div");
-        projName.className = "project";
-        var badge = document.createElement("span");
-        badge.className = "status-badge " + getStatusBadgeClass(project.status);
-        projName.appendChild(badge);
-        projName.appendChild(document.createTextNode(project.name));
-        projName.onclick = function () { selectProject(project); };
-        label.appendChild(projName);
-        labels.appendChild(label);
-
-        renderProjectBar(project, bars);
-      });
-    }
-
-    var todayPercent = percentFromStart(today);
-    var timeline = document.getElementById("timeline");
-    var todayLine = timeline.querySelector(".today-line");
-    if (todayLine) todayLine.style.left = todayPercent + "%";
+    var attBox = document.getElementById("attention");
+    attBox.textContent = "";
+    if (!flags.length) attBox.appendChild(el("div", "empty", "Nothing flagged right now."));
     else {
-      todayLine = document.createElement("div");
-      todayLine.className = "today-line";
-      todayLine.style.left = todayPercent + "%";
-      timeline.appendChild(todayLine);
+      var wrap = el("div", "attention");
+      flags.forEach(function (f) {
+        var r = el("div", "attention-item");
+        var a = el("a", null, f.item.name);
+        a.href = "#" + f.item.id;
+        r.appendChild(a);
+        r.appendChild(el("span", "why", f.why));
+        wrap.appendChild(r);
+      });
+      attBox.appendChild(wrap);
     }
-  }
 
-  function renderProjectBar(project, barsContainer) {
-    var bar = document.createElement("div");
-    bar.className = "row";
-    var container = document.createElement("div");
-    container.className = "bar-container";
-
-    var projBar = document.createElement("div");
-    projBar.className = "project-bar " + (project.pod || "other");
-    projBar.textContent = project.name;
-    projBar.onclick = function (e) { e.stopPropagation(); selectProject(project); };
-    projBar.style.left = percentFromStart(project.startDate) + "%";
-    projBar.style.width = percentWidth(project.startDate, project.endDate) + "%";
-    container.appendChild(projBar);
-
-    (project.milestones || []).forEach(function (milestone) {
-      var msIndicator = document.createElement("div");
-      msIndicator.className = "milestone-indicator";
-      msIndicator.style.left = percentFromStart(milestone.date) + "%";
-      var tooltipText = milestone.name + " - " + formatDate(milestone.date) + " - " + (milestone.completed ? "Done" : "Upcoming");
-      msIndicator.title = tooltipText;
-      container.appendChild(msIndicator);
-    });
-
-    bar.appendChild(container);
-    barsContainer.appendChild(bar);
+    fill("active", active.map(activeCard), "Nothing in progress for this pod.");
+    renderTimeline();
+    fill("backlog", backlog.map(function (i, n) { return listCard(i, n + 1); }), "Backlog is empty for this pod.");
+    fill("done", done.map(function (i) { return listCard(i, 0, i.completed ? "Completed " + fmt(i.completed) : "Completed"); }), "Nothing completed yet. Projects move here once they reach the Complete stage.");
   }
 
   render();
