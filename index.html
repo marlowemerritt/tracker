@@ -28,13 +28,6 @@
   .chip { font: inherit; font-size: 13px; padding: 4px 12px; border-radius: 999px; border: 1px solid #cfcbc2; background: var(--card); color: var(--ink); cursor: pointer; }
   .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 8px; }
-  .stat { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
-  .stat:hover { border-color: #b9b5aa; }
-  .stat .n { font-size: 28px; font-weight: 700; line-height: 1.1; }
-  .stat .t { font-size: 13px; color: var(--muted); }
-  .stat.alert .n { color: #9b2f1f; }
-
   section { margin-top: 28px; }
   h2 { font-size: 16px; margin: 0 0 4px; }
   h2 .count { color: var(--muted); font-weight: 400; }
@@ -104,6 +97,48 @@
   .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 11px; font-weight: 700; color: var(--today); }
   .tl-legend { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 
+  .ongoing { display: grid; gap: 6px; }
+  .og-row { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+  .og-row .name { font-weight: 600; }
+  .og-row .note { color: var(--muted); flex: 1 1 240px; }
+  .og-row .links { margin: 0; padding: 0; border: 0; }
+  .kind { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
+  .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #e8e4f3; color: #4d3f7f; }
+  .kind.support { background: #fdebd9; color: #8a4a12; } .kind.other { background: #eeece6; color: #46453f; }
+  [hidden] { display: none !important; }
+  .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 20px; overflow-x: auto; }
+  .tab { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border: 0; background: none; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brand); }
+  .tab .badge { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 6px; border-radius: 999px; background: #eeece6; color: var(--ink); font-size: 12px; text-align: center; }
+  .tab .badge.alert { background: #fbe3df; color: #9b2f1f; }
+  section.first { margin-top: 0; margin-bottom: 20px; }
+
+  .adminbar { margin: -24px -20px 16px; position: sticky; top: 0; z-index: 20; background: #2b2a28; color: #fff; padding: 8px 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 13px; }
+  .adminbar[hidden] { display: none; }
+  .adminbar .msg { flex: 1 1 260px; color: #d8d5cc; }
+  .btn { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 6px; border: 1px solid #cfcbc2; background: var(--card); color: var(--ink); cursor: pointer; }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn.danger { color: #9b2f1f; border-color: #e3b5ac; }
+  .btn.small { padding: 2px 9px; font-size: 12px; }
+  .card-actions { margin-top: 10px; }
+
+  dialog { border: 0; border-radius: 12px; padding: 0; width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 24px); box-shadow: 0 12px 40px rgba(0,0,0,.25); color: var(--ink); }
+  dialog::backdrop { background: rgba(0,0,0,.4); }
+  dialog form { padding: 18px 20px; display: grid; gap: 12px; }
+  dialog h2 { margin: 0; font-size: 17px; }
+  .f { display: grid; gap: 4px; font-size: 12px; font-weight: 600; }
+  .f input, .f select, .f textarea { font: inherit; font-size: 13px; font-weight: 400; padding: 6px 8px; border: 1px solid #cfcbc2; border-radius: 6px; width: 100%; }
+  .f textarea { min-height: 56px; resize: vertical; }
+  .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .reps { display: grid; gap: 6px; }
+  .rep { display: grid; grid-template-columns: 140px 1fr auto auto; gap: 6px; align-items: center; }
+  .rep.link { grid-template-columns: 1fr 2fr auto; }
+  .rep input[type=text], .rep input[type=date], .rep input[type=url] { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; }
+  .rep label { font-size: 12px; font-weight: 400; white-space: nowrap; }
+  .dlg-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .dlg-actions .danger { margin-right: auto; }
+  .err { color: #9b2f1f; font-size: 13px; min-height: 1em; }
+
   footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
   footer p { margin: 0 0 6px; }
 
@@ -111,6 +146,7 @@
 </style>
 </head>
 <body>
+<div class="adminbar" id="adminbar" hidden></div>
 <div class="wrap">
   <header>
     <div>
@@ -122,42 +158,88 @@
 
   <div class="filters" id="filters" role="group" aria-label="Filter by pod"></div>
 
-  <div class="stats" id="stats"></div>
+  <div class="tabs" role="tablist" aria-label="Sections" id="tabs"></div>
 
-  <section id="attention-section">
-    <h2>Needs attention <span class="count" id="attention-count"></span></h2>
-    <p class="hint">Flagged by me, or automatically when an end date or milestone has passed without being closed out.</p>
-    <div id="attention"></div>
-  </section>
+  <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+    <section id="timeline-section" class="first">
+      <h2>Timeline</h2>
+      <p class="hint">Solid bars are active work, dashed bars are planned. Diamonds are milestones (filled when done). Select a bar to jump to its card.</p>
+      <div class="timeline"><div class="tl" id="tl"></div></div>
+    </section>
 
-  <section id="active-section">
-    <h2>In progress <span class="count" id="active-count"></span></h2>
-    <p class="hint">Ordered by priority. The bar shows how far each project has moved through its stages.</p>
-    <div class="grid" id="active"></div>
-  </section>
+    <section id="active-section">
+      <h2>Top priorities <span class="count" id="active-count"></span></h2>
+      <p class="hint">Ordered by priority. The bar shows how far each project has moved through its stages.</p>
+      <div class="grid" id="active"></div>
+    </section>
 
-  <section id="timeline-section">
-    <h2>Timeline</h2>
-    <p class="hint">Solid bars are active work, dashed bars are planned. Diamonds are milestones (filled when done). Select a bar to jump to its card.</p>
-    <div class="timeline"><div class="tl" id="tl"></div></div>
-  </section>
+    <section id="attention-section">
+      <h2>Needs attention <span class="count" id="attention-count"></span></h2>
+      <p class="hint">Flagged by me, or automatically when an end date or milestone has passed without being closed out.</p>
+      <div id="attention"></div>
+    </section>
 
-  <section id="backlog-section">
-    <h2>Up next (backlog) <span class="count" id="backlog-count"></span></h2>
-    <p class="hint">Queued or being scoped, in priority order. Nothing here has kicked off yet.</p>
-    <div class="backlog" id="backlog"></div>
-  </section>
+    <section id="ongoing-section">
+      <h2>Also on my plate <span class="count" id="ongoing-count"></span></h2>
+      <p class="hint">Smaller items and ongoing work with no start or end date: bugs, support, learning.</p>
+      <div class="ongoing" id="ongoing"></div>
+    </section>
+  </div>
 
-  <section id="done-section">
-    <h2>Completed <span class="count" id="done-count"></span></h2>
-    <div class="backlog" id="done"></div>
-  </section>
+  <div role="tabpanel" id="panel-backlog" aria-labelledby="tab-backlog" hidden>
+    <section id="backlog-section" class="first">
+      <h2>Up next (backlog) <span class="count" id="backlog-count"></span></h2>
+      <p class="hint">Queued or being scoped, in priority order. Nothing here has kicked off yet.</p>
+      <div class="backlog" id="backlog"></div>
+    </section>
+  </div>
+
+  <div role="tabpanel" id="panel-done" aria-labelledby="tab-done" hidden>
+    <section id="done-section" class="first">
+      <h2>Completed <span class="count" id="done-count"></span></h2>
+      <div class="backlog" id="done"></div>
+    </section>
+  </div>
 
   <footer>
     <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
     <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
   </footer>
 </div>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <form method="dialog" id="dlg-form">
+    <h2 id="dlg-title">Edit project</h2>
+    <label class="f">Name<input type="text" id="f-name" required></label>
+    <div class="f2">
+      <label class="f">Pod<select id="f-pod"></select></label>
+      <label class="f">List<select id="f-lane">
+        <option value="active">In progress</option><option value="backlog">Up next (backlog)</option><option value="done">Completed</option><option value="ongoing">Also on my plate (no dates)</option>
+      </select></label>
+    </div>
+    <div class="f2">
+      <label class="f">Priority (1 = highest)<input type="number" id="f-priority" min="1" step="1"></label>
+      <label class="f" id="w-kind">Type<select id="f-kind"></select></label>
+      <label class="f" id="w-status">Status<select id="f-status"></select></label>
+    </div>
+    <label class="f" id="w-stage">Stage<select id="f-stage"></select></label>
+    <div class="f2" id="w-dates">
+      <label class="f">Start date<input type="date" id="f-start"></label>
+      <label class="f">End date<input type="date" id="f-end"></label>
+    </div>
+    <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
+    <label class="f">Summary<textarea id="f-summary"></textarea></label>
+    <label class="f">Concern or ask (shows in Needs attention when filled)<textarea id="f-concern"></textarea></label>
+    <div class="f">Milestones<div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div></div>
+    <div class="f">Links<div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div></div>
+    <div class="err" id="f-err" role="alert"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="f-delete">Delete</button>
+      <button type="button" class="btn" id="f-cancel">Cancel</button>
+      <button type="submit" class="btn primary" id="f-save">Save</button>
+    </div>
+  </form>
+</dialog>
 
 <script id="tracker-data" type="application/json">
 {
@@ -255,7 +337,15 @@
 
 <script>
 (function () {
-  var DATA = JSON.parse(document.getElementById("tracker-data").textContent);
+  var PUBLISHED = document.getElementById("tracker-data").textContent;
+  var DATA = JSON.parse(PUBLISHED);
+  // Admin mode (?admin) edits a draft kept in this browser only; viewers always see the published JSON above.
+  var ADMIN = /[?&]admin(=|&|$)/.test(location.search);
+  var DRAFT_KEY = "tracker_admin_draft_v1";
+  if (ADMIN) {
+    try { var draft = localStorage.getItem(DRAFT_KEY); if (draft) DATA = JSON.parse(draft); } catch (e) { /* use published */ }
+  }
+  var KINDS = ["Bug", "Learning", "Support", "Other"];
   var STAGES = ["Awaiting kickoff", "Discovery", "Iteration", "Finalizing specs", "Development", "DQA", "Complete"];
   var STATUS_CLASS = { "On Track": "on-track", "Needs Support": "needs-support", "Awaiting review": "awaiting-review", "Blocked": "blocked" };
   var DAY = 86400000;
@@ -299,9 +389,11 @@
 
   function attentionFor(item) {
     var out = [];
+    if (item.lane === "ongoing") { if (item.concern) out.push(item.concern); return out; }
     if (item.lane !== "active") return out;
-    if (item.status === "Needs Support" || item.status === "Blocked") {
-      out.push(item.concern || (item.status === "Blocked" ? "Blocked. Details to be added." : "Flagged as needing support. Details to be added."));
+    if (item.concern) out.push(item.concern);
+    else if (item.status === "Needs Support" || item.status === "Blocked") {
+      out.push(item.status === "Blocked" ? "Blocked. Details to be added." : "Flagged as needing support. Details to be added.");
     }
     if (daysBetween(today, pd(item.end)) < 0) out.push("End date " + fmt(item.end) + " has passed and the project is still open.");
     (item.milestones || []).forEach(function (m) {
@@ -383,9 +475,46 @@
       card.appendChild(ul);
     }
 
+    if (item.concern) {
+      var cr = el("div", "row");
+      cr.appendChild(el("span", "k", "Concern or ask: "));
+      cr.appendChild(el("span", "warn", item.concern));
+      card.appendChild(cr);
+    }
+
     var links = linksBlock(item);
     if (links) card.appendChild(links);
+    addEditButton(card, item);
     return card;
+  }
+
+  function addEditButton(parent, item) {
+    if (!ADMIN) return;
+    var wrap = el("div", "card-actions");
+    var b = el("button", "btn small", "Edit");
+    b.type = "button";
+    b.onclick = function () { openEditor(item); };
+    wrap.appendChild(b);
+    parent.appendChild(wrap);
+  }
+
+  function ongoingRow(item) {
+    var row = el("div", "og-row");
+    row.id = item.id;
+    var kind = item.kind || "Other";
+    row.appendChild(el("span", "kind " + kind.toLowerCase(), kind.toUpperCase()));
+    row.appendChild(el("span", "name", item.name));
+    row.appendChild(el("span", "pod", podName(item.pod)));
+    if (item.summary) row.appendChild(el("span", "note", item.summary));
+    if (item.concern) row.appendChild(el("span", "warn", item.concern));
+    var links = linksBlock(item);
+    if (links) row.appendChild(links);
+    if (ADMIN) {
+      var b = el("button", "btn small", "Edit"); b.type = "button";
+      b.onclick = function () { openEditor(item); };
+      row.appendChild(b);
+    }
+    return row;
   }
 
   function listCard(item, rank, extra) {
@@ -406,8 +535,15 @@
       r.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end)));
       body.appendChild(r);
     }
+    if (item.concern) {
+      var cr = el("div", "row");
+      cr.appendChild(el("span", "k", "Concern or ask: "));
+      cr.appendChild(el("span", "warn", item.concern));
+      body.appendChild(cr);
+    }
     var links = linksBlock(item);
     if (links) body.appendChild(links);
+    addEditButton(body, item);
     card.appendChild(body);
     return card;
   }
@@ -417,6 +553,41 @@
     box.textContent = "";
     if (!nodes.length) { box.appendChild(el("div", "empty", emptyText)); return; }
     nodes.forEach(function (n) { box.appendChild(n); });
+  }
+
+  var TABS = [["overview", "Overview"], ["backlog", "Up next"], ["done", "Completed"]];
+  var currentTab = "overview";
+
+  function setTab(id) {
+    currentTab = id;
+    TABS.forEach(function (t) { document.getElementById("panel-" + t[0]).hidden = t[0] !== id; });
+    Array.prototype.forEach.call(document.getElementById("tabs").children, function (b) {
+      var on = b.dataset.tab === id;
+      b.setAttribute("aria-selected", String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+  }
+
+  function renderTabs(nActive, nFlags, nBacklog, nDone) {
+    var box = document.getElementById("tabs");
+    var counts = { overview: nFlags, backlog: nBacklog, done: nDone };
+    box.textContent = "";
+    TABS.forEach(function (t, n) {
+      var b = el("button", "tab", t[1]);
+      b.type = "button"; b.id = "tab-" + t[0]; b.dataset.tab = t[0];
+      b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "panel-" + t[0]);
+      if (t[0] === "overview" && nFlags > 0) b.appendChild(el("span", "badge alert", nFlags + " flagged"));
+      else if (t[0] !== "overview") b.appendChild(el("span", "badge", String(counts[t[0]])));
+      b.onclick = function () { setTab(t[0]); };
+      b.onkeydown = function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        var next = TABS[(n + d + TABS.length) % TABS.length][0];
+        setTab(next); document.getElementById("tab-" + next).focus();
+      };
+      box.appendChild(b);
+    });
+    setTab(currentTab);
   }
 
   function renderFilters() {
@@ -494,23 +665,16 @@
     var upd = pd(DATA.updated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     document.getElementById("updated").textContent = "Last updated " + upd;
     renderFilters();
+    renderAdminBar();
 
     var active = items("active").sort(byPriority);
     var backlog = items("backlog").sort(byPriority);
+    var ongoing = items("ongoing").sort(byPriority);
     var done = items("done").sort(function (a, b) { return (b.completed || "") < (a.completed || "") ? -1 : 1; });
     var flags = [];
-    active.forEach(function (i) { attentionFor(i).forEach(function (why) { flags.push({ item: i, why: why }); }); });
+    active.concat(ongoing).forEach(function (i) { attentionFor(i).forEach(function (why) { flags.push({ item: i, why: why }); }); });
 
-    var stats = document.getElementById("stats");
-    stats.textContent = "";
-    [["In progress", active.length, "#active-section", false], ["Needs attention", flags.length, "#attention-section", flags.length > 0],
-     ["Up next", backlog.length, "#backlog-section", false], ["Completed", done.length, "#done-section", false]].forEach(function (s) {
-      var a = el("a", "stat" + (s[3] ? " alert" : ""));
-      a.href = s[2];
-      a.appendChild(el("div", "n", String(s[1])));
-      a.appendChild(el("div", "t", s[0]));
-      stats.appendChild(a);
-    });
+    renderTabs(active.length, flags.length, backlog.length, done.length);
 
     document.getElementById("attention-count").textContent = "(" + flags.length + ")";
     document.getElementById("active-count").textContent = "(" + active.length + ")";
@@ -533,10 +697,168 @@
       attBox.appendChild(wrap);
     }
 
+    document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
+    document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
+    fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
     fill("active", active.map(activeCard), "Nothing in progress for this pod.");
     renderTimeline();
     fill("backlog", backlog.map(function (i, n) { return listCard(i, n + 1); }), "Backlog is empty for this pod.");
     fill("done", done.map(function (i) { return listCard(i, 0, i.completed ? "Completed " + fmt(i.completed) : "Completed"); }), "Nothing completed yet. Projects move here once they reach the Complete stage.");
+  }
+
+  function $(id) { return document.getElementById(id); }
+  function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  var editing = null;
+
+  function commit() {
+    DATA.updated = iso(today);
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(DATA));
+    render();
+  }
+
+  function renderAdminBar() {
+    var bar = $("adminbar");
+    bar.hidden = !ADMIN;
+    if (!ADMIN) return;
+    bar.textContent = "";
+    var dirty = JSON.stringify(DATA) !== JSON.stringify(JSON.parse(PUBLISHED));
+    bar.appendChild(el("span", "msg", dirty
+      ? "Admin mode. You have unpublished draft changes, saved in this browser only. Copy the JSON to publish them."
+      : "Admin mode. Edits are drafts saved in this browser only. Viewers see the published data."));
+    var add = el("button", "btn primary", "+ Add project"); add.type = "button"; add.onclick = function () { openEditor(null); };
+    var copy = el("button", "btn", "Copy data JSON"); copy.type = "button";
+    copy.onclick = function () {
+      var text = JSON.stringify(DATA, null, 2);
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () { copy.textContent = "Copied"; setTimeout(function () { copy.textContent = "Copy data JSON"; }, 1500); },
+        function () {
+          var a = el("a"); a.href = URL.createObjectURL(new Blob([text], { type: "application/json" })); a.download = "tracker-data.json"; a.click();
+        });
+    };
+    var reset = el("button", "btn", "Discard draft"); reset.type = "button";
+    reset.onclick = function () {
+      if (!confirm("Discard all draft changes and go back to the published data?")) return;
+      localStorage.removeItem(DRAFT_KEY); DATA = JSON.parse(PUBLISHED); render();
+    };
+    [add, copy, reset].forEach(function (b) { bar.appendChild(b); });
+  }
+
+  function opt(sel, value, label) { var o = el("option", null, label || value); o.value = value; sel.appendChild(o); }
+
+  function msRow(m) {
+    var r = el("div", "rep");
+    var d = el("input"); d.type = "date"; d.value = m.date || ""; d.setAttribute("aria-label", "Milestone date");
+    var n = el("input"); n.type = "text"; n.value = m.name || ""; n.placeholder = "Milestone name"; n.setAttribute("aria-label", "Milestone name");
+    var lab = el("label"); var c = el("input"); c.type = "checkbox"; c.checked = !!m.done; lab.appendChild(c); lab.appendChild(document.createTextNode(" Done"));
+    var x = el("button", "btn small", "Remove"); x.type = "button"; x.onclick = function () { r.remove(); };
+    [d, n, lab, x].forEach(function (e) { r.appendChild(e); });
+    $("f-ms").appendChild(r);
+  }
+
+  function linkRow(l) {
+    var r = el("div", "rep link");
+    var a = el("input"); a.type = "text"; a.value = l.label || ""; a.placeholder = "Label"; a.setAttribute("aria-label", "Link label");
+    var u = el("input"); u.type = "url"; u.value = l.url || ""; u.placeholder = "https://..."; u.setAttribute("aria-label", "Link URL");
+    var x = el("button", "btn small", "Remove"); x.type = "button"; x.onclick = function () { r.remove(); };
+    [a, u, x].forEach(function (e) { r.appendChild(e); });
+    $("f-links").appendChild(r);
+  }
+
+  function syncLaneFields() {
+    var lane = $("f-lane").value;
+    $("w-status").hidden = lane !== "active";
+    $("w-stage").hidden = lane === "done" || lane === "ongoing";
+    $("w-kind").hidden = lane !== "ongoing";
+    $("w-dates").hidden = lane === "ongoing";
+    $("w-completed").hidden = lane !== "done";
+  }
+
+  function openEditor(item) {
+    editing = item;
+    $("dlg-title").textContent = item ? "Edit project" : "Add project";
+    $("f-delete").hidden = !item;
+    var it = item || { lane: "active", pod: "other", status: "On Track", stage: "Awaiting kickoff", milestones: [], links: [] };
+    $("f-name").value = it.name || "";
+    $("f-pod").value = it.pod;
+    $("f-lane").value = it.lane;
+    $("f-priority").value = it.priority || "";
+    $("f-status").value = it.status || "On Track";
+    $("f-kind").value = it.kind || "Bug";
+    $("f-stage").value = it.stage || "Awaiting kickoff";
+    $("f-start").value = it.start || "";
+    $("f-end").value = it.end || "";
+    $("f-completed").value = it.completed || "";
+    $("f-summary").value = it.summary || "";
+    $("f-concern").value = it.concern || "";
+    $("f-ms").textContent = ""; (it.milestones || []).forEach(msRow);
+    $("f-links").textContent = ""; (it.links || []).forEach(linkRow);
+    $("f-err").textContent = "";
+    syncLaneFields();
+    $("dlg").showModal();
+  }
+
+  function uniqueId(name) {
+    var base = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "project";
+    var id = base, n = 2;
+    while (DATA.items.some(function (i) { return i.id === id; })) id = base + "-" + n++;
+    return id;
+  }
+
+  function saveEditor(ev) {
+    ev.preventDefault();
+    var err = $("f-err");
+    var name = $("f-name").value.trim(), lane = $("f-lane").value;
+    var start = $("f-start").value, end = $("f-end").value;
+    if (!name) { err.textContent = "Name is required."; return; }
+    if (lane === "active" && (!start || !end)) { err.textContent = "In-progress projects need a start and end date."; return; }
+    if (start && end && end < start) { err.textContent = "End date is before the start date."; return; }
+
+    var milestones = [], links = [];
+    Array.prototype.forEach.call($("f-ms").children, function (r) {
+      var f = r.querySelectorAll("input");
+      if (f[0].value && f[1].value.trim()) milestones.push({ name: f[1].value.trim(), date: f[0].value, done: f[2].checked });
+    });
+    var bad = false;
+    Array.prototype.forEach.call($("f-links").children, function (r) {
+      var f = r.querySelectorAll("input");
+      if (!f[1].value.trim()) return;
+      if (!safeUrl(f[1].value.trim())) { bad = true; return; }
+      links.push({ label: f[0].value.trim() || f[1].value.trim(), url: f[1].value.trim() });
+    });
+    if (bad) { err.textContent = "Link URLs must start with http:// or https://."; return; }
+
+    var it = editing || { id: uniqueId(name) };
+    var prio = parseInt($("f-priority").value, 10);
+    it.name = name; it.pod = $("f-pod").value; it.lane = lane;
+    it.priority = prio > 0 ? prio : DATA.items.filter(function (i) { return i.lane === lane; }).length + 1;
+    it.summary = $("f-summary").value.trim(); it.concern = $("f-concern").value.trim();
+    it.milestones = milestones; it.links = links;
+    if (start) it.start = start; else delete it.start;
+    if (end) it.end = end; else delete it.end;
+    if (lane === "ongoing") { it.kind = $("f-kind").value; delete it.status; delete it.stage; delete it.start; delete it.end; delete it.completed; }
+    else if (lane === "active") { it.status = $("f-status").value; it.stage = $("f-stage").value; delete it.completed; }
+    else if (lane === "backlog") { it.stage = $("f-stage").value; delete it.status; delete it.completed; }
+    else { it.stage = "Complete"; delete it.status; it.completed = $("f-completed").value || iso(today); }
+    if (!editing) DATA.items.push(it);
+    $("dlg").close();
+    currentTab = lane === "active" || lane === "ongoing" ? "overview" : lane === "backlog" ? "backlog" : "done";
+    commit();
+  }
+
+  if (ADMIN) {
+    Object.keys(DATA.pods).forEach(function (k) { opt($("f-pod"), k, DATA.pods[k]); });
+    KINDS.forEach(function (k) { opt($("f-kind"), k); });
+    Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s); });
+    ["Scoping"].concat(STAGES.slice(0, -1)).forEach(function (s) { opt($("f-stage"), s); });
+    $("f-lane").onchange = syncLaneFields;
+    $("add-ms").onclick = function () { msRow({}); };
+    $("add-link").onclick = function () { linkRow({}); };
+    $("f-cancel").onclick = function () { $("dlg").close(); };
+    $("f-delete").onclick = function () {
+      if (!editing || !confirm('Delete "' + editing.name + '"?')) return;
+      DATA.items = DATA.items.filter(function (i) { return i !== editing; });
+      $("dlg").close(); commit();
+    };
+    $("dlg-form").addEventListener("submit", saveEditor);
   }
 
   render();
