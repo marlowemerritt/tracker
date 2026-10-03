@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Priorities and pipeline - Marlowe Merritt</title>
+<title>Marlowe's priorities and pipeline</title>
 <style>
   :root {
     color-scheme: light;
@@ -98,6 +98,12 @@
   .tl-start::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--other); border: 3px solid var(--card); box-shadow: 0 0 0 2px var(--other); flex-shrink: 0; }
   .tl-start.benefits-me::before { box-shadow: 0 0 0 2px var(--benefits-me); } .tl-start.payer-global::before { background: var(--payer-global); box-shadow: 0 0 0 2px var(--payer-global); }
   .tl-start.insights::before { background: var(--insights); box-shadow: 0 0 0 2px var(--insights); } .tl-start.channel-partners::before { background: var(--channel-partners); box-shadow: 0 0 0 2px var(--channel-partners); }
+  .tl-dev { position: absolute; top: 15px; height: 10px; border-radius: 5px; border: 1px solid var(--c, var(--other)); background: repeating-linear-gradient(135deg, var(--c, var(--other)) 0 3px, transparent 3px 7px); opacity: .5; text-decoration: none; }
+  .tl-dev.benefits-me { --c: var(--benefits-me); } .tl-dev.payer-global { --c: var(--payer-global); }
+  .tl-dev.insights { --c: var(--insights); } .tl-dev.channel-partners { --c: var(--channel-partners); }
+  .card.with-eng { background: #f6f4ef; }
+  .card.with-eng .stepper i.done, .card.with-eng .stepper i.current { opacity: .55; }
+  .card.with-eng h3 { color: #55544f; }
   .tl-launch { position: absolute; top: 6px; height: 28px; width: 2px; background: var(--ink); }
   .tl-launch span { position: absolute; top: -1px; left: 3px; font-size: 10px; font-weight: 700; background: var(--card); padding: 0 3px; border-radius: 2px; white-space: nowrap; }
   .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
@@ -116,7 +122,7 @@
   .ftype.blocker, .ftype.overdue, .ftype.blocked { background: #fbe3df; color: #9b2f1f; }
   .ftype.risk, .ftype.needs-support { background: #fdebd9; color: #8a4a12; }
   .ftype.direction-change { background: #e8e4f3; color: #4d3f7f; }
-  .ftype.needs-decision { background: #dfeaf2; color: #1f4f6b; }
+  .ftype.decision-needed { background: #dfeaf2; color: #1f4f6b; }
   .fdate { color: var(--muted); font-size: 12px; }
   .flagrow { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin-top: 6px; font-size: 13px; }
   
@@ -155,13 +161,30 @@
   .dlg-actions .danger { margin-right: auto; }
   .err { color: #9b2f1f; font-size: 13px; min-height: 1em; }
 
-  .snapshot { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; }
+  .snapshot { background: #eef6f3; border: 1px solid #cfe3dc; border-left: 4px solid var(--brand); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; }
   .snapshot:empty { display: none; }
+  .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  .pri-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .seg { display: inline-flex; border: 1px solid #cfcbc2; border-radius: 6px; overflow: hidden; }
+  .seg button { font: inherit; font-size: 12px; padding: 4px 12px; border: 0; background: var(--card); color: var(--ink); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .card-head { display: block; }
+  .ch-stage { margin-top: 8px; }
+  .ch-dates { margin-top: 6px; }
+  .ch-side { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .toggle { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
+  .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .grid.rows { grid-template-columns: 1fr; gap: 10px; }
+  .grid.rows .card-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 1.5fr) auto; gap: 8px 22px; align-items: center; }
+  .grid.rows .ch-stage, .grid.rows .ch-dates { margin-top: 0; }
+  .grid.rows .ch-side { flex-direction: column; align-items: flex-end; margin-top: 0; }
+  .grid.rows .meta { margin-bottom: 0; }
+  .grid.rows .card h3 { margin-bottom: 4px; }
+  .grid.rows .ch-stage .stage-label { margin-bottom: 0; }
+  @media (max-width: 820px) { .grid.rows .card-head { grid-template-columns: 1fr; } .grid.rows .ch-side { flex-direction: row; align-items: center; margin-top: 8px; } }
   .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
   .snap-label { color: var(--muted); font-weight: 600; }
   .snap-note { color: var(--ink); }
-  .snap-counts { display: flex; gap: 16px; color: var(--muted); }
-  .snap-counts b { color: var(--ink); font-size: 15px; }
   .updated.stale { color: #9b2f1f; font-weight: 600; }
 
   .focus { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
@@ -171,6 +194,13 @@
   .focus-n { font-size: 22px; font-weight: 700; color: #a9a89f; line-height: 1.1; }
   .focus-note { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
+  #f-support { width: auto; margin-right: 6px; }
+  .recap-sec { margin-top: 16px; }
+  .recap-sec h3 { font-size: 14px; margin: 0 0 6px; }
+  .recap-sec .txt { white-space: pre-line; font-size: 14px; }
+  .recap-sec ol { margin: 0; padding-left: 20px; font-size: 14px; }
+  .recap-sec li { padding: 2px 0; }
+  .recap-week { font-size: 17px; margin: 4px 0 0; }
   .info { font-size: 13px; margin-top: 6px; }
   .info .k { color: var(--muted); }
   .rec { font-size: 13px; margin-top: 3px; color: #3a3935; }
@@ -188,7 +218,7 @@
   .pods-list li { padding: 2px 0; }
 
   .rep.flag { grid-template-columns: 130px 1fr 1fr auto; }
-  @media (max-width: 560px) { .rep.flag { grid-template-columns: 1fr; } .snapshot { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 560px) { .rep.flag { grid-template-columns: 1fr; } }
   footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
   footer p { margin: 0 0 6px; }
 
@@ -200,8 +230,8 @@
 <div class="wrap">
   <header>
     <div>
-      <h1>Priorities and pipeline</h1>
-      <div class="sub">What is on Marlowe Merritt's plate: what is in flight, what needs help, what is queued next, and what has shipped.</div>
+      <h1>Marlowe's priorities and pipeline</h1>
+      <div class="sub">What's on my plate: what's in flight, where I need help, what's queued next, and what I've shipped.</div>
     </div>
     <div class="updated" id="updated"></div>
   </header>
@@ -215,7 +245,7 @@
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
     <section id="timeline-section" class="first">
       <h2>Timeline</h2>
-      <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
+      <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A hatched line means handed off and with Eng; the bar is solid again when Design QA starts. A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
       <div class="timeline"><div class="tl" id="tl"></div></div>
     </section>
 
@@ -227,13 +257,14 @@
 
     <section id="active-section">
       <h2>Top priorities <span class="count" id="active-count"></span></h2>
-      <p class="hint">Ordered by priority. The bar shows how far each project has moved through its stages.</p>
-      <div class="grid" id="active"></div>
+      <p class="hint">In the order I am putting my time. The bar shows how far each project has moved through its stages.</p>
+      <div class="pri-tools" id="pri-tools"></div>
+      <div class="grid rows" id="active"></div>
     </section>
 
     <section id="attention-section">
-      <h2>Needs attention <span class="count" id="attention-count"></span></h2>
-      <p class="hint">Blockers, risks and open decisions I have flagged, plus anything overdue.</p>
+      <h2>Flags <span class="count" id="attention-count"></span></h2>
+      <p class="hint">Risks, blockers and decisions I need, plus anything overdue.</p>
       <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
       <div id="attention"></div>
     </section>
@@ -245,15 +276,29 @@
     </section>
   </div>
 
+  <div role="tabpanel" id="panel-recap" aria-labelledby="tab-recap" hidden>
+    <section class="first">
+      <h2>Weekly recap</h2>
+      <p class="hint">A snapshot of the week: what I got done, what is next, and what is going on across my teams. The latest week also shows my current priorities and flags.</p>
+      <div class="pri-tools" id="recap-tools"></div>
+      <div id="recap"></div>
+    </section>
+  </div>
+
   <div role="tabpanel" id="panel-backlog" aria-labelledby="tab-backlog" hidden>
     <section id="backlog-section" class="first">
-      <h2>Up next (backlog) <span class="count" id="backlog-count"></span></h2>
-      <p class="hint">Queued or being scoped, in priority order. Nothing here has kicked off yet.</p>
+      <h2>Up next <span class="count" id="backlog-count"></span></h2>
+      <p class="hint">Queued or being scoped, in the order I plan to pick them up. Nothing here has kicked off yet.</p>
       <div class="backlog" id="backlog"></div>
     </section>
   </div>
 
   <div role="tabpanel" id="panel-done" aria-labelledby="tab-done" hidden>
+    <section id="support-section" class="first" hidden>
+      <h2>Ongoing support <span class="count" id="support-count"></span></h2>
+      <p class="hint">Delivered work I am still supporting. Requests still come in from time to time.</p>
+      <div class="backlog" id="support"></div>
+    </section>
     <section id="done-section" class="first">
       <h2>Completed <span class="count" id="done-count"></span></h2>
       <div class="backlog" id="done"></div>
@@ -261,21 +306,21 @@
   </div>
 
   <div role="tabpanel" id="panel-log" aria-labelledby="tab-log" hidden>
-    <div id="log-tools" style="margin-bottom:12px" hidden><button type="button" class="btn small primary" id="add-log">+ Add log entry</button></div>
+    <div id="log-tools" style="margin-bottom:12px" hidden><button type="button" class="btn small primary" id="add-log">+ Add entry</button></div>
     <section class="first">
-      <h2>Incoming asks</h2>
-      <p class="hint">How each new request was handled: fits within scope, bumps something else, or declined.</p>
-      <div class="loglist" id="log-asks"></div>
-    </section>
-    <section>
-      <h2>Decisions</h2>
-      <p class="hint">Decisions made, and why.</p>
-      <div class="loglist" id="log-decisions"></div>
-    </section>
-    <section>
       <h2>Open questions</h2>
       <p class="hint">Questions I am working to get answered within a week.</p>
       <div class="loglist" id="log-questions"></div>
+    </section>
+    <section>
+      <h2>Decisions made</h2>
+      <p class="hint">What was decided, and why.</p>
+      <div class="loglist" id="log-decisions"></div>
+    </section>
+    <section>
+      <h2>New requests</h2>
+      <p class="hint">How I handled each new request: fits within scope, bumps something else, or declined.</p>
+      <div class="loglist" id="log-asks"></div>
     </section>
   </div>
 
@@ -289,6 +334,7 @@
 
   <footer>
     <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
+    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Overdue. Each one I raise comes with a recommendation.</p>
     <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
   </footer>
 </div>
@@ -327,10 +373,10 @@
   <form method="dialog" id="log-form">
     <h2 id="log-title">Log entry</h2>
     <div class="f2">
-      <label class="f">Type<select id="l-type"><option value="ask">Incoming ask</option><option value="decision">Decision</option><option value="question">Open question</option></select></label>
+      <label class="f">Type<select id="l-type"><option value="ask">New request</option><option value="decision">Decision</option><option value="question">Open question</option></select></label>
       <label class="f">Date<input type="date" id="l-date"></label>
     </div>
-    <label class="f"><span id="l-text-label">The ask</span><input type="text" id="l-text"></label>
+    <label class="f"><span id="l-text-label">The request</span><input type="text" id="l-text"></label>
     <div class="f2">
       <label class="f"><span id="l-who-label">From</span><input type="text" id="l-who"></label>
       <label class="f" id="w-lstate"><span id="l-state-label">Outcome</span><select id="l-state"></select></label>
@@ -345,11 +391,29 @@
   </form>
 </dialog>
 
+<dialog id="dlg-recap" aria-labelledby="recap-title">
+  <form method="dialog" id="recap-form">
+    <h2 id="recap-title">Weekly recap</h2>
+    <label class="f">Week ending (Friday)<input type="date" id="r-week"></label>
+    <label class="f">What I got done<textarea id="r-done"></textarea></label>
+    <label class="f">What's next<textarea id="r-next"></textarea></label>
+    <label class="f">Other teams and things going on<textarea id="r-other"></textarea></label>
+    <label class="f">Bandwidth and timeline changes<textarea id="r-bandwidth"></textarea></label>
+    <label class="f">Calendar check (focus blocks, meeting load)<textarea id="r-calendar"></textarea></label>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="r-delete">Delete</button>
+      <button type="button" class="btn" id="r-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
 <dialog id="dlg-pod" aria-labelledby="pod-title">
   <form method="dialog" id="pod-form">
     <h2 id="pod-title">Edit pod</h2>
     <label class="f">Goal for this pod<textarea id="p-goal"></textarea></label>
     <label class="f">PM and key partners<input type="text" id="p-partners"></label>
+    <label class="f">Status or note<textarea id="p-note"></textarea></label>
     <div class="dlg-actions">
       <button type="button" class="btn" id="p-cancel">Cancel</button>
       <button type="submit" class="btn primary">Save</button>
@@ -377,11 +441,15 @@
       <label class="f">Start date<input type="date" id="f-start"></label>
       <label class="f">Design deliverable date<input type="date" id="f-end"></label>
     </div>
-    <label class="f" id="w-launch">Launch date<input type="date" id="f-launch"></label>
+    <div class="f2" id="w-launch">
+      <label class="f">Design QA starts (back on my plate)<input type="date" id="f-dqastart"></label>
+      <label class="f">Launch date<input type="date" id="f-launch"></label>
+    </div>
     <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
+    <label class="f" id="w-support"><span><input type="checkbox" id="f-support"> Still supporting this (shows as Ongoing support)</span></label>
     <label class="f">Summary<textarea id="f-summary"></textarea></label>
     <label class="f">Next step<input type="text" id="f-next"></label>
-    <label class="f">Decision needed (shows in Needs attention until cleared)<input type="text" id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></label>
+    <label class="f">Decision needed (shows under Flags until cleared)<input type="text" id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></label>
     <div class="f">Flags (blockers, risks, direction changes - each needs a recommendation)<div class="reps" id="f-flags"></div><div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div></div>
     <div class="f">Milestones<div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div></div>
     <div class="f">Links<div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div></div>
@@ -396,7 +464,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-02",
+  "updated": "2026-10-03",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -410,12 +478,12 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 1,
+      "priority": 3,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
       "end": "2026-10-02",
-      "summary": "",
+      "summary": "Booking flow and restricted-market experience for global (T2) members. Handed to Eng; I answer questions as they come up until Design QA.",
       "milestones": [
         {
           "name": "Review with Eng",
@@ -432,6 +500,14 @@
         {
           "label": "Figma",
           "url": "https://www.figma.com/design/QwTzl25BwpBF0usRzcBYso/Global--T2-Direct-WPO-Scheduling?node-id=36-2&t=0dr75q8ge9MeYFGE-1"
+        },
+        {
+          "label": "Technical plan (Confluence)",
+          "url": "https://springhealth.atlassian.net/wiki/spaces/ENG/pages/4077159289/T2+Scheduling+Integration+WPO+API+Technical+Plan"
+        },
+        {
+          "label": "MG-54 (UX design)",
+          "url": "https://springhealth.atlassian.net/browse/MG-54"
         }
       ],
       "launch": "2026-11-02"
@@ -446,7 +522,7 @@
       "stage": "Iteration",
       "start": "2026-09-14",
       "end": "2026-10-09",
-      "summary": "",
+      "summary": "Full-year calendar of upcoming marketing campaigns with content previews and a single opt-in action for customers, plus an internal CSM view to manage participation. Nov 16 is the tentative release the pod is aiming for, so we can test and be ready for full customer release.",
       "milestones": [
         {
           "name": "Review with Marketing",
@@ -468,16 +544,47 @@
         {
           "label": "Figma",
           "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=106-26462&t=n0Wg9ixbdVON37jw-1"
+        },
+        {
+          "label": "PRD",
+          "url": "https://springhealth.atlassian.net/wiki/spaces/ENG/pages/4261281834/customer-value-spring-insights-campaign-planning+prd"
+        },
+        {
+          "label": "FigJam",
+          "url": "https://www.figma.com/board/EmkUKgoHbAd4LsoaM8vHMP/NECL-Campaign-Planning-Figjam?node-id=0-1"
+        },
+        {
+          "label": "Claude mocks",
+          "url": "https://claude.ai/design/p/cc8a7339-cfa3-4eee-85e8-1e22786cd4f0?file=Campaign+Planning.dc.html"
+        },
+        {
+          "label": "Roadmap idea (RD-12718)",
+          "url": "https://springhealth.atlassian.net/jira/polaris/projects/RD/ideas/view/d2a8daa4-8453-4fa4-a37e-3d248626ff63?selectedIssue=RD-12718"
+        },
+        {
+          "label": "Jira (RND-3739)",
+          "url": "https://springhealth.atlassian.net/browse/RND-3739"
+        },
+        {
+          "label": "Overview and feedback board (Figma)",
+          "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=101-21635"
+        },
+        {
+          "label": "Marketing member engagement plan (deck)",
+          "url": "https://docs.google.com/presentation/d/1eDUO-LW77jvLleji6abfp9rYJY3YowUBjGC3guoOz6g/edit"
         }
       ],
-      "launch": "2026-12-02",
+      "launch": "2026-11-16",
       "flags": [
         {
           "type": "Risk",
-          "text": "Competing priorities coming from Marketing and CSMs",
+          "text": "The tentative Nov 16 release (for testing ahead of full customer release) is at risk. Marketing and CSM reviews brought new learnings and conflicting views on the opt-in model, and I am ramping onto Insights alongside other pods.",
+          "rec": "Draft: lock placement and the opt-in model this week with Andrea and Ramya, then confirm whether Nov 16 holds or the first release is scoped down.",
           "date": "2026-10-02"
         }
-      ]
+      ],
+      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya.",
+      "decision": "Where should Campaign Planner live? Option 1: new top-level 'Communications' page (planner plus MAC). Option 2: new 'Communications' tab inside Resources (MAC moves there). Also: manage opt-in inside the planner or in Settings?"
     },
     {
       "id": "gottman-marketplace",
@@ -503,23 +610,34 @@
           "label": "Andy/Arpna Figma",
           "url": "https://www.figma.com/design/I8L1Z1TELyObB37104XsrJ/Marketplace?node-id=5448-26030&t=6B2nHYd1mflMBOPe-1"
         }
-      ]
+      ],
+      "next": "Design starts the week of Oct 12. The team sent updated assets for me to apply when I start."
     },
     {
       "id": "ibx-remediation",
       "name": "IBX Remediation Plan",
       "pod": "payer-global",
-      "lane": "backlog",
-      "priority": 1,
-      "stage": "Scoping",
-      "summary": "IBX escalation, scoping with team.",
+      "lane": "done",
+      "priority": 2,
+      "stage": "Complete",
+      "summary": "Shared quick design ideas for the IBX iteration. A light, low-scope request that came in as urgent, so it meant a context switch. The team is scoping next week and I am waiting on next steps.",
       "links": [
         {
           "label": "Escalation doc",
           "url": "https://docs.google.com/document/d/133gkVZtF1mLDJlFHpuYmUJ6hQKLRXhbdfQoeO8_aXJw/edit"
+        },
+        {
+          "label": "Shared design update (Slack)",
+          "url": "https://spring-health.slack.com/archives/C0AHXRY8RF0/p1790949270718469"
+        },
+        {
+          "label": "Original request (Slack)",
+          "url": "https://spring-health.slack.com/archives/C0C3UUQ6NNP/p1790613125689519"
         }
       ],
-      "milestones": []
+      "milestones": [],
+      "support": true,
+      "flags": []
     },
     {
       "id": "thoughtful-integration-into-marketplace",
@@ -527,7 +645,7 @@
       "pod": "channel-partners",
       "lane": "backlog",
       "priority": 3,
-      "summary": "",
+      "summary": "Still to be defined, so it stays in Up next until there is more clarity. Regina is keeping track as the previous team transitions it off.",
       "milestones": [],
       "links": [
         {
@@ -547,12 +665,16 @@
       "pod": "insights",
       "lane": "backlog",
       "priority": 3,
-      "summary": "",
+      "summary": "Self-serve business review (QBR) generation in Spring Insights to cut the time CSMs spend preparing them.",
       "milestones": [],
       "links": [
         {
           "label": "PRD",
           "url": "https://springhealth.atlassian.net/wiki/x/HoB9-Q"
+        },
+        {
+          "label": "FigJam (CS x CV AI workshop)",
+          "url": "https://www.figma.com/board/BdZULB88cW5ruecPz9mBzv/CS-x-CV--AI-Opportunities-Workshop?node-id=0-1"
         }
       ],
       "stage": "Awaiting kickoff"
@@ -595,8 +717,70 @@
       "end": "2026-10-16",
       "status": "On Track",
       "stage": "DQA"
+    },
+    {
+      "id": "insurance-filter-sales-demo",
+      "name": "Sales demo prototype: insurance filter",
+      "pod": "payer-global",
+      "lane": "done",
+      "priority": 1,
+      "summary": "Approved prototype used in sales demos. Requests come in now and then to change names and customers. Requester: Matt Vargeese, PM: Vera.",
+      "flags": [],
+      "milestones": [],
+      "links": [
+        {
+          "label": "Figma",
+          "url": "https://www.figma.com/design/2YAwkVgPFNqbbSphGM4l9D/Insurance-filter?node-id=118-23567"
+        }
+      ],
+      "support": true,
+      "stage": "Complete"
     }
-  ]
+  ],
+  "podInfo": {
+    "insights": {
+      "goal": "Extend Spring Insights reporting and AI foundations to show customers the value of their Spring Health benefit, drive right-sized utilization, and cut manual CS work.",
+      "partners": "PM: Andrea Rohan, EM: Guru Kalra"
+    },
+    "channel-partners": {
+      "goal": "",
+      "partners": "PM: Regina, EM: James Bruno"
+    },
+    "payer-global": {
+      "goal": "",
+      "partners": "PM: Regina, EM: Jasmine. Slack: #pod-global-and-payer-experience"
+    },
+    "benefits-me": {
+      "goal": "",
+      "partners": "PM: Vera, EM: Carie / Eden",
+      "note": "Moving off this pod once Design QA wraps. No other designer is assigned until the pod disperses, so I stay on as support until then."
+    }
+  },
+  "capacity": {
+    "level": "",
+    "note": "Wednesdays are my protected heads-down focus day. Monday, Tuesday and Thursday are meeting-heavy."
+  },
+  "log": [
+    {
+      "id": "l-gottman-bandwidth",
+      "type": "ask",
+      "date": "2026-10-03",
+      "text": "Gottman into Marketplace design",
+      "who": "Regina, James",
+      "state": "Fits within scope",
+      "detail": "Shared my bandwidth up front. I plan to pick this up the week of Oct 12, and the team already sent updated assets to apply."
+    },
+    {
+      "id": "l-necl-us-only",
+      "type": "question",
+      "date": "2026-10-03",
+      "text": "Should customers be able to opt in for US only, or by region?",
+      "who": "CSM review",
+      "state": "Open",
+      "detail": "MACs go out in English only today, and some customers turn comms off because they do not fit a global population. Regional customization is also requested."
+    }
+  ],
+  "recaps": []
 }
 </script>
 
@@ -625,7 +809,7 @@
   if (ADMIN) {
     try { var draft = localStorage.getItem(DRAFT_KEY); if (draft) DATA = prepare(JSON.parse(draft)); } catch (e) { /* use published */ }
   }
-  var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Needs decision"];
+  var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Decision needed"];
   var KINDS = ["Bug", "Learning", "Support", "Leadership", "Other"];
   var CAPACITY = ["Comfortable", "At capacity", "Over capacity"];
   var CAP_CLASS = { "Comfortable": "on-track", "At capacity": "needs-support", "Over capacity": "blocked" };
@@ -665,6 +849,9 @@
     return { text: Math.abs(left) + (left === -1 ? " day" : " days") + " past end date", warn: true };
   }
 
+  // Handed off to Eng: design is done, work continues in dev until Design QA brings it back.
+  function withEng(item) { return item.lane === "active" && item.stage === "Development"; }
+
   function launchText(item) {
     var d = daysBetween(today, pd(item.launch));
     var when = d > 1 ? d + " days away" : d === 1 ? "tomorrow" : d === 0 ? "today" : Math.abs(d) + (d === -1 ? " day ago" : " days ago");
@@ -682,12 +869,12 @@
 
   function attentionFor(item) {
     var out = (item.flags || []).map(function (f, idx) { return { type: f.type, text: f.text, rec: f.rec, date: f.date, manual: true, idx: idx }; });
-    if (item.decision && item.lane !== "done") out.push({ type: "Needs decision", text: item.decision });
+    if (item.decision && item.lane !== "done") out.push({ type: "Decision needed", text: item.decision });
     if (item.lane !== "active") return out;
     if (!out.length && (item.status === "Needs Support" || item.status === "Blocked")) {
       out.push({ type: item.status === "Blocked" ? "Blocked" : "Needs support", text: "Details to be added." });
     }
-    if (daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
+    if (!withEng(item) && daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
     (item.milestones || []).forEach(function (m) {
       if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push({ type: "Overdue", text: 'Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.' });
     });
@@ -720,8 +907,10 @@
     }
   }
 
+  function statusLabel(st) { return st.charAt(0) + st.slice(1).toLowerCase(); }
+
   function pill(status) {
-    return el("span", "pill " + (STATUS_CLASS[status] || "on-track"), status);
+    return el("span", "pill " + (STATUS_CLASS[status] || "on-track"), statusLabel(status));
   }
 
   function linksBlock(item) {
@@ -736,76 +925,126 @@
     return box;
   }
 
-  function activeCard(item) {
-    var card = el("article", "card " + item.pod);
-    card.id = item.id;
-    var top = el("div", "card-top");
-    var left = el("div");
-    left.appendChild(el("div", "prio", "PRIORITY " + item.priority));
-    left.appendChild(el("h3", null, item.name));
-    top.appendChild(left);
-    top.appendChild(pill(item.status));
-    card.appendChild(top);
+  var expanded = {};
+  var priView = "rows";
+  try { if (localStorage.getItem("tracker_pri_view") === "cards") priView = "cards"; } catch (e) { /* default rows */ }
 
+  function activeCard(item) {
+    var isOpen = !!expanded[item.id];
+    var card = el("article", "card " + item.pod + (withEng(item) ? " with-eng" : "") + (isOpen ? " open" : ""));
+    card.id = item.id;
+    var head = el("div", "card-head");
+
+    var main = el("div", "ch-main");
+    main.appendChild(el("div", "prio", "PRIORITY " + item.priority));
+    main.appendChild(el("h3", null, item.name));
     var meta = el("div", "meta");
     meta.appendChild(el("span", "pod", podName(item.pod)));
-    card.appendChild(meta);
+    if (withEng(item)) meta.appendChild(el("span", "pod", "With Eng"));
+    var seen = {};
+    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; meta.appendChild(ftypePill(f.type)); } });
+    main.appendChild(meta);
+    head.appendChild(main);
 
     var idx = Math.max(0, STAGES.indexOf(item.stage));
+    var st = el("div", "ch-stage");
     var stepper = el("div", "stepper");
     stepper.setAttribute("role", "img");
     stepper.setAttribute("aria-label", "Stage " + (idx + 1) + " of " + STAGES.length + ": " + item.stage);
     STAGES.forEach(function (s, n) { stepper.appendChild(el("i", n < idx ? "done" : n === idx ? "current" : "")); });
-    card.appendChild(stepper);
+    st.appendChild(stepper);
     var lbl = el("div", "stage-label");
     lbl.appendChild(document.createTextNode("Stage: "));
     lbl.appendChild(el("b", null, item.stage));
     lbl.appendChild(document.createTextNode(" (" + (idx + 1) + " of " + STAGES.length + ")"));
-    card.appendChild(lbl);
+    st.appendChild(lbl);
+    head.appendChild(st);
 
-    if (item.summary) card.appendChild(el("p", "summary", item.summary));
-    infoRows(card, item);
-
+    var dt = el("div", "ch-dates");
     var due = dueInfo(item);
     var dates = el("div", "row");
-    dates.appendChild(el("span", "k", "Design deliverable: "));
-    dates.appendChild(document.createTextNode(fmt(item.end) + " - "));
-    dates.appendChild(el("span", due.warn ? "warn" : null, due.text));
-    card.appendChild(dates);
+    if (withEng(item)) {
+      dates.appendChild(el("span", "k", "Handed to Eng: "));
+      dates.appendChild(document.createTextNode(fmt(item.end)));
+    } else {
+      dates.appendChild(el("span", "k", "Design deliverable: "));
+      dates.appendChild(document.createTextNode(fmt(item.end) + " - "));
+      dates.appendChild(el("span", due.warn ? "warn" : null, due.text));
+    }
+    dt.appendChild(dates);
+    if (item.dqaStart || withEng(item)) {
+      var qr = el("div", "row");
+      qr.appendChild(el("span", "k", "Design QA: "));
+      qr.appendChild(document.createTextNode(item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
+      dt.appendChild(qr);
+    }
     if (item.launch) {
       var lr = el("div", "row");
       lr.appendChild(el("span", "k", "Launch: "));
       lr.appendChild(document.createTextNode(launchText(item)));
-      card.appendChild(lr);
+      dt.appendChild(lr);
     }
+    head.appendChild(dt);
 
-    var next = nextMilestone(item);
-    if (next) {
-      var nm = el("div", "row");
-      nm.appendChild(el("span", "k", "Next milestone: "));
-      var late = daysBetween(today, pd(next.date)) < 0;
-      nm.appendChild(document.createTextNode(next.name + " (" + fmt(next.date) + ")"));
-      if (late) nm.appendChild(el("span", "warn", " - overdue"));
-      card.appendChild(nm);
+    var side = el("div", "ch-side");
+    side.appendChild(pill(item.status));
+    var tg = el("button", "toggle", isOpen ? "Hide details" : "Show details");
+    tg.type = "button";
+    tg.setAttribute("aria-expanded", String(isOpen));
+    tg.onclick = function () { expanded[item.id] = !isOpen; render(); };
+    side.appendChild(tg);
+    head.appendChild(side);
+    card.appendChild(head);
+
+    if (isOpen) {
+      var body = el("div", "card-body");
+      if (item.summary) body.appendChild(el("p", "summary", item.summary));
+      infoRows(body, item);
+      var next = nextMilestone(item);
+      if (next) {
+        var nm = el("div", "row");
+        nm.appendChild(el("span", "k", "Next milestone: "));
+        nm.appendChild(document.createTextNode(next.name + " (" + fmt(next.date) + ")"));
+        if (daysBetween(today, pd(next.date)) < 0) nm.appendChild(el("span", "warn", " - overdue"));
+        body.appendChild(nm);
+      }
+      if ((item.milestones || []).length) {
+        var ul = el("ul", "ms");
+        item.milestones.forEach(function (m) {
+          var li = el("li", m.done ? "done" : "");
+          li.appendChild(el("span", "box", m.done ? "\u2713" : "\u25CB"));
+          li.appendChild(el("span", null, m.name + " (" + fmt(m.date) + ")"));
+          ul.appendChild(li);
+        });
+        body.appendChild(ul);
+      }
+      flagRows(body, item);
+      var links = linksBlock(item);
+      if (links) body.appendChild(links);
+      card.appendChild(body);
     }
-
-    if ((item.milestones || []).length) {
-      var ul = el("ul", "ms");
-      item.milestones.forEach(function (m) {
-        var li = el("li", m.done ? "done" : "");
-        li.appendChild(el("span", "box", m.done ? "✓" : "○"));
-        li.appendChild(el("span", null, m.name + " (" + fmt(m.date) + ")"));
-        ul.appendChild(li);
-      });
-      card.appendChild(ul);
-    }
-
-    flagRows(card, item);
-
-    var links = linksBlock(item);
-    if (links) card.appendChild(links);
     addEditButton(card, item);
     return card;
+  }
+
+  function renderPriTools(active) {
+    var box = $("pri-tools");
+    box.textContent = "";
+    var seg = el("div", "seg");
+    seg.setAttribute("role", "group"); seg.setAttribute("aria-label", "Layout");
+    [["rows", "Rows"], ["cards", "Cards"]].forEach(function (v) {
+      var b = el("button", null, v[1]); b.type = "button";
+      b.setAttribute("aria-pressed", String(priView === v[0]));
+      b.onclick = function () { priView = v[0]; try { localStorage.setItem("tracker_pri_view", priView); } catch (e) { /* ignore */ } render(); };
+      seg.appendChild(b);
+    });
+    box.appendChild(seg);
+    var allOpen = active.length > 0 && active.every(function (i) { return expanded[i.id]; });
+    var ex = el("button", "toggle", allOpen ? "Collapse all" : "Expand all");
+    ex.type = "button";
+    ex.onclick = function () { active.forEach(function (i) { expanded[i.id] = !allOpen; }); render(); };
+    box.appendChild(ex);
+    $("active").className = "grid" + (priView === "rows" ? " rows" : "");
   }
 
   function addEditButton(parent, item) {
@@ -846,7 +1085,7 @@
   function listCard(item, rank, extra) {
     var card = el("article", "card " + item.pod);
     card.id = item.id;
-    card.appendChild(el("div", "rank", extra ? "✓" : String(rank)));
+    card.appendChild(el("div", "rank", extra ? (item.support ? "\u21BB" : "\u2713") : String(rank)));
     var body = el("div");
     body.appendChild(el("h3", null, item.name));
     var meta = el("div", "meta");
@@ -889,8 +1128,12 @@
     nodes.forEach(function (n) { box.appendChild(n); });
   }
 
-  var TABS = [["overview", "Overview"], ["backlog", "Up next"], ["done", "Completed"], ["log", "Log"], ["pods", "Pods"]];
+  var TABS = [["overview", "Overview"], ["recap", "Weekly recap"], ["backlog", "Up next"], ["done", "Completed"], ["log", "Decisions & questions"], ["pods", "Pods"]];
   var currentTab = "overview";
+  (function () {
+    var q = /[?&]tab=([a-z]+)/.exec(location.search);
+    if (q && TABS.some(function (t) { return t[0] === q[1]; })) currentTab = q[1];
+  })();
 
   function setTab(id) {
     currentTab = id;
@@ -906,18 +1149,19 @@
     var box = document.getElementById("tabs");
     var counts = { overview: nFlags, backlog: nBacklog, done: nDone };
     box.textContent = "";
-    TABS.forEach(function (t, n) {
+    var shown = TABS.filter(function (t) { return t[0] !== "recap" || ADMIN || recapList().length; });
+    shown.forEach(function (t, n) {
       var b = el("button", "tab", t[1]);
       b.type = "button"; b.id = "tab-" + t[0]; b.dataset.tab = t[0];
       b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "panel-" + t[0]);
-      if (t[0] === "overview" && nFlags > 0) b.appendChild(el("span", "badge alert", nFlags + " flagged"));
+      if (t[0] === "overview" && nFlags > 0) b.appendChild(el("span", "badge alert", nFlags + (nFlags === 1 ? " flag" : " flags")));
       else if (t[0] === "log" && nOpenQ > 0) b.appendChild(el("span", "badge alert", nOpenQ + " open"));
       else if (t[0] === "backlog" || t[0] === "done") b.appendChild(el("span", "badge", String(counts[t[0]])));
       b.onclick = function () { setTab(t[0]); };
       b.onkeydown = function (e) {
         var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
         if (!d) return;
-        var next = TABS[(n + d + TABS.length) % TABS.length][0];
+        var next = shown[(n + d + shown.length) % shown.length][0];
         setTab(next); document.getElementById("tab-" + next).focus();
       };
       box.appendChild(b);
@@ -949,11 +1193,14 @@
     tl.style.paddingLeft = "";
 
     var starts = rows.map(function (i) { return pd(i.start); }).concat([today]);
-    var ends = rows.map(function (i) { return pd(i.launch || i.end || i.start); }).concat([today]);
+    var ends = rows.map(function (i) { return pd(i.launch || i.dqaStart || i.end || i.start); }).concat([today]);
     var min = new Date(Math.min.apply(null, starts) - 7 * DAY);
     var max = new Date(Math.max.apply(null, ends) + 14 * DAY);
-    var span = max - min;
-    function pct(d) { return ((d - min) / span) * 100; }
+    // Weekends are skipped so the chart reads in working days.
+    var base = new Date(min.getFullYear(), min.getMonth(), min.getDate() - ((min.getDay() + 6) % 7));
+    function bx(dt) { var days = Math.round((dt - base) / DAY), wk = Math.floor(days / 7); return wk * 5 + Math.min(days - wk * 7, 5); }
+    var x0 = bx(min), span = bx(max) - x0;
+    function pct(dt) { return ((bx(dt) - x0) / span) * 100; }
 
     var head = el("div", "tl-head");
     var m = new Date(min.getFullYear(), min.getMonth() + 1, 1);
@@ -976,7 +1223,7 @@
       name.appendChild(el("span", null, item.name));
       row.appendChild(name);
       if (item.end) {
-        var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : item.stage);
+        var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : withEng(item) ? "Design" : item.stage);
         bar.href = "#" + item.id;
         bar.style.left = pct(pd(item.start)) + "%";
         bar.style.width = Math.max(1, pct(pd(item.end)) - pct(pd(item.start))) + "%";
@@ -989,6 +1236,31 @@
         dot.title = item.name + ": starts " + fmt(item.start) + ", design handoff TBD";
         dot.appendChild(el("span", null, "Starts " + fmt(item.start) + " - handoff TBD"));
         row.appendChild(dot);
+      }
+      var devTo = item.dqaStart || item.launch;
+      if (item.end && devTo && item.lane === "active" && pd(devTo) > pd(item.end)) {
+        var dev = el("div", "tl-dev " + item.pod);
+        dev.style.left = pct(pd(item.end)) + "%";
+        dev.style.width = Math.max(0.5, pct(pd(devTo)) - pct(pd(item.end))) + "%";
+        dev.title = item.name + ": with Eng " + fmt(item.end) + " to " + fmt(devTo);
+        row.appendChild(dev);
+      }
+      if (item.dqaStart && item.lane === "active") {
+        if (item.launch && pd(item.launch) > pd(item.dqaStart)) {
+          var qb = el("a", "tl-bar " + item.pod, "Design QA");
+          qb.href = "#" + item.id;
+          qb.style.left = pct(pd(item.dqaStart)) + "%";
+          qb.style.width = Math.max(1, pct(pd(item.launch)) - pct(pd(item.dqaStart))) + "%";
+          qb.title = item.name + ": Design QA " + fmt(item.dqaStart) + " to " + fmt(item.launch);
+          row.appendChild(qb);
+        } else {
+          var qd = el("a", "tl-start " + item.pod);
+          qd.href = "#" + item.id;
+          qd.style.left = pct(pd(item.dqaStart)) + "%";
+          qd.title = item.name + ": Design QA starts " + fmt(item.dqaStart);
+          qd.appendChild(el("span", null, "Design QA " + fmt(item.dqaStart)));
+          row.appendChild(qd);
+        }
       }
       if (item.launch) {
         var fl = el("div", "tl-launch");
@@ -1030,15 +1302,15 @@
 
     var openQ = (DATA.log || []).filter(function (e) { return e.type === "question" && e.state !== "Answered"; }).length;
     renderTabs(flags.length, backlog.length, done.length, openQ);
-    renderSnapshot(active.length, flags.length, backlog.length);
+    renderSnapshot();
     renderFocus();
     renderLog();
     renderPods();
+    renderRecap();
 
     document.getElementById("attention-count").textContent = "(" + flags.length + ")";
     document.getElementById("active-count").textContent = "(" + active.length + ")";
     document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
-    document.getElementById("done-count").textContent = "(" + done.length + ")";
 
     var attBox = document.getElementById("attention");
     attBox.textContent = "";
@@ -1074,32 +1346,33 @@
     document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
     fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
+    renderPriTools(active);
     fill("active", active.map(activeCard), "Nothing in progress for this pod.");
     renderTimeline();
     fill("backlog", backlog.map(function (i, n) { return listCard(i, n + 1); }), "Backlog is empty for this pod.");
-    fill("done", done.map(function (i) { return listCard(i, 0, i.completed ? "Completed " + fmt(i.completed) : "Completed"); }), "Nothing completed yet. Projects move here once they reach the Complete stage.");
+    var supporting = done.filter(function (i) { return i.support; });
+    var finished = done.filter(function (i) { return !i.support; });
+    $("support-section").hidden = !supporting.length;
+    $("done-section").className = supporting.length ? "" : "first";
+    $("support-count").textContent = "(" + supporting.length + ")";
+    $("done-count").textContent = "(" + finished.length + ")";
+    fill("support", supporting.map(function (i) { return listCard(i, 0, "Ongoing support"); }), "");
+    fill("done", finished.map(function (i) { return listCard(i, 0, i.completed ? "Completed " + fmt(i.completed) : "Completed"); }), "Nothing completed yet. Projects move here once they reach the Complete stage.");
   }
 
-  function renderSnapshot(nActive, nFlags, nBacklog) {
+  function renderSnapshot() {
     var box = $("snapshot");
     box.textContent = "";
     var cap = DATA.capacity;
-    if (cap && cap.level) {
+    if (cap && (cap.level || cap.note)) {
       var c = el("div", "snap-cap");
-      c.appendChild(el("span", "snap-label", "Capacity"));
-      c.appendChild(el("span", "pill " + (CAP_CLASS[cap.level] || "on-track"), cap.level));
+      c.appendChild(el("span", "snap-label", cap.level ? "Capacity" : "My time"));
+      if (cap.level) c.appendChild(el("span", "pill " + (CAP_CLASS[cap.level] || "on-track"), cap.level));
       if (cap.note) c.appendChild(el("span", "snap-note", cap.note));
       box.appendChild(c);
     } else if (ADMIN) {
       box.appendChild(el("div", "snap-cap snap-label", "Capacity not set. Use Weekly settings."));
-    } else {
-      box.appendChild(el("div"));
     }
-    var n = el("div", "snap-counts");
-    [[nActive, "in progress"], [nFlags, "flagged"], [nBacklog, "up next"]].forEach(function (p) {
-      var sp = el("span"); sp.appendChild(el("b", null, String(p[0]))); sp.appendChild(document.createTextNode(" " + p[1])); n.appendChild(sp);
-    });
-    box.appendChild(n);
   }
 
   function renderFocus() {
@@ -1151,7 +1424,7 @@
     $("log-tools").hidden = !ADMIN;
     function of(t) { return log.filter(function (e) { return e.type === t; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; }); }
     var qs = of("question").sort(function (a, b) { return (a.state === "Answered") - (b.state === "Answered"); });
-    fill("log-asks", of("ask").map(logRow), "No asks logged yet.");
+    fill("log-asks", of("ask").map(logRow), "No requests logged yet.");
     fill("log-decisions", of("decision").map(logRow), "No decisions logged yet.");
     fill("log-questions", qs.map(logRow), "No open questions.");
   }
@@ -1165,7 +1438,7 @@
       var card = el("article", "card " + k);
       card.appendChild(el("h3", null, podName(k)));
       var pi = info[k] || {};
-      [["Goal: ", pi.goal], ["PM and partners: ", pi.partners]].forEach(function (p) {
+      [["Goal: ", pi.goal], ["PM and partners: ", pi.partners], ["Note: ", pi.note]].forEach(function (p) {
         if (!p[1]) return;
         var r = el("div", "info"); r.appendChild(el("span", "k", p[0])); r.appendChild(document.createTextNode(p[1])); card.appendChild(r);
       });
@@ -1195,14 +1468,16 @@
     var L = [];
     var long = today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     L.push("Weekly update - " + long);
-    if (DATA.capacity && DATA.capacity.level) L.push("Capacity: " + DATA.capacity.level + (DATA.capacity.note ? " - " + DATA.capacity.note : ""));
+    if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push((DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
     var focus = (DATA.focus || []).map(function (f) { return { item: DATA.items.filter(function (i) { return i.id === f.id; })[0], note: f.note }; }).filter(function (f) { return f.item; });
     if (focus.length) { L.push("", "Focus this week:"); focus.forEach(function (f, n) { L.push((n + 1) + ". " + f.item.name + (f.note ? " - " + f.note : "")); }); }
+    var rc = recapList()[0];
+    if (rc) RECAP_NOTES.slice(0, 2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var active = DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority);
     L.push("", "In progress:");
     if (!active.length) L.push("- None");
     active.forEach(function (i) {
-      L.push("- " + i.name + " (" + i.stage + ", " + i.status + "), design deliverable " + fmt(i.end) + (i.launch ? ", launch " + fmt(i.launch) : ""));
+      L.push("- " + i.name + " (" + i.stage + ", " + i.status + "), " + (withEng(i) ? "handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") : "design deliverable " + fmt(i.end)) + (i.launch ? ", launch " + fmt(i.launch) : ""));
       if (i.next) L.push("    Next step: " + i.next);
     });
     var flags = [];
@@ -1213,17 +1488,99 @@
     function recent(t) { return (DATA.log || []).filter(function (e) { return e.type === t && daysBetween(pd(e.date), today) <= 7; }); }
     var dec = recent("decision"), asks = recent("ask");
     if (dec.length) { L.push("", "Decisions made:"); dec.forEach(function (e) { L.push("- " + e.text + (e.detail ? " (" + e.detail + ")" : "")); }); }
-    if (asks.length) { L.push("", "New asks and how I handled them:"); asks.forEach(function (e) { L.push("- " + e.text + (e.state ? " - " + e.state : "") + (e.detail ? " (" + e.detail + ")" : "")); }); }
+    if (asks.length) { L.push("", "New requests and how I handled them:"); asks.forEach(function (e) { L.push("- " + e.text + (e.state ? " - " + e.state : "") + (e.detail ? " (" + e.detail + ")" : "")); }); }
     var openQ = (DATA.log || []).filter(function (e) { return e.type === "question" && e.state !== "Answered"; });
     if (openQ.length) { L.push("", "Open questions:"); openQ.forEach(function (e) { L.push("- " + e.text + (e.who ? " (" + e.who + ")" : "")); }); }
+    if (rc) RECAP_NOTES.slice(2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var done = DATA.items.filter(function (i) { return i.lane === "done" && i.completed && daysBetween(pd(i.completed), today) <= 7; });
     if (done.length) { L.push("", "Completed this week:"); done.forEach(function (i) { L.push("- " + i.name); }); }
     return L.join("\n");
   }
 
+  var recapWeek = null, editingRecap = null;
+  function recapList() { return (DATA.recaps || []).slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; }); }
+  function lastFriday() {
+    var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    while (dt.getDay() !== 5) dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() - 1);
+    return iso(dt);
+  }
+  var RECAP_NOTES = [["done", "What I got done"], ["next", "What's next"], ["other", "Other teams and things going on"], ["bandwidth", "Bandwidth and timeline changes"], ["calendar", "Calendar check"]];
+
+  function recapSection(title, node) {
+    var sec = el("div", "recap-sec");
+    sec.appendChild(el("h3", null, title));
+    sec.appendChild(node);
+    return sec;
+  }
+
+  function renderRecap() {
+    var list = recapList();
+    var tools = $("recap-tools"), box = $("recap");
+    tools.textContent = ""; box.textContent = "";
+    if (!recapWeek || !list.some(function (r) { return r.week === recapWeek; })) recapWeek = list.length ? list[0].week : null;
+    if (list.length > 1) {
+      var sel = el("select"); sel.setAttribute("aria-label", "Week");
+      list.forEach(function (r) { opt(sel, r.week, "Week ending " + fmt(r.week)); });
+      sel.value = recapWeek;
+      sel.onchange = function () { recapWeek = sel.value; renderRecap(); };
+      tools.appendChild(sel);
+    }
+    if (ADMIN) {
+      var nw = el("button", "btn small primary", "+ New week"); nw.type = "button"; nw.onclick = function () { openRecap(null); };
+      tools.appendChild(nw);
+      if (recapWeek) {
+        var ed = el("button", "btn small", "Edit this week"); ed.type = "button";
+        ed.onclick = function () { openRecap(list.filter(function (r) { return r.week === recapWeek; })[0]); };
+        tools.appendChild(ed);
+      }
+    }
+    if (!recapWeek) { box.appendChild(el("div", "empty", "No weekly recap posted yet.")); return; }
+    var r = list.filter(function (x) { return x.week === recapWeek; })[0];
+    var latest = list[0].week === r.week;
+    box.appendChild(el("h3", "recap-week", "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })));
+
+    if (latest) {
+      var ol = el("ol");
+      DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
+        ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
+      });
+      if (ol.children.length) box.appendChild(recapSection("Priorities", ol));
+    }
+    RECAP_NOTES.forEach(function (n) { if (r[n[0]]) box.appendChild(recapSection(n[1], el("div", "txt", r[n[0]]))); });
+
+    var decisions = (DATA.log || []).filter(function (e) {
+      var back = daysBetween(pd(e.date), pd(r.week));
+      return e.type === "decision" && back >= 0 && back <= 6;
+    });
+    if (decisions.length) {
+      var dl = el("ul", "ms");
+      decisions.forEach(function (e) { dl.appendChild(el("li", null, e.text + (e.detail ? " (" + e.detail + ")" : ""))); });
+      box.appendChild(recapSection("Decisions made", dl));
+    }
+    if (latest) {
+      var fl = [];
+      DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + f.text + (f.rec ? " Recommendation: " + f.rec : "")); }); });
+      if (fl.length) {
+        var fu = el("ul", "ms");
+        fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
+        box.appendChild(recapSection("Flags", fu));
+      }
+    }
+  }
+
+  function openRecap(rc) {
+    editingRecap = rc;
+    $("recap-title").textContent = rc ? "Edit weekly recap" : "New weekly recap";
+    $("r-delete").hidden = !rc;
+    var r = rc || { week: lastFriday() };
+    $("r-week").value = r.week;
+    RECAP_NOTES.forEach(function (n) { $("r-" + n[0]).value = r[n[0]] || ""; });
+    $("dlg-recap").showModal();
+  }
+
   var editingLog = null, editingPod = null;
   var STATE_OPTS = { ask: ["Fits within scope", "Bumps something else", "Declined"], decision: [], question: ["Open", "Answered"] };
-  var LOG_LABELS = { ask: ["The ask", "From", "Outcome", "Tradeoff or rationale"], decision: ["The decision", "Decided with", "", "Rationale"], question: ["The question", "Asked of", "Status", "Answer"] };
+  var LOG_LABELS = { ask: ["The request", "From", "Outcome", "Tradeoff or rationale"], decision: ["The decision", "Decided with", "", "Rationale"], question: ["The question", "Asked of", "Status", "Answer"] };
 
   function syncLogFields() {
     var t = $("l-type").value, lb = LOG_LABELS[t];
@@ -1249,7 +1606,7 @@
     editingPod = key;
     var pi = (DATA.podInfo || {})[key] || {};
     $("pod-title").textContent = "Edit pod: " + podName(key);
-    $("p-goal").value = pi.goal || ""; $("p-partners").value = pi.partners || "";
+    $("p-goal").value = pi.goal || ""; $("p-partners").value = pi.partners || ""; $("p-note").value = pi.note || "";
     $("dlg-pod").showModal();
   }
 
@@ -1351,6 +1708,7 @@
     $("w-dates").hidden = lane === "ongoing";
     $("w-launch").hidden = lane === "ongoing";
     $("w-completed").hidden = lane !== "done";
+    $("w-support").hidden = lane !== "done";
   }
 
   function openEditor(item, toLane) {
@@ -1366,9 +1724,11 @@
     $("f-kind").value = it.kind || "Bug";
     $("f-stage").value = STAGES.indexOf(it.stage) > -1 || (it.stage === "Scoping" && !toLane) ? it.stage : "Awaiting kickoff";
     $("f-launch").value = it.launch || "";
+    $("f-dqastart").value = it.dqaStart || "";
     $("f-start").value = it.start || (toLane ? iso(today) : "");
     $("f-end").value = it.end || "";
     $("f-completed").value = it.completed || "";
+    $("f-support").checked = !!it.support;
     $("f-summary").value = it.summary || "";
     $("f-next").value = it.next || ""; $("f-decision").value = it.decision || "";
     $("f-flags").textContent = ""; (it.flags || []).forEach(flagRow);
@@ -1429,14 +1789,16 @@
     if (dc) it.decision = dc; else delete it.decision;
     delete it.concern;
     it.milestones = milestones; it.links = links;
-    var launch = $("f-launch").value;
+    var launch = $("f-launch").value, dqaStart = $("f-dqastart").value;
     if (launch) it.launch = launch; else delete it.launch;
+    if (dqaStart) it.dqaStart = dqaStart; else delete it.dqaStart;
     if (start) it.start = start; else delete it.start;
     if (end) it.end = end; else delete it.end;
-    if (lane === "ongoing") { it.kind = $("f-kind").value; delete it.status; delete it.stage; delete it.start; delete it.end; delete it.launch; delete it.completed; }
+    if (lane === "ongoing") { it.kind = $("f-kind").value; delete it.status; delete it.stage; delete it.start; delete it.end; delete it.launch; delete it.dqaStart; delete it.completed; }
     else if (lane === "active") { it.status = $("f-status").value; it.stage = $("f-stage").value; delete it.completed; }
     else if (lane === "backlog") { it.stage = $("f-stage").value; delete it.status; delete it.completed; }
     else { it.stage = "Complete"; delete it.status; it.completed = $("f-completed").value || iso(today); }
+    if (lane === "done" && $("f-support").checked) it.support = true; else delete it.support;
     if (!editing) DATA.items.push(it);
     renumber(DATA, lane, it);
     if (oldLane && oldLane !== lane) renumber(DATA, oldLane, null);
@@ -1448,7 +1810,7 @@
   if (ADMIN) {
     Object.keys(DATA.pods).forEach(function (k) { opt($("f-pod"), k, DATA.pods[k]); });
     KINDS.forEach(function (k) { opt($("f-kind"), k); });
-    Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s); });
+    Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s, statusLabel(s)); });
     ["Scoping"].concat(STAGES.slice(0, -1)).forEach(function (s) { opt($("f-stage"), s); });
     $("f-lane").onchange = syncLaneFields;
     $("add-flagrow").onclick = function () { flagRow({}); };
@@ -1487,7 +1849,8 @@
     $("settings-form").addEventListener("submit", function (ev) {
       ev.preventDefault();
       var lvl = $("s-cap").value;
-      if (lvl) DATA.capacity = { level: lvl, note: $("s-capnote").value.trim() }; else delete DATA.capacity;
+      var capNote = $("s-capnote").value.trim();
+      if (lvl || capNote) DATA.capacity = { level: lvl, note: capNote }; else delete DATA.capacity;
       DATA.focus = [];
       Array.prototype.forEach.call($("s-focus").children, function (r) {
         var id = r.querySelector("select").value;
@@ -1516,11 +1879,27 @@
       $("dlg-log").close(); currentTab = "log"; commit();
     });
 
+    $("r-cancel").onclick = function () { $("dlg-recap").close(); };
+    $("r-delete").onclick = function () {
+      if (!editingRecap || !confirm("Delete this weekly recap?")) return;
+      DATA.recaps = DATA.recaps.filter(function (r) { return r !== editingRecap; });
+      $("dlg-recap").close(); commit();
+    };
+    $("recap-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var r = editingRecap || {};
+      r.week = $("r-week").value || lastFriday();
+      RECAP_NOTES.forEach(function (n) { var v = $("r-" + n[0]).value.trim(); if (v) r[n[0]] = v; else delete r[n[0]]; });
+      if (!editingRecap) (DATA.recaps = DATA.recaps || []).push(r);
+      recapWeek = r.week;
+      $("dlg-recap").close(); currentTab = "recap"; commit();
+    });
+
     $("p-cancel").onclick = function () { $("dlg-pod").close(); };
     $("pod-form").addEventListener("submit", function (ev) {
       ev.preventDefault();
       DATA.podInfo = DATA.podInfo || {};
-      DATA.podInfo[editingPod] = { goal: $("p-goal").value.trim(), partners: $("p-partners").value.trim() };
+      DATA.podInfo[editingPod] = { goal: $("p-goal").value.trim(), partners: $("p-partners").value.trim(), note: $("p-note").value.trim() };
       $("dlg-pod").close(); currentTab = "pods"; commit();
     });
   }
