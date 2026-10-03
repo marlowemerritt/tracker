@@ -111,6 +111,15 @@
   .kind { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
   .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #e8e4f3; color: #4d3f7f; }
   .kind.support { background: #fdebd9; color: #8a4a12; } .kind.other { background: #eeece6; color: #46453f; }
+  .ftype { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; white-space: nowrap; text-transform: uppercase; background: #eeece6; color: #46453f; }
+  .ftype.blocker, .ftype.overdue, .ftype.blocked { background: #fbe3df; color: #9b2f1f; }
+  .ftype.risk, .ftype.needs-support { background: #fdebd9; color: #8a4a12; }
+  .ftype.direction-change { background: #e8e4f3; color: #4d3f7f; }
+  .ftype.needs-decision { background: #dfeaf2; color: #1f4f6b; }
+  .fdate { color: var(--muted); font-size: 12px; }
+  .flagrow { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin-top: 6px; font-size: 13px; }
+  .rep.flag { grid-template-columns: 150px 1fr auto; }
+  .rep.flag select { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; }
   [hidden] { display: none !important; }
   .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 20px; flex-wrap: wrap; }
   .tab { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border: 0; background: none; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
@@ -181,7 +190,8 @@
 
     <section id="attention-section">
       <h2>Needs attention <span class="count" id="attention-count"></span></h2>
-      <p class="hint">Flagged by me, or automatically when an end date or milestone has passed without being closed out.</p>
+      <p class="hint">Blockers, risks and open decisions I have flagged, plus anything overdue.</p>
+      <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
       <div id="attention"></div>
     </section>
 
@@ -213,6 +223,19 @@
   </footer>
 </div>
 
+<dialog id="dlg-flag" aria-labelledby="flag-title">
+  <form method="dialog" id="flag-form">
+    <h2 id="flag-title">Add flag</h2>
+    <label class="f">Project<select id="ff-item"></select></label>
+    <label class="f">Type<select id="ff-type"></select></label>
+    <label class="f">What is going on?<textarea id="ff-text" required></textarea></label>
+    <div class="dlg-actions">
+      <button type="button" class="btn" id="ff-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Add flag</button>
+    </div>
+  </form>
+</dialog>
+
 <dialog id="dlg" aria-labelledby="dlg-title">
   <form method="dialog" id="dlg-form">
     <h2 id="dlg-title">Edit project</h2>
@@ -239,7 +262,7 @@
     </div>
     <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
     <label class="f">Summary<textarea id="f-summary"></textarea></label>
-    <label class="f">Concern or ask (shows in Needs attention when filled)<textarea id="f-concern"></textarea></label>
+    <div class="f">Flags (blockers, risks, decisions - shown in Needs attention)<div class="reps" id="f-flags"></div><div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div></div>
     <div class="f">Milestones<div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div></div>
     <div class="f">Links<div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div></div>
     <div class="err" id="f-err" role="alert"></div>
@@ -267,7 +290,7 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 4,
+      "priority": 1,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
@@ -275,34 +298,35 @@
       "summary": "",
       "milestones": [
         { "name": "Review with Eng", "date": "2026-09-29", "done": true },
-        { "name": "Eng handoff + kickoff", "date": "2026-10-02", "done": true }
+        { "name": "Eng kickoff", "date": "2026-10-02", "done": true }
       ],
       "links": [
         { "label": "Figma", "url": "https://www.figma.com/design/QwTzl25BwpBF0usRzcBYso/Global--T2-Direct-WPO-Scheduling?node-id=36-2&t=0dr75q8ge9MeYFGE-1" }
       ],
       "concern": "",
-      "launch": "2027-01-01",
-      "dqa": "In progress"
+      "launch": "2026-11-02"
     },
     {
       "id": "necl-marketing-planner",
       "name": "NECL Marketing Planner",
       "pod": "insights",
       "lane": "active",
-      "priority": 2,
+      "priority": 1,
       "status": "On Track",
       "stage": "Iteration",
       "start": "2026-09-14",
       "end": "2026-10-09",
       "summary": "",
       "milestones": [
-        { "name": "Review with Marketing", "date": "2026-10-01", "done": false },
-        { "name": "Review with Eng", "date": "2026-10-02", "done": false },
-        { "name": "Kickoff", "date": "2026-10-05", "done": false }
+        { "name": "Review with Marketing", "date": "2026-10-01", "done": true },
+        { "name": "Review with CSMs-Mustafa, Myra", "date": "2026-10-02", "done": true },
+        { "name": "Kickoff", "date": "2026-10-09", "done": true }
       ],
       "links": [
         { "label": "Figma", "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=106-26462&t=n0Wg9ixbdVON37jw-1" }
-      ]
+      ],
+      "concern": "",
+      "launch": "2026-12-02"
     },
     {
       "id": "gottman-marketplace",
@@ -312,6 +336,7 @@
       "priority": 4,
       "stage": "Iteration",
       "start": "2026-10-12",
+      "end": "2026-10-23",
       "summary": "",
       "concern": "",
       "milestones": [],
@@ -319,8 +344,7 @@
         { "label": "Loom", "url": "https://www.loom.com/share/edef73816c8c4e95a7b534dd363c48c2" },
         { "label": "FIGMA NOT STARTED", "url": "https://www.figma.com/design/4N4xDu3kMLZVghXxt7m4Lr/Gottma-V2?node-id=0-1&t=e01PJakubeOMt0iP-1" },
         { "label": "Andy/Arpna Figma", "url": "https://www.figma.com/design/I8L1Z1TELyObB37104XsrJ/Marketplace?node-id=5448-26030&t=6B2nHYd1mflMBOPe-1" }
-      ],
-      "end": "2026-10-23"
+      ]
     },
     {
       "id": "ibx-remediation",
@@ -355,7 +379,7 @@
       "id": "business-review-builder",
       "name": "Business review builder",
       "pod": "insights",
-      "lane": "active",
+      "lane": "backlog",
       "priority": 3,
       "summary": "",
       "concern": "",
@@ -363,10 +387,7 @@
       "links": [
         { "label": "PRD", "url": "https://springhealth.atlassian.net/wiki/x/HoB9-Q" }
       ],
-      "stage": "Awaiting kickoff",
-      "start": "2026-10-02",
-      "end": "2026-10-30",
-      "status": "On Track"
+      "stage": "Awaiting kickoff"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -401,10 +422,15 @@
   }
   var DQA = ["In progress", "Issues open", "Passed"];
   var DQA_CLASS = { "In progress": "awaiting-review", "Issues open": "blocked", "Passed": "on-track" };
+  var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Needs decision"];
   var KINDS = ["Bug", "Learning", "Support", "Other"];
   var STAGES = ["Awaiting kickoff", "Discovery", "Iteration", "Finalizing specs", "Development", "DQA", "Complete"];
   var STATUS_CLASS = { "On Track": "on-track", "Needs Support": "needs-support", "Awaiting review": "awaiting-review", "Blocked": "blocked" };
   var DAY = 86400000;
+  // Older data kept one "concern" string per project; fold it into flags.
+  DATA.items.forEach(function (i) {
+    if (i.concern && !(i.flags && i.flags.length)) { i.flags = [{ type: "Risk", text: i.concern, date: DATA.updated }]; delete i.concern; }
+  });
   var podFilter = "all";
 
   var now = new Date();
@@ -453,19 +479,29 @@
     return open[0] || null;
   }
 
+  function slug(t) { return t.toLowerCase().replace(/[^a-z]+/g, "-"); }
+  function ftypePill(type) { return el("span", "ftype " + slug(type), type); }
+
   function attentionFor(item) {
-    var out = [];
-    if (item.lane === "ongoing") { if (item.concern) out.push(item.concern); return out; }
+    var out = (item.flags || []).map(function (f, idx) { return { type: f.type, text: f.text, date: f.date, manual: true, idx: idx }; });
     if (item.lane !== "active") return out;
-    if (item.concern) out.push(item.concern);
-    else if (item.status === "Needs Support" || item.status === "Blocked") {
-      out.push(item.status === "Blocked" ? "Blocked. Details to be added." : "Flagged as needing support. Details to be added.");
+    if (!out.length && (item.status === "Needs Support" || item.status === "Blocked")) {
+      out.push({ type: item.status === "Blocked" ? "Blocked" : "Needs support", text: "Details to be added." });
     }
-    if (daysBetween(today, pd(item.end)) < 0) out.push("Design deliverable date " + fmt(item.end) + " has passed and the project is still open.");
+    if (daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
     (item.milestones || []).forEach(function (m) {
-      if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push('Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.');
+      if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push({ type: "Overdue", text: 'Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.' });
     });
     return out;
+  }
+
+  function flagRows(parent, item) {
+    (item.flags || []).forEach(function (f) {
+      var r = el("div", "flagrow");
+      r.appendChild(ftypePill(f.type));
+      r.appendChild(el("span", null, f.text));
+      parent.appendChild(r);
+    });
   }
 
   function pill(status) {
@@ -549,12 +585,7 @@
       card.appendChild(ul);
     }
 
-    if (item.concern) {
-      var cr = el("div", "row");
-      cr.appendChild(el("span", "k", "Concern or ask: "));
-      cr.appendChild(el("span", "warn", item.concern));
-      card.appendChild(cr);
-    }
+    flagRows(card, item);
 
     var links = linksBlock(item);
     if (links) card.appendChild(links);
@@ -586,7 +617,7 @@
     row.appendChild(el("span", "name", item.name));
     row.appendChild(el("span", "pod", podName(item.pod)));
     if (item.summary) row.appendChild(el("span", "note", item.summary));
-    if (item.concern) row.appendChild(el("span", "warn", item.concern));
+    flagRows(row, item);
     var links = linksBlock(item);
     if (links) row.appendChild(links);
     if (ADMIN) {
@@ -629,12 +660,7 @@
       lr2.appendChild(document.createTextNode(launchText(item)));
       body.appendChild(lr2);
     }
-    if (item.concern) {
-      var cr = el("div", "row");
-      cr.appendChild(el("span", "k", "Concern or ask: "));
-      cr.appendChild(el("span", "warn", item.concern));
-      body.appendChild(cr);
-    }
+    flagRows(body, item);
     var links = linksBlock(item);
     if (links) body.appendChild(links);
     addEditButton(body, item);
@@ -782,7 +808,7 @@
     var ongoing = items("ongoing").sort(byPriority);
     var done = items("done").sort(function (a, b) { return (b.completed || "") < (a.completed || "") ? -1 : 1; });
     var flags = [];
-    active.concat(ongoing).forEach(function (i) { attentionFor(i).forEach(function (why) { flags.push({ item: i, why: why }); }); });
+    active.concat(backlog, ongoing).forEach(function (i) { attentionFor(i).forEach(function (f) { flags.push({ item: i, flag: f }); }); });
 
     renderTabs(active.length, flags.length, backlog.length, done.length);
 
@@ -798,10 +824,21 @@
       var wrap = el("div", "attention");
       flags.forEach(function (f) {
         var r = el("div", "attention-item");
+        r.appendChild(ftypePill(f.flag.type));
         var a = el("a", null, f.item.name);
         a.href = "#" + f.item.id;
         r.appendChild(a);
-        r.appendChild(el("span", "why", f.why));
+        r.appendChild(el("span", "why", f.flag.text));
+        if (f.flag.date) r.appendChild(el("span", "fdate", "Raised " + fmt(f.flag.date)));
+        if (ADMIN) {
+          var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(f.item); };
+          r.appendChild(ed);
+          if (f.flag.manual) {
+            var rs = el("button", "btn small", "Resolve"); rs.type = "button";
+            rs.onclick = function () { f.item.flags.splice(f.flag.idx, 1); commit(); };
+            r.appendChild(rs);
+          }
+        }
         wrap.appendChild(r);
       });
       attBox.appendChild(wrap);
@@ -873,6 +910,16 @@
     $("f-links").appendChild(r);
   }
 
+  function flagRow(f) {
+    var r = el("div", "rep flag");
+    r.dataset.date = f.date || iso(today);
+    var t = el("select"); FLAG_TYPES.forEach(function (x) { opt(t, x); }); t.value = f.type || "Risk"; t.setAttribute("aria-label", "Flag type");
+    var x = el("input"); x.type = "text"; x.value = f.text || ""; x.placeholder = "What is going on?"; x.setAttribute("aria-label", "Flag details");
+    var rm = el("button", "btn small", "Remove"); rm.type = "button"; rm.onclick = function () { r.remove(); };
+    [t, x, rm].forEach(function (e) { r.appendChild(e); });
+    $("f-flags").appendChild(r);
+  }
+
   function syncLaneFields() {
     var lane = $("f-lane").value;
     $("w-status").hidden = lane !== "active";
@@ -902,7 +949,7 @@
     $("f-end").value = it.end || "";
     $("f-completed").value = it.completed || "";
     $("f-summary").value = it.summary || "";
-    $("f-concern").value = it.concern || "";
+    $("f-flags").textContent = ""; (it.flags || []).forEach(flagRow);
     $("f-ms").textContent = ""; (it.milestones || []).forEach(msRow);
     $("f-links").textContent = ""; (it.links || []).forEach(linkRow);
     $("f-err").textContent = "";
@@ -944,7 +991,12 @@
     var prio = parseInt($("f-priority").value, 10);
     it.name = name; it.pod = $("f-pod").value; it.lane = lane;
     it.priority = prio > 0 ? prio : DATA.items.filter(function (i) { return i.lane === lane; }).length + 1;
-    it.summary = $("f-summary").value.trim(); it.concern = $("f-concern").value.trim();
+    it.summary = $("f-summary").value.trim(); it.flags = [];
+    Array.prototype.forEach.call($("f-flags").children, function (r) {
+      var txt = r.querySelector("input").value.trim();
+      if (txt) it.flags.push({ type: r.querySelector("select").value, text: txt, date: r.dataset.date });
+    });
+    delete it.concern;
     it.milestones = milestones; it.links = links;
     var launch = $("f-launch").value;
     if (launch) it.launch = launch; else delete it.launch;
@@ -967,6 +1019,23 @@
     Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s); });
     ["Scoping"].concat(STAGES.slice(0, -1)).forEach(function (s) { opt($("f-stage"), s); });
     $("f-lane").onchange = syncLaneFields;
+    $("add-flagrow").onclick = function () { flagRow({}); };
+    $("attention-tools").hidden = false;
+    $("add-flag").onclick = function () {
+      var sel = $("ff-item"); sel.textContent = "";
+      DATA.items.filter(function (i) { return i.lane !== "done"; }).forEach(function (i) { opt(sel, i.id, i.name); });
+      $("ff-text").value = ""; $("dlg-flag").showModal();
+    };
+    FLAG_TYPES.forEach(function (x) { opt($("ff-type"), x); });
+    $("ff-cancel").onclick = function () { $("dlg-flag").close(); };
+    $("flag-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var it = DATA.items.filter(function (i) { return i.id === $("ff-item").value; })[0];
+      var txt = $("ff-text").value.trim();
+      if (!it || !txt) return;
+      (it.flags = it.flags || []).push({ type: $("ff-type").value, text: txt, date: iso(today) });
+      $("dlg-flag").close(); commit();
+    });
     $("add-ms").onclick = function () { msRow({}); };
     $("add-link").onclick = function () { linkRow({}); };
     $("f-cancel").onclick = function () { $("dlg").close(); };
