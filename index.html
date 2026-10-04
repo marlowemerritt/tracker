@@ -151,9 +151,11 @@
   .seg button { font: inherit; font-size: 12px; padding: 4px 12px; border: 0; background: var(--card); color: var(--ink); cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
   .card-head { display: block; }
-  .ch-stage { margin-top: 8px; }
   .ch-dates { margin-top: 6px; }
-  .ch-side { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .rows .ch-dates { margin-top: 0; }
+  .ch-dates .stepper { max-width: 340px; margin-bottom: 4px; }
+  .ch-dates .pill { display: inline-block; margin-bottom: 8px; }
+  .card-actions .links { margin: 0; padding: 0; border: 0; }
   .toggle { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
   .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 
@@ -192,16 +194,16 @@
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
 
   .rows { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  .rows .card-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 1.6fr) auto; gap: 8px 22px; align-items: start; }
-  .rows .ch-stage, .rows .ch-dates { margin-top: 0; }
-  .rows .ch-side { flex-direction: column; align-items: flex-end; margin-top: 0; }
+  .rows .card-head { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 8px 28px; align-items: start; }
   .rows .meta { margin-bottom: 0; }
   .rows .card h3 { margin-bottom: 4px; }
-  .rows .ch-stage .stage-label { margin-bottom: 0; }
-  .ch-side .links { margin: 0; padding: 0; border: 0; flex-direction: column; align-items: flex-end; gap: 2px; }
   .ch-main h3 a { color: var(--ink); text-decoration: none; }
   .ch-main h3 a:hover { text-decoration: underline; }
-  .rows .card-head.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); }
+  .card { position: relative; }
+  .card.has-toggle .card-head { padding-right: 104px; }
+  .toggle.corner { position: absolute; top: 12px; right: 14px; white-space: nowrap; }
+  .metas { display: grid; gap: 6px; justify-items: start; }
+  .metas .meta { margin-bottom: 0; }
   .pill-slot { margin-bottom: 6px; line-height: 1; }
   .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
   .flag-card { background: #fff6f4; border-color: #f0c9c1; }
@@ -215,7 +217,7 @@
   .rep.flag textarea { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; min-height: 58px; resize: vertical; }
   .pods-proj { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13px; }
   .pods-proj li { padding: 2px 0; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
-  @media (max-width: 820px) { .rows .card-head { grid-template-columns: 1fr; } .rows .ch-side { flex-direction: row; align-items: center; margin-top: 8px; } .ch-side .links { flex-direction: row; flex-wrap: wrap; } }
+  @media (max-width: 820px) { .rows .card-head { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -944,17 +946,21 @@
 
   // Every list uses the same four columns: name and chips, stage or type, dates and details, status and actions.
   function rowCard(o) {
-    var card = el("article", "card " + (o.cls || ""));
+    var card = el("article", "card " + (o.cls || "") + (o.toggle ? " has-toggle" : ""));
     if (o.id) card.id = o.id;
-    var head = el("div", "card-head" + (o.two ? " two" : ""));
-    var cols = o.two
-      ? [["ch-main", o.c1], ["ch-dates", (o.c3 || []).concat(o.c4 && o.c4.length ? [(function () { var a = el("div", "card-actions"); o.c4.forEach(function (n) { if (n) a.appendChild(n); }); return a; })()] : [])]]
-      : [["ch-main", o.c1], ["ch-stage", o.c2], ["ch-dates", o.c3], ["ch-side", o.c4]];
-    cols.forEach(function (p) {
-      var col = el("div", p[0]);
-      (p[1] || []).forEach(function (n) { if (n) col.appendChild(n); });
-      head.appendChild(col);
-    });
+    if (o.toggle) card.appendChild(o.toggle);
+    var head = el("div", "card-head");
+    var main = el("div", "ch-main");
+    (o.c1 || []).forEach(function (n) { if (n) main.appendChild(n); });
+    var detail = el("div", "ch-dates");
+    (o.c2 || []).concat(o.c3 || []).forEach(function (n) { if (n) detail.appendChild(n); });
+    if (o.c4 && o.c4.filter(Boolean).length) {
+      var act = el("div", "card-actions");
+      o.c4.forEach(function (n) { if (n) act.appendChild(n); });
+      detail.appendChild(act);
+    }
+    head.appendChild(main);
+    head.appendChild(detail);
     card.appendChild(head);
     if (o.body) card.appendChild(o.body);
     return card;
@@ -968,19 +974,26 @@
   }
 
   function metaRow(item, extra) {
+    var wrap = el("div", "metas");
     var m = el("div", "meta");
     m.appendChild(el("span", "pod", podName(item.pod)));
-    (extra || []).forEach(function (t) { m.appendChild(el("span", "pod", t)); });
+    wrap.appendChild(m);
+    var m2 = el("div", "meta");
+    (extra || []).forEach(function (t) { m2.appendChild(el("span", "pod", t)); });
     var seen = {};
-    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m.appendChild(ftypePill(f.type)); } });
-    return m;
+    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m2.appendChild(ftypePill(f.type)); } });
+    if (m2.children.length) wrap.appendChild(m2);
+    return wrap;
   }
 
   function toggleBtn(item) {
     var open = !!expanded[item.id];
-    var tg = el("button", "toggle", open ? "Hide details" : "Show details");
+    var tg = el("button", "toggle corner");
     tg.type = "button";
+    tg.appendChild(document.createTextNode(open ? "Collapse " : "Expand "));
+    tg.appendChild(el("span", null, open ? "\u25B4" : "\u25BE"));
     tg.setAttribute("aria-expanded", String(open));
+    tg.setAttribute("aria-label", (open ? "Collapse" : "Expand") + " details for " + item.name);
     tg.onclick = function () { expanded[item.id] = !open; render(); };
     return tg;
   }
@@ -1061,9 +1074,10 @@
     return rowCard({
       id: item.id, cls: item.pod + (withEng(item) ? " with-eng" : "") + (open ? " open" : ""),
       c1: [el("div", "prio", "PRIORITY " + item.priority), el("h3", null, item.name), metaRow(item, withEng(item) ? ["With Eng"] : [])],
-      c2: stageCol(item, true),
+      c2: [pill(item.status)].concat(stageCol(item, true)),
       c3: dates,
-      c4: [pill(item.status), toggleBtn(item)].concat(adminBtns(item)),
+      c4: adminBtns(item),
+      toggle: toggleBtn(item),
       body: open ? itemBody(item) : null
     });
   }
@@ -1099,7 +1113,8 @@
       c1: [el("div", "prio", "UP NEXT " + rank), el("h3", null, item.name), metaRow(item)],
       c2: stageCol(item, false),
       c3: dates,
-      c4: [toggleBtn(item)].concat(adminBtns(item)),
+      c4: adminBtns(item),
+      toggle: toggleBtn(item),
       body: open ? itemBody(item) : null
     });
   }
@@ -1112,7 +1127,8 @@
       c1: [el("div", "prio", item.support ? "ONGOING SUPPORT" : "COMPLETED"), el("h3", null, item.name), metaRow(item)],
       c2: [],
       c3: dates,
-      c4: [toggleBtn(item)].concat(adminBtns(item)),
+      c4: adminBtns(item),
+      toggle: toggleBtn(item),
       body: open ? itemBody(item) : null
     });
   }
@@ -1156,7 +1172,6 @@
     }
     var slot = el("div", "pill-slot"); slot.appendChild(ftypePill(f.type));
     return rowCard({
-      two: true,
       cls: item.pod + " flag-card",
       c1: [slot, projectLink(item), (function () { var m = el("div", "meta"); m.appendChild(el("span", "pod", podName(item.pod))); return m; })()],
       c3: c3,
@@ -1176,7 +1191,6 @@
     if (item) meta.appendChild(el("span", "pod", podName(item.pod)));
     var slot = el("div", "pill-slot"); slot.appendChild(el("span", "ftype update-" + slug(u.kind), u.kind));
     return rowCard({
-      two: true,
       cls: item ? item.pod : "",
       c1: [slot, projectLink(item), meta],
       c3: c3,
