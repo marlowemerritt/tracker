@@ -35,12 +35,6 @@
   .hint { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
   .empty { color: var(--muted); font-size: 13px; font-style: italic; padding: 12px 0; }
 
-  .attention { background: #fff6f4; border: 1px solid #f0c9c1; border-radius: 10px; padding: 4px 14px; }
-  .attention-item { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #f3dcd6; font-size: 14px; }
-  .attention-item:last-child { border-bottom: 0; }
-  .attention-item a { font-weight: 600; }
-  .attention-item .why { color: #5c2a22; flex: 1 1 280px; }
-
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
   .card { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--other); border-radius: 10px; padding: 14px 16px; scroll-margin-top: 16px; }
   .card:target { box-shadow: 0 0 0 2px var(--brand); }
@@ -74,11 +68,6 @@
   .ms .box { width: 14px; flex-shrink: 0; color: var(--brand); font-weight: 700; }
   .ms li.done { color: var(--muted); text-decoration: line-through; }
 
-  .backlog { display: grid; gap: 8px; }
-  .backlog .card { display: grid; grid-template-columns: auto 1fr; gap: 0 14px; align-items: start; }
-  .backlog .rank { font-size: 20px; font-weight: 700; color: #a9a89f; min-width: 28px; }
-  .backlog h3 { margin: 0 0 4px; }
-
   .timeline { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
   .tl { position: relative; min-width: 760px; padding-left: 190px; }
   .tl-head { position: relative; height: 28px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
@@ -110,11 +99,6 @@
   .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 11px; font-weight: 700; color: var(--today); }
   .tl-legend { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 
-  .ongoing { display: grid; gap: 6px; }
-  .og-row { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
-  .og-row .name { font-weight: 600; }
-  .og-row .note { color: var(--muted); flex: 1 1 240px; }
-  .og-row .links { margin: 0; padding: 0; border: 0; }
   .kind { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
   .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #e8e4f3; color: #4d3f7f; }
   .kind.support { background: #fdebd9; color: #8a4a12; } .kind.other { background: #eeece6; color: #46453f; }
@@ -124,7 +108,6 @@
   .ftype.direction-change { background: #e8e4f3; color: #4d3f7f; }
   .ftype.decision-needed { background: #dfeaf2; color: #1f4f6b; }
   .fdate { color: var(--muted); font-size: 12px; }
-  .flagrow { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin-top: 6px; font-size: 13px; }
   
   .rep.flag select { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; }
   [hidden] { display: none !important; }
@@ -142,7 +125,6 @@
   .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
   .btn.danger { color: #9b2f1f; border-color: #e3b5ac; }
   .btn.small { padding: 2px 9px; font-size: 12px; }
-  .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
 
   dialog { border: 0; border-radius: 12px; padding: 0; width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 24px); box-shadow: 0 12px 40px rgba(0,0,0,.25); color: var(--ink); }
   dialog::backdrop { background: rgba(0,0,0,.4); }
@@ -174,14 +156,7 @@
   .ch-side { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: 10px; }
   .toggle { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
   .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
-  .grid.rows { grid-template-columns: 1fr; gap: 10px; }
-  .grid.rows .card-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 1.5fr) auto; gap: 8px 22px; align-items: center; }
-  .grid.rows .ch-stage, .grid.rows .ch-dates { margin-top: 0; }
-  .grid.rows .ch-side { flex-direction: column; align-items: flex-end; margin-top: 0; }
-  .grid.rows .meta { margin-bottom: 0; }
-  .grid.rows .card h3 { margin-bottom: 4px; }
-  .grid.rows .ch-stage .stage-label { margin-bottom: 0; }
-  @media (max-width: 820px) { .grid.rows .card-head { grid-template-columns: 1fr; } .grid.rows .ch-side { flex-direction: row; align-items: center; margin-top: 8px; } }
+
   .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
   .snap-label { color: var(--muted); font-weight: 600; }
   .snap-note { color: var(--ink); }
@@ -206,16 +181,8 @@
   .rec { font-size: 13px; margin-top: 3px; color: #3a3935; }
   .rec b { font-weight: 600; }
   .norec { font-size: 12px; color: var(--muted); font-style: italic; }
-  .flagrow .rec { flex-basis: 100%; margin: 0 0 0 4px; }
 
-  .loglist { display: grid; gap: 6px; }
-  .log-row { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
-  .log-row .fdate { min-width: 48px; }
-  .log-body { flex: 1 1 260px; }
-  .log-detail { color: var(--muted); margin-top: 2px; }
   .kind.leadership { background: #dfeaf2; color: #1f4f6b; }
-  .pods-list { list-style: none; margin: 8px 0 0; padding: 0; font-size: 13px; }
-  .pods-list li { padding: 2px 0; }
 
   .rep.flag { grid-template-columns: 130px 1fr 1fr auto; }
   @media (max-width: 560px) { .rep.flag { grid-template-columns: 1fr; } }
@@ -223,6 +190,32 @@
   footer p { margin: 0 0 6px; }
 
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
+
+  .rows { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .rows .card-head { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr) minmax(0, 1.6fr) auto; gap: 8px 22px; align-items: start; }
+  .rows .ch-stage, .rows .ch-dates { margin-top: 0; }
+  .rows .ch-side { flex-direction: column; align-items: flex-end; margin-top: 0; }
+  .rows .meta { margin-bottom: 0; }
+  .rows .card h3 { margin-bottom: 4px; }
+  .rows .ch-stage .stage-label { margin-bottom: 0; }
+  .ch-side .links { margin: 0; padding: 0; border: 0; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .ch-main h3 a { color: var(--ink); text-decoration: none; }
+  .ch-main h3 a:hover { text-decoration: underline; }
+  .rows .card-head.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); }
+  .pill-slot { margin-bottom: 6px; line-height: 1; }
+  .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .flag-card { background: #fff6f4; border-color: #f0c9c1; }
+  .bul { margin: 0; padding-left: 18px; font-size: 13px; }
+  .bul li { padding: 1px 0; }
+  .ch-dates .bul { margin-top: 6px; }
+  .flagrow { display: grid; gap: 4px; margin-top: 8px; font-size: 13px; justify-items: start; }
+  .rec .bul { margin-top: 2px; }
+  .ftype.update-decided { background: #e3f1ec; color: #17594a; } .ftype.update-requested { background: #e8e4f3; color: #4d3f7f; } .ftype.update-timing { background: #fdebd9; color: #8a4a12; } .ftype.update-fyi { background: #eeece6; color: #46453f; }
+  .ftype.open-question { background: #dff1ee; color: #17594a; }
+  .rep.flag textarea { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; min-height: 58px; resize: vertical; }
+  .pods-proj { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13px; }
+  .pods-proj li { padding: 2px 0; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+  @media (max-width: 820px) { .rows .card-head { grid-template-columns: 1fr; } .rows .ch-side { flex-direction: row; align-items: center; margin-top: 8px; } .ch-side .links { flex-direction: row; flex-wrap: wrap; } }
 </style>
 </head>
 <body>
@@ -264,15 +257,23 @@
 
     <section id="attention-section">
       <h2>Flags <span class="count" id="attention-count"></span></h2>
-      <p class="hint">Risks, blockers and decisions I need, plus anything overdue.</p>
+      <p class="hint">Risks, blockers, open questions and decisions I need, plus anything overdue.</p>
       <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
-      <div id="attention"></div>
+      <div class="rows" id="attention"></div>
+    </section>
+
+    <section id="updates-section">
+      <h2>Updates I've shared <span class="count" id="updates-count"></span></h2>
+      <p class="hint">What I've decided, asked for, or timed, and when, so nothing comes as a surprise.</p>
+      <div id="updates-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-update">+ Add update</button></div>
+      <div class="rows" id="updates"></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="updates-more" hidden>Show all</button></div>
     </section>
 
     <section id="ongoing-section">
       <h2>Also on my plate <span class="count" id="ongoing-count"></span></h2>
       <p class="hint">Smaller items and ongoing work with no start or end date: bugs, support, learning.</p>
-      <div class="ongoing" id="ongoing"></div>
+      <div class="rows" id="ongoing"></div>
     </section>
   </div>
 
@@ -289,7 +290,7 @@
     <section id="backlog-section" class="first">
       <h2>Up next <span class="count" id="backlog-count"></span></h2>
       <p class="hint">Queued or being scoped, in the order I plan to pick them up. Nothing here has kicked off yet.</p>
-      <div class="backlog" id="backlog"></div>
+      <div class="rows" id="backlog"></div>
     </section>
   </div>
 
@@ -297,30 +298,11 @@
     <section id="support-section" class="first" hidden>
       <h2>Ongoing support <span class="count" id="support-count"></span></h2>
       <p class="hint">Delivered work I am still supporting. Requests still come in from time to time.</p>
-      <div class="backlog" id="support"></div>
+      <div class="rows" id="support"></div>
     </section>
     <section id="done-section" class="first">
       <h2>Completed <span class="count" id="done-count"></span></h2>
-      <div class="backlog" id="done"></div>
-    </section>
-  </div>
-
-  <div role="tabpanel" id="panel-log" aria-labelledby="tab-log" hidden>
-    <div id="log-tools" style="margin-bottom:12px" hidden><button type="button" class="btn small primary" id="add-log">+ Add entry</button></div>
-    <section class="first">
-      <h2>Open questions</h2>
-      <p class="hint">Questions I am working to get answered within a week.</p>
-      <div class="loglist" id="log-questions"></div>
-    </section>
-    <section>
-      <h2>Decisions made</h2>
-      <p class="hint">What was decided, and why.</p>
-      <div class="loglist" id="log-decisions"></div>
-    </section>
-    <section>
-      <h2>New requests</h2>
-      <p class="hint">How I handled each new request: fits within scope, bumps something else, or declined.</p>
-      <div class="loglist" id="log-asks"></div>
+      <div class="rows" id="done"></div>
     </section>
   </div>
 
@@ -328,13 +310,13 @@
     <section class="first">
       <h2>Pods</h2>
       <p class="hint">What each pod is working toward, who to talk to, and what I am doing in it.</p>
-      <div class="grid" id="pods"></div>
+      <div class="rows" id="pods"></div>
     </section>
   </div>
 
   <footer>
     <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
-    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Overdue. Each one I raise comes with a recommendation.</p>
+    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question, Overdue. Everything except an open question comes with my recommendation.</p>
     <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
   </footer>
 </div>
@@ -371,17 +353,15 @@
 
 <dialog id="dlg-log" aria-labelledby="log-title">
   <form method="dialog" id="log-form">
-    <h2 id="log-title">Log entry</h2>
+    <h2 id="log-title">Update I'm sharing</h2>
     <div class="f2">
-      <label class="f">Type<select id="l-type"><option value="ask">New request</option><option value="decision">Decision</option><option value="question">Open question</option></select></label>
+      <label class="f">Type<select id="l-kind"><option value="Decided">Decided</option><option value="Requested">Requested</option><option value="Timing">Timing</option><option value="FYI">FYI</option></select></label>
       <label class="f">Date<input type="date" id="l-date"></label>
     </div>
-    <label class="f"><span id="l-text-label">The request</span><input type="text" id="l-text"></label>
-    <div class="f2">
-      <label class="f"><span id="l-who-label">From</span><input type="text" id="l-who"></label>
-      <label class="f" id="w-lstate"><span id="l-state-label">Outcome</span><select id="l-state"></select></label>
-    </div>
-    <label class="f"><span id="l-detail-label">Tradeoff or rationale</span><textarea id="l-detail"></textarea></label>
+    <label class="f">Project<select id="l-project"></select></label>
+    <label class="f">What<input type="text" id="l-text"></label>
+    <label class="f">With (who I told or asked)<input type="text" id="l-who"></label>
+    <label class="f">Details (one per line)<textarea id="l-detail"></textarea></label>
     <div class="err" id="l-err" role="alert"></div>
     <div class="dlg-actions">
       <button type="button" class="btn danger" id="l-delete">Delete</button>
@@ -449,7 +429,7 @@
     <label class="f" id="w-support"><span><input type="checkbox" id="f-support"> Still supporting this (shows as Ongoing support)</span></label>
     <label class="f">Summary<textarea id="f-summary"></textarea></label>
     <label class="f">Next step<input type="text" id="f-next"></label>
-    <label class="f">Decision needed (shows under Flags until cleared)<input type="text" id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></label>
+    <label class="f">Decision needed (shows under Flags until cleared; one point per line)<textarea id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></textarea></label>
     <div class="f">Flags (blockers, risks, direction changes - each needs a recommendation)<div class="reps" id="f-flags"></div><div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div></div>
     <div class="f">Milestones<div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div></div>
     <div class="f">Links<div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div></div>
@@ -578,13 +558,18 @@
       "flags": [
         {
           "type": "Risk",
-          "text": "The tentative Nov 16 release (for testing ahead of full customer release) is at risk. Marketing and CSM reviews brought new learnings and conflicting views on the opt-in model, and I am ramping onto Insights alongside other pods.",
-          "rec": "Draft: lock placement and the opt-in model this week with Andrea and Ramya, then confirm whether Nov 16 holds or the first release is scoped down.",
-          "date": "2026-10-02"
+          "date": "2026-10-02",
+          "text": "The tentative Nov 16 release (for testing ahead of full customer release) is at risk.\nMarketing and CSM reviews brought new learnings and conflicting views on the opt-in model.\nI am ramping onto Insights alongside other pods.",
+          "rec": "Draft: lock placement and the opt-in model this week with Andrea and Ramya.\nThen confirm whether Nov 16 holds or the first release is scoped down."
+        },
+        {
+          "type": "Open question",
+          "date": "2026-10-03",
+          "text": "Should customers be able to opt in for US only, or by region?\nMACs go out in English only today, and some customers turn comms off because they do not fit a global population.\nRegional customization is also requested."
         }
       ],
       "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya.",
-      "decision": "Where should Campaign Planner live? Option 1: new top-level 'Communications' page (planner plus MAC). Option 2: new 'Communications' tab inside Resources (MAC moves there). Also: manage opt-in inside the planner or in Settings?"
+      "decision": "Where should Campaign Planner live?\nOption 1: new top-level 'Communications' page (planner plus MAC).\nOption 2: new 'Communications' tab inside Resources (MAC moves there).\nAlso: manage opt-in inside the planner or in Settings?"
     },
     {
       "id": "gottman-marketplace",
@@ -760,27 +745,30 @@
     "level": "",
     "note": "Wednesdays are my protected heads-down focus day. Monday, Tuesday and Thursday are meeting-heavy."
   },
-  "log": [
+  "recaps": [
     {
-      "id": "l-gottman-bandwidth",
-      "type": "ask",
-      "date": "2026-10-03",
-      "text": "Gottman into Marketplace design",
-      "who": "Regina, James",
-      "state": "Fits within scope",
-      "detail": "Shared my bandwidth up front. I plan to pick this up the week of Oct 12, and the team already sent updated assets to apply."
+      "week": "2026-10-02",
+      "done": "Insights: met with Marketing and CSMs to review the first design and get their perspectives. Lots of learnings and some competing feelings.\nGlobal T2: handed off to dev. They are heads down until it is time for Design QA.",
+      "next": "Insights: put top focus on the iterations next week.\nBenefits: ME DQA kicks off next week.\nGlobal T2: still overseeing and supporting questions as they come up, but it is no longer my top focus.",
+      "other": "Partner: told Regina and James my bandwidth and that I plan to pick up Gottman the week of 10/12. Received updated assets to apply when ready.\nPartner: Thoughtful integration is still TBD, so it stays in the backlog until there is more clarity. The previous team is transitioning it off and Regina is staying on top of it.\nPayer: shared quick ideas for the IBX iteration and am waiting on next steps. Not top of mind, but it was an urgent request that needed support right away."
     },
     {
-      "id": "l-necl-us-only",
-      "type": "question",
-      "date": "2026-10-03",
-      "text": "Should customers be able to opt in for US only, or by region?",
-      "who": "CSM review",
-      "state": "Open",
-      "detail": "MACs go out in English only today, and some customers turn comms off because they do not fit a global population. Regional customization is also requested."
+      "week": "2026-09-25",
+      "done": "Insights: marketing campaign design V1.\nMet the team and got a general understanding of pod goals across Insights, Payer & Global, and Partnerships.",
+      "next": "Transition off Benefits and Payer/PSS."
     }
   ],
-  "recaps": []
+  "updates": [
+    {
+      "id": "u-gottman-timing",
+      "date": "2026-10-03",
+      "project": "gottman-marketplace",
+      "kind": "Timing",
+      "text": "Gottman design starts the week of Oct 12",
+      "who": "Regina, James",
+      "detail": "Shared my bandwidth up front so expectations are set.\nThe team already sent updated assets to apply when I start."
+    }
+  ]
 }
 </script>
 
@@ -802,6 +790,13 @@
       // Older data kept one "concern" string per project; fold it into flags.
       if (i.concern && !(i.flags && i.flags.length)) { i.flags = [{ type: "Risk", text: i.concern, date: data.updated }]; delete i.concern; }
     });
+    // Older drafts kept a log of asks, decisions and questions; fold it into updates.
+    if (data.log) {
+      data.updates = (data.updates || []).concat(data.log.map(function (e) {
+        return { id: e.id, date: e.date, project: e.project || "", kind: e.type === "decision" ? "Decided" : "FYI", text: e.text, who: e.who || "", detail: [e.state, e.detail].filter(Boolean).join("\n") };
+      }));
+      delete data.log;
+    }
     ["active", "backlog", "done", "ongoing"].forEach(function (l) { renumber(data, l, null); });
     return data;
   }
@@ -809,11 +804,11 @@
   if (ADMIN) {
     try { var draft = localStorage.getItem(DRAFT_KEY); if (draft) DATA = prepare(JSON.parse(draft)); } catch (e) { /* use published */ }
   }
-  var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Decision needed"];
+  var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Decision needed", "Open question"];
+  var UPDATE_KINDS = ["Decided", "Requested", "Timing", "FYI"];
   var KINDS = ["Bug", "Learning", "Support", "Leadership", "Other"];
   var CAPACITY = ["Comfortable", "At capacity", "Over capacity"];
   var CAP_CLASS = { "Comfortable": "on-track", "At capacity": "needs-support", "Over capacity": "blocked" };
-  var ASK_CLASS = { "Fits within scope": "on-track", "Bumps something else": "needs-support", "Declined": "awaiting-review" };
   var STAGES = ["Awaiting kickoff", "Discovery", "Iteration", "Finalizing specs", "Development", "DQA", "Complete"];
   var STATUS_CLASS = { "On Track": "on-track", "Needs Support": "needs-support", "Awaiting review": "awaiting-review", "Blocked": "blocked" };
   var DAY = 86400000;
@@ -881,10 +876,27 @@
     return out;
   }
 
-  function recLine(rec) {
+  function lines(text) {
+    return String(text || "").split(/\n+/).map(function (l) { return l.replace(/^\s*[-\u2022*]\s*/, "").trim(); }).filter(Boolean);
+  }
+  function bullets(text) {
+    var ls = lines(text);
+    if (!ls.length) return null;
+    var ul = el("ul", "bul");
+    ls.forEach(function (l) { ul.appendChild(el("li", null, l)); });
+    return ul;
+  }
+  function textBlock(text) {
+    var ls = lines(text);
+    if (!ls.length) return null;
+    return ls.length > 1 ? bullets(text) : el("p", "summary", ls[0]);
+  }
+
+  function recBlock(rec) {
     var d = el("div", "rec");
-    d.appendChild(el("b", null, "Recommendation: "));
-    d.appendChild(document.createTextNode(rec));
+    d.appendChild(el("b", null, "Recommendation"));
+    var b = bullets(rec);
+    if (b) d.appendChild(b);
     return d;
   }
 
@@ -892,8 +904,9 @@
     (item.flags || []).forEach(function (f) {
       var r = el("div", "flagrow");
       r.appendChild(ftypePill(f.type));
-      r.appendChild(el("span", null, f.text));
-      if (f.rec) r.appendChild(recLine(f.rec));
+      var b = bullets(f.text);
+      if (b) r.appendChild(b);
+      if (f.rec) r.appendChild(recBlock(f.rec));
       parent.appendChild(r);
     });
   }
@@ -903,7 +916,7 @@
       var n = el("div", "info"); n.appendChild(el("span", "k", "Next step: ")); n.appendChild(document.createTextNode(item.next)); parent.appendChild(n);
     }
     if (item.decision && item.lane !== "done") {
-      var d = el("div", "info"); d.appendChild(el("span", "k", "Decision needed: ")); d.appendChild(el("span", "warn", item.decision)); parent.appendChild(d);
+      var d = el("div", "info"); d.appendChild(el("span", "k", "Decision needed")); var b = bullets(item.decision); if (b) d.appendChild(b); parent.appendChild(d);
     }
   }
 
@@ -929,102 +942,130 @@
   var priView = "rows";
   try { if (localStorage.getItem("tracker_pri_view") === "cards") priView = "cards"; } catch (e) { /* default rows */ }
 
-  function activeCard(item) {
-    var isOpen = !!expanded[item.id];
-    var card = el("article", "card " + item.pod + (withEng(item) ? " with-eng" : "") + (isOpen ? " open" : ""));
-    card.id = item.id;
-    var head = el("div", "card-head");
-
-    var main = el("div", "ch-main");
-    main.appendChild(el("div", "prio", "PRIORITY " + item.priority));
-    main.appendChild(el("h3", null, item.name));
-    var meta = el("div", "meta");
-    meta.appendChild(el("span", "pod", podName(item.pod)));
-    if (withEng(item)) meta.appendChild(el("span", "pod", "With Eng"));
-    var seen = {};
-    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; meta.appendChild(ftypePill(f.type)); } });
-    main.appendChild(meta);
-    head.appendChild(main);
-
-    var idx = Math.max(0, STAGES.indexOf(item.stage));
-    var st = el("div", "ch-stage");
-    var stepper = el("div", "stepper");
-    stepper.setAttribute("role", "img");
-    stepper.setAttribute("aria-label", "Stage " + (idx + 1) + " of " + STAGES.length + ": " + item.stage);
-    STAGES.forEach(function (s, n) { stepper.appendChild(el("i", n < idx ? "done" : n === idx ? "current" : "")); });
-    st.appendChild(stepper);
-    var lbl = el("div", "stage-label");
-    lbl.appendChild(document.createTextNode("Stage: "));
-    lbl.appendChild(el("b", null, item.stage));
-    lbl.appendChild(document.createTextNode(" (" + (idx + 1) + " of " + STAGES.length + ")"));
-    st.appendChild(lbl);
-    head.appendChild(st);
-
-    var dt = el("div", "ch-dates");
-    var due = dueInfo(item);
-    var dates = el("div", "row");
-    if (withEng(item)) {
-      dates.appendChild(el("span", "k", "Handed to Eng: "));
-      dates.appendChild(document.createTextNode(fmt(item.end)));
-    } else {
-      dates.appendChild(el("span", "k", "Design deliverable: "));
-      dates.appendChild(document.createTextNode(fmt(item.end) + " - "));
-      dates.appendChild(el("span", due.warn ? "warn" : null, due.text));
-    }
-    dt.appendChild(dates);
-    if (item.dqaStart || withEng(item)) {
-      var qr = el("div", "row");
-      qr.appendChild(el("span", "k", "Design QA: "));
-      qr.appendChild(document.createTextNode(item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
-      dt.appendChild(qr);
-    }
-    if (item.launch) {
-      var lr = el("div", "row");
-      lr.appendChild(el("span", "k", "Launch: "));
-      lr.appendChild(document.createTextNode(launchText(item)));
-      dt.appendChild(lr);
-    }
-    head.appendChild(dt);
-
-    var side = el("div", "ch-side");
-    side.appendChild(pill(item.status));
-    var tg = el("button", "toggle", isOpen ? "Hide details" : "Show details");
-    tg.type = "button";
-    tg.setAttribute("aria-expanded", String(isOpen));
-    tg.onclick = function () { expanded[item.id] = !isOpen; render(); };
-    side.appendChild(tg);
-    head.appendChild(side);
+  // Every list uses the same four columns: name and chips, stage or type, dates and details, status and actions.
+  function rowCard(o) {
+    var card = el("article", "card " + (o.cls || ""));
+    if (o.id) card.id = o.id;
+    var head = el("div", "card-head" + (o.two ? " two" : ""));
+    var cols = o.two
+      ? [["ch-main", o.c1], ["ch-dates", (o.c3 || []).concat(o.c4 && o.c4.length ? [(function () { var a = el("div", "card-actions"); o.c4.forEach(function (n) { if (n) a.appendChild(n); }); return a; })()] : [])]]
+      : [["ch-main", o.c1], ["ch-stage", o.c2], ["ch-dates", o.c3], ["ch-side", o.c4]];
+    cols.forEach(function (p) {
+      var col = el("div", p[0]);
+      (p[1] || []).forEach(function (n) { if (n) col.appendChild(n); });
+      head.appendChild(col);
+    });
     card.appendChild(head);
-
-    if (isOpen) {
-      var body = el("div", "card-body");
-      if (item.summary) body.appendChild(el("p", "summary", item.summary));
-      infoRows(body, item);
-      var next = nextMilestone(item);
-      if (next) {
-        var nm = el("div", "row");
-        nm.appendChild(el("span", "k", "Next milestone: "));
-        nm.appendChild(document.createTextNode(next.name + " (" + fmt(next.date) + ")"));
-        if (daysBetween(today, pd(next.date)) < 0) nm.appendChild(el("span", "warn", " - overdue"));
-        body.appendChild(nm);
-      }
-      if ((item.milestones || []).length) {
-        var ul = el("ul", "ms");
-        item.milestones.forEach(function (m) {
-          var li = el("li", m.done ? "done" : "");
-          li.appendChild(el("span", "box", m.done ? "\u2713" : "\u25CB"));
-          li.appendChild(el("span", null, m.name + " (" + fmt(m.date) + ")"));
-          ul.appendChild(li);
-        });
-        body.appendChild(ul);
-      }
-      flagRows(body, item);
-      var links = linksBlock(item);
-      if (links) body.appendChild(links);
-      card.appendChild(body);
-    }
-    addEditButton(card, item);
+    if (o.body) card.appendChild(o.body);
     return card;
+  }
+
+  function labelRow(label, value, valueCls) {
+    var r = el("div", "row");
+    r.appendChild(el("span", "k", label + ": "));
+    r.appendChild(valueCls ? el("span", valueCls, value) : document.createTextNode(value));
+    return r;
+  }
+
+  function metaRow(item, extra) {
+    var m = el("div", "meta");
+    m.appendChild(el("span", "pod", podName(item.pod)));
+    (extra || []).forEach(function (t) { m.appendChild(el("span", "pod", t)); });
+    var seen = {};
+    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m.appendChild(ftypePill(f.type)); } });
+    return m;
+  }
+
+  function toggleBtn(item) {
+    var open = !!expanded[item.id];
+    var tg = el("button", "toggle", open ? "Hide details" : "Show details");
+    tg.type = "button";
+    tg.setAttribute("aria-expanded", String(open));
+    tg.onclick = function () { expanded[item.id] = !open; render(); };
+    return tg;
+  }
+
+  function adminBtns(item) {
+    if (!ADMIN) return [];
+    var out = [];
+    var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openEditor(item); };
+    out.push(b);
+    if (item.lane === "backlog") {
+      var mv = el("button", "btn small primary", "Move to Top priorities"); mv.type = "button";
+      mv.onclick = function () { openEditor(item, "active"); };
+      out.push(mv);
+    }
+    return out;
+  }
+
+  function itemBody(item) {
+    var body = el("div", "card-body");
+    var sm = textBlock(item.summary);
+    if (sm) body.appendChild(sm);
+    infoRows(body, item);
+    var next = nextMilestone(item);
+    if (next) {
+      var nm = labelRow("Next milestone", next.name + " (" + fmt(next.date) + ")");
+      if (daysBetween(today, pd(next.date)) < 0) nm.appendChild(el("span", "warn", " - overdue"));
+      body.appendChild(nm);
+    }
+    if ((item.milestones || []).length) {
+      var ul = el("ul", "ms");
+      item.milestones.forEach(function (m) {
+        var li = el("li", m.done ? "done" : "");
+        li.appendChild(el("span", "box", m.done ? "\u2713" : "\u25CB"));
+        li.appendChild(el("span", null, m.name + " (" + fmt(m.date) + ")"));
+        ul.appendChild(li);
+      });
+      body.appendChild(ul);
+    }
+    flagRows(body, item);
+    var links = linksBlock(item);
+    if (links) body.appendChild(links);
+    return body.children.length ? body : null;
+  }
+
+  function stageCol(item, withBar) {
+    var out = [];
+    var idx = Math.max(0, STAGES.indexOf(item.stage));
+    if (withBar) {
+      var stepper = el("div", "stepper");
+      stepper.setAttribute("role", "img");
+      stepper.setAttribute("aria-label", "Stage " + (idx + 1) + " of " + STAGES.length + ": " + item.stage);
+      STAGES.forEach(function (s, n) { stepper.appendChild(el("i", n < idx ? "done" : n === idx ? "current" : "")); });
+      out.push(stepper);
+    }
+    if (item.stage) {
+      var lbl = el("div", "stage-label");
+      lbl.appendChild(document.createTextNode("Stage: "));
+      lbl.appendChild(el("b", null, item.stage));
+      if (withBar) lbl.appendChild(document.createTextNode(" (" + (idx + 1) + " of " + STAGES.length + ")"));
+      out.push(lbl);
+    }
+    return out;
+  }
+
+  function activeCard(item) {
+    var open = !!expanded[item.id];
+    var dates = [];
+    if (withEng(item)) {
+      dates.push(labelRow("Handed to Eng", fmt(item.end)));
+    } else {
+      var due = dueInfo(item);
+      var dr = labelRow("Design deliverable", fmt(item.end) + " - ");
+      dr.appendChild(el("span", due.warn ? "warn" : null, due.text));
+      dates.push(dr);
+    }
+    if (item.dqaStart || withEng(item)) dates.push(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
+    if (item.launch) dates.push(labelRow("Launch", launchText(item)));
+    return rowCard({
+      id: item.id, cls: item.pod + (withEng(item) ? " with-eng" : "") + (open ? " open" : ""),
+      c1: [el("div", "prio", "PRIORITY " + item.priority), el("h3", null, item.name), metaRow(item, withEng(item) ? ["With Eng"] : [])],
+      c2: stageCol(item, true),
+      c3: dates,
+      c4: [pill(item.status), toggleBtn(item)].concat(adminBtns(item)),
+      body: open ? itemBody(item) : null
+    });
   }
 
   function renderPriTools(active) {
@@ -1044,81 +1085,103 @@
     ex.type = "button";
     ex.onclick = function () { active.forEach(function (i) { expanded[i.id] = !allOpen; }); render(); };
     box.appendChild(ex);
-    $("active").className = "grid" + (priView === "rows" ? " rows" : "");
+    $("active").className = priView === "rows" ? "rows" : "grid";
   }
 
-  function addEditButton(parent, item) {
-    if (!ADMIN) return;
-    var wrap = el("div", "card-actions");
-    var b = el("button", "btn small", "Edit");
-    b.type = "button";
-    b.onclick = function () { openEditor(item); };
-    wrap.appendChild(b);
-    if (item.lane === "backlog") {
-      var mv = el("button", "btn small primary", "Move to Top priorities");
-      mv.type = "button";
-      mv.onclick = function () { openEditor(item, "active"); };
-      wrap.appendChild(mv);
-    }
-    parent.appendChild(wrap);
+  function backlogRow(item, rank) {
+    var open = !!expanded[item.id];
+    var dates = [];
+    if (item.start && !item.end) dates.push(labelRow("Start", fmt(item.start) + " - design handoff TBD"));
+    if (item.start && item.end) dates.push(labelRow("Planned design", fmt(item.start) + " to " + fmt(item.end)));
+    if (item.launch) dates.push(labelRow("Launch", launchText(item)));
+    return rowCard({
+      id: item.id, cls: item.pod + (open ? " open" : ""),
+      c1: [el("div", "prio", "UP NEXT " + rank), el("h3", null, item.name), metaRow(item)],
+      c2: stageCol(item, false),
+      c3: dates,
+      c4: [toggleBtn(item)].concat(adminBtns(item)),
+      body: open ? itemBody(item) : null
+    });
+  }
+
+  function doneRow(item) {
+    var open = !!expanded[item.id];
+    var dates = item.completed ? [labelRow("Completed", fmt(item.completed))] : [];
+    return rowCard({
+      id: item.id, cls: item.pod + (open ? " open" : ""),
+      c1: [el("div", "prio", item.support ? "ONGOING SUPPORT" : "COMPLETED"), el("h3", null, item.name), metaRow(item)],
+      c2: [],
+      c3: dates,
+      c4: [toggleBtn(item)].concat(adminBtns(item)),
+      body: open ? itemBody(item) : null
+    });
   }
 
   function ongoingRow(item) {
-    var row = el("div", "og-row");
-    row.id = item.id;
-    var kind = item.kind || "Other";
-    row.appendChild(el("span", "kind " + kind.toLowerCase(), kind.toUpperCase()));
-    row.appendChild(el("span", "name", item.name));
-    row.appendChild(el("span", "pod", podName(item.pod)));
-    if (item.summary) row.appendChild(el("span", "note", item.summary));
-    flagRows(row, item);
     var links = linksBlock(item);
-    if (links) row.appendChild(links);
-    if (ADMIN) {
-      var b = el("button", "btn small", "Edit"); b.type = "button";
-      b.onclick = function () { openEditor(item); };
-      row.appendChild(b);
-    }
-    return row;
+    var sm = textBlock(item.summary);
+    return rowCard({
+      id: item.id, cls: item.pod,
+      c1: [el("div", "prio", (item.kind || "Other").toUpperCase()), el("h3", null, item.name), metaRow(item)],
+      c2: [],
+      c3: [sm],
+      c4: [links].concat(adminBtns(item))
+    });
   }
 
-  function listCard(item, rank, extra) {
-    var card = el("article", "card " + item.pod);
-    card.id = item.id;
-    card.appendChild(el("div", "rank", extra ? (item.support ? "\u21BB" : "\u2713") : String(rank)));
-    var body = el("div");
-    body.appendChild(el("h3", null, item.name));
+  function projectLink(item) {
+    if (!item) return el("h3", null, "General");
+    var h = el("h3");
+    if (item.lane === "active" || item.lane === "ongoing") { var a = el("a", null, item.name); a.href = "#" + item.id; h.appendChild(a); }
+    else h.textContent = item.name;
+    return h;
+  }
+
+  function flagCard(entry) {
+    var item = entry.item, f = entry.flag;
+    var c3 = [];
+    if (f.date) c3.push(labelRow("Raised", fmt(f.date)));
+    var tb = bullets(f.text); if (tb) c3.push(tb);
+    if (f.rec) c3.push(recBlock(f.rec));
+    else if (f.manual && ADMIN && f.type !== "Open question") c3.push(el("div", "norec", "No recommendation yet. Edit to add one."));
+    var c4 = [];
+    if (ADMIN) {
+      var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(item); };
+      c4.push(ed);
+      if (f.manual) {
+        var rs = el("button", "btn small", "Resolve"); rs.type = "button";
+        rs.onclick = function () { item.flags.splice(f.idx, 1); commit(); };
+        c4.push(rs);
+      }
+    }
+    var slot = el("div", "pill-slot"); slot.appendChild(ftypePill(f.type));
+    return rowCard({
+      two: true,
+      cls: item.pod + " flag-card",
+      c1: [slot, projectLink(item), (function () { var m = el("div", "meta"); m.appendChild(el("span", "pod", podName(item.pod))); return m; })()],
+      c3: c3,
+      c4: c4
+    });
+  }
+
+  function updateCard(u) {
+    var item = DATA.items.filter(function (i) { return i.id === u.project; })[0] || null;
+    var c3 = [labelRow("Shared", fmt(u.date))];
+    var tb = bullets(u.text); if (tb) c3.push(tb);
+    if (u.who) c3.push(labelRow("With", u.who));
+    var db = bullets(u.detail); if (db) c3.push(db);
+    var c4 = [];
+    if (ADMIN) { var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openUpdate(u); }; c4.push(b); }
     var meta = el("div", "meta");
-    meta.appendChild(el("span", "pod", podName(item.pod)));
-    if (item.stage) meta.appendChild(el("span", "pod", item.stage));
-    if (extra) meta.appendChild(el("span", "pod", extra));
-    body.appendChild(meta);
-    if (item.summary) body.appendChild(el("p", "summary", item.summary));
-    infoRows(body, item);
-    if (item.start && !item.end && !extra) {
-      var sr = el("div", "row");
-      sr.appendChild(el("span", "k", "Start: "));
-      sr.appendChild(document.createTextNode(fmt(item.start) + " - design handoff TBD"));
-      body.appendChild(sr);
-    }
-    if (item.start && item.end && !extra) {
-      var r = el("div", "row");
-      r.appendChild(el("span", "k", "Planned design: "));
-      r.appendChild(document.createTextNode(fmt(item.start) + " to " + fmt(item.end)));
-      body.appendChild(r);
-    }
-    if (item.launch && !extra) {
-      var lr2 = el("div", "row");
-      lr2.appendChild(el("span", "k", "Launch: "));
-      lr2.appendChild(document.createTextNode(launchText(item)));
-      body.appendChild(lr2);
-    }
-    flagRows(body, item);
-    var links = linksBlock(item);
-    if (links) body.appendChild(links);
-    addEditButton(body, item);
-    card.appendChild(body);
-    return card;
+    if (item) meta.appendChild(el("span", "pod", podName(item.pod)));
+    var slot = el("div", "pill-slot"); slot.appendChild(el("span", "ftype update-" + slug(u.kind), u.kind));
+    return rowCard({
+      two: true,
+      cls: item ? item.pod : "",
+      c1: [slot, projectLink(item), meta],
+      c3: c3,
+      c4: c4
+    });
   }
 
   function fill(id, nodes, emptyText) {
@@ -1128,7 +1191,7 @@
     nodes.forEach(function (n) { box.appendChild(n); });
   }
 
-  var TABS = [["overview", "Overview"], ["recap", "Weekly recap"], ["backlog", "Up next"], ["done", "Completed"], ["log", "Decisions & questions"], ["pods", "Pods"]];
+  var TABS = [["overview", "Overview"], ["recap", "Weekly recap"], ["backlog", "Up next"], ["done", "Completed"], ["pods", "Pods"]];
   var currentTab = "overview";
   (function () {
     var q = /[?&]tab=([a-z]+)/.exec(location.search);
@@ -1145,7 +1208,7 @@
     });
   }
 
-  function renderTabs(nFlags, nBacklog, nDone, nOpenQ) {
+  function renderTabs(nFlags, nBacklog, nDone) {
     var box = document.getElementById("tabs");
     var counts = { overview: nFlags, backlog: nBacklog, done: nDone };
     box.textContent = "";
@@ -1155,7 +1218,6 @@
       b.type = "button"; b.id = "tab-" + t[0]; b.dataset.tab = t[0];
       b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "panel-" + t[0]);
       if (t[0] === "overview" && nFlags > 0) b.appendChild(el("span", "badge alert", nFlags + (nFlags === 1 ? " flag" : " flags")));
-      else if (t[0] === "log" && nOpenQ > 0) b.appendChild(el("span", "badge alert", nOpenQ + " open"));
       else if (t[0] === "backlog" || t[0] === "done") b.appendChild(el("span", "badge", String(counts[t[0]])));
       b.onclick = function () { setTab(t[0]); };
       b.onkeydown = function (e) {
@@ -1300,11 +1362,9 @@
     var flags = [];
     active.concat(backlog, ongoing).forEach(function (i) { attentionFor(i).forEach(function (f) { flags.push({ item: i, flag: f }); }); });
 
-    var openQ = (DATA.log || []).filter(function (e) { return e.type === "question" && e.state !== "Answered"; }).length;
-    renderTabs(flags.length, backlog.length, done.length, openQ);
+    renderTabs(flags.length, backlog.length, done.length);
     renderSnapshot();
     renderFocus();
-    renderLog();
     renderPods();
     renderRecap();
 
@@ -1312,36 +1372,15 @@
     document.getElementById("active-count").textContent = "(" + active.length + ")";
     document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
 
-    var attBox = document.getElementById("attention");
-    attBox.textContent = "";
-    if (!flags.length) attBox.appendChild(el("div", "empty", "Nothing flagged right now."));
-    else {
-      var wrap = el("div", "attention");
-      flags.forEach(function (f) {
-        var r = el("div", "attention-item");
-        r.appendChild(ftypePill(f.flag.type));
-        var a = el("a", null, f.item.name);
-        a.href = "#" + f.item.id;
-        r.appendChild(a);
-        var why = el("div", "why");
-        why.appendChild(document.createTextNode(f.flag.text));
-        if (f.flag.rec) why.appendChild(recLine(f.flag.rec));
-        else if (f.flag.manual && ADMIN) why.appendChild(el("div", "norec", "No recommendation yet. Edit to add one."));
-        r.appendChild(why);
-        if (f.flag.date) r.appendChild(el("span", "fdate", "Raised " + fmt(f.flag.date)));
-        if (ADMIN) {
-          var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(f.item); };
-          r.appendChild(ed);
-          if (f.flag.manual) {
-            var rs = el("button", "btn small", "Resolve"); rs.type = "button";
-            rs.onclick = function () { f.item.flags.splice(f.flag.idx, 1); commit(); };
-            r.appendChild(rs);
-          }
-        }
-        wrap.appendChild(r);
-      });
-      attBox.appendChild(wrap);
-    }
+    fill("attention", flags.map(flagCard), "Nothing flagged right now.");
+
+    var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var showAll = !!window.__upShowAll;
+    $("updates-section").hidden = !ups.length && !ADMIN;
+    $("updates-count").textContent = "(" + ups.length + ")";
+    fill("updates", (showAll ? ups : ups.slice(0, 4)).map(updateCard), "Nothing shared yet.");
+    $("updates-more").hidden = ups.length <= 4;
+    $("updates-more").textContent = showAll ? "Show fewer" : "Show all " + ups.length;
 
     document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
@@ -1349,15 +1388,15 @@
     renderPriTools(active);
     fill("active", active.map(activeCard), "Nothing in progress for this pod.");
     renderTimeline();
-    fill("backlog", backlog.map(function (i, n) { return listCard(i, n + 1); }), "Backlog is empty for this pod.");
+    fill("backlog", backlog.map(function (i, n) { return backlogRow(i, n + 1); }), "Nothing queued for this pod.");
     var supporting = done.filter(function (i) { return i.support; });
     var finished = done.filter(function (i) { return !i.support; });
     $("support-section").hidden = !supporting.length;
     $("done-section").className = supporting.length ? "" : "first";
     $("support-count").textContent = "(" + supporting.length + ")";
     $("done-count").textContent = "(" + finished.length + ")";
-    fill("support", supporting.map(function (i) { return listCard(i, 0, "Ongoing support"); }), "");
-    fill("done", finished.map(function (i) { return listCard(i, 0, i.completed ? "Completed " + fmt(i.completed) : "Completed"); }), "Nothing completed yet. Projects move here once they reach the Complete stage.");
+    fill("support", supporting.map(doneRow), "");
+    fill("done", finished.map(doneRow), "Nothing completed yet. Projects move here once they reach the Complete stage.");
   }
 
   function renderSnapshot() {
@@ -1396,70 +1435,39 @@
     });
   }
 
-  function logRow(e) {
-    var r = el("div", "log-row");
-    r.appendChild(el("span", "fdate", fmt(e.date)));
-    var body = el("div", "log-body");
-    var head = el("div");
-    head.appendChild(el("b", null, e.text));
-    if (e.who) head.appendChild(el("span", "fdate", (e.type === "ask" ? " from " : e.type === "question" ? " asked of " : " with ") + e.who));
-    body.appendChild(head);
-    if (e.detail) body.appendChild(el("div", "log-detail", e.detail));
-    r.appendChild(body);
-    if (e.type === "ask" && e.state) r.appendChild(el("span", "pill " + (ASK_CLASS[e.state] || "on-track"), e.state));
-    if (e.type === "question") {
-      var open = e.state !== "Answered";
-      var age = daysBetween(pd(e.date), today);
-      r.appendChild(el("span", "pill " + (open ? (age >= 7 ? "blocked" : "awaiting-review") : "on-track"), open ? "Open " + age + "d" : "Answered"));
-    }
-    if (ADMIN) {
-      var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openLog(e); };
-      r.appendChild(b);
-    }
-    return r;
-  }
-
-  function renderLog() {
-    var log = DATA.log || [];
-    $("log-tools").hidden = !ADMIN;
-    function of(t) { return log.filter(function (e) { return e.type === t; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; }); }
-    var qs = of("question").sort(function (a, b) { return (a.state === "Answered") - (b.state === "Answered"); });
-    fill("log-asks", of("ask").map(logRow), "No requests logged yet.");
-    fill("log-decisions", of("decision").map(logRow), "No decisions logged yet.");
-    fill("log-questions", qs.map(logRow), "No open questions.");
-  }
-
   function renderPods() {
     var info = DATA.podInfo || {};
     var keys = Object.keys(DATA.pods).filter(function (k) {
       return (podFilter === "all" || podFilter === k) && (info[k] || DATA.items.some(function (i) { return i.pod === k; }));
     });
     var nodes = keys.map(function (k) {
-      var card = el("article", "card " + k);
-      card.appendChild(el("h3", null, podName(k)));
       var pi = info[k] || {};
-      [["Goal: ", pi.goal], ["PM and partners: ", pi.partners], ["Note: ", pi.note]].forEach(function (p) {
-        if (!p[1]) return;
-        var r = el("div", "info"); r.appendChild(el("span", "k", p[0])); r.appendChild(document.createTextNode(p[1])); card.appendChild(r);
-      });
+      var c3 = [];
+      if (pi.goal) c3.push(labelRow("Goal", pi.goal));
+      if (pi.note) c3.push(labelRow("Note", pi.note));
       var mine = DATA.items.filter(function (i) { return i.pod === k && i.lane !== "done"; });
       var order = { active: 0, backlog: 1, ongoing: 2 };
       mine.sort(function (a, b) { return (order[a.lane] - order[b.lane]) || byPriority(a, b); });
       if (mine.length) {
-        var ul = el("ul", "pods-list");
+        var ul = el("ul", "pods-proj");
         mine.forEach(function (i) {
           var li = el("li");
           li.appendChild(el("b", null, i.name));
-          li.appendChild(document.createTextNode(i.lane === "active" ? " - " + i.stage + ", " + i.status : i.lane === "backlog" ? " - up next" : " - ongoing"));
+          li.appendChild(document.createTextNode(i.lane === "active" ? i.stage + ", " + statusLabel(i.status) : i.lane === "backlog" ? "up next" : "ongoing"));
+          attentionFor(i).forEach(function (f, n, arr) { if (arr.findIndex(function (x) { return x.type === f.type; }) === n) li.appendChild(ftypePill(f.type)); });
           ul.appendChild(li);
         });
-        card.appendChild(ul);
-      } else card.appendChild(el("div", "empty", "Nothing active in this pod."));
-      if (ADMIN) {
-        var w = el("div", "card-actions"); var b = el("button", "btn small", "Edit pod info"); b.type = "button"; b.onclick = function () { openPod(k); };
-        w.appendChild(b); card.appendChild(w);
-      }
-      return card;
+        c3.push(ul);
+      } else c3.push(el("div", "empty", "Nothing active in this pod."));
+      var c4 = [];
+      if (ADMIN) { var b = el("button", "btn small", "Edit pod info"); b.type = "button"; b.onclick = function () { openPod(k); }; c4.push(b); }
+      return rowCard({
+        cls: k,
+        c1: [el("div", "prio", "POD"), el("h3", null, podName(k))],
+        c2: pi.partners ? [labelRow("PM and partners", pi.partners)] : [],
+        c3: c3,
+        c4: c4
+      });
     });
     fill("pods", nodes, "No pods to show.");
   }
@@ -1484,13 +1492,15 @@
     DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { flags.push({ i: i, f: f }); }); });
     L.push("", "Flags and blockers:");
     if (!flags.length) L.push("- None");
-    flags.forEach(function (x) { L.push("- [" + x.f.type + "] " + x.i.name + ": " + x.f.text + (x.f.rec ? " Recommendation: " + x.f.rec : "")); });
-    function recent(t) { return (DATA.log || []).filter(function (e) { return e.type === t && daysBetween(pd(e.date), today) <= 7; }); }
-    var dec = recent("decision"), asks = recent("ask");
-    if (dec.length) { L.push("", "Decisions made:"); dec.forEach(function (e) { L.push("- " + e.text + (e.detail ? " (" + e.detail + ")" : "")); }); }
-    if (asks.length) { L.push("", "New requests and how I handled them:"); asks.forEach(function (e) { L.push("- " + e.text + (e.state ? " - " + e.state : "") + (e.detail ? " (" + e.detail + ")" : "")); }); }
-    var openQ = (DATA.log || []).filter(function (e) { return e.type === "question" && e.state !== "Answered"; });
-    if (openQ.length) { L.push("", "Open questions:"); openQ.forEach(function (e) { L.push("- " + e.text + (e.who ? " (" + e.who + ")" : "")); }); }
+    flags.forEach(function (x) { L.push("- [" + x.f.type + "] " + x.i.name + ": " + lines(x.f.text).join(" ") + (x.f.rec ? " Recommendation: " + lines(x.f.rec).join(" ") : "")); });
+    var ups = (DATA.updates || []).filter(function (e) { return daysBetween(pd(e.date), today) <= 7; });
+    if (ups.length) {
+      L.push("", "Updates I shared:");
+      ups.forEach(function (e) {
+        var it = DATA.items.filter(function (i) { return i.id === e.project; })[0];
+        L.push("- [" + e.kind + "] " + (it ? it.name + ": " : "") + e.text + (e.who ? " (with " + e.who + ")" : "") + (e.detail ? " - " + lines(e.detail).join("; ") : ""));
+      });
+    }
     if (rc) RECAP_NOTES.slice(2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var done = DATA.items.filter(function (i) { return i.lane === "done" && i.completed && daysBetween(pd(i.completed), today) <= 7; });
     if (done.length) { L.push("", "Completed this week:"); done.forEach(function (i) { L.push("- " + i.name); }); }
@@ -1546,22 +1556,22 @@
       });
       if (ol.children.length) box.appendChild(recapSection("Priorities", ol));
     }
-    RECAP_NOTES.forEach(function (n) { if (r[n[0]]) box.appendChild(recapSection(n[1], el("div", "txt", r[n[0]]))); });
+    RECAP_NOTES.forEach(function (n) { if (r[n[0]]) box.appendChild(recapSection(n[1], bullets(r[n[0]]))); });
 
-    var decisions = (DATA.log || []).filter(function (e) {
+    var shared = (DATA.updates || []).filter(function (e) {
       var back = daysBetween(pd(e.date), pd(r.week));
-      return e.type === "decision" && back >= 0 && back <= 6;
+      return back >= 0 && back <= 6;
     });
-    if (decisions.length) {
-      var dl = el("ul", "ms");
-      decisions.forEach(function (e) { dl.appendChild(el("li", null, e.text + (e.detail ? " (" + e.detail + ")" : ""))); });
-      box.appendChild(recapSection("Decisions made", dl));
+    if (shared.length) {
+      var dl = el("ul", "bul");
+      shared.forEach(function (e) { dl.appendChild(el("li", null, "[" + e.kind + "] " + e.text + (e.who ? " (with " + e.who + ")" : ""))); });
+      box.appendChild(recapSection("Updates I shared", dl));
     }
     if (latest) {
       var fl = [];
-      DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + f.text + (f.rec ? " Recommendation: " + f.rec : "")); }); });
+      DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
       if (fl.length) {
-        var fu = el("ul", "ms");
+        var fu = el("ul", "bul");
         fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
         box.appendChild(recapSection("Flags", fu));
       }
@@ -1579,25 +1589,17 @@
   }
 
   var editingLog = null, editingPod = null;
-  var STATE_OPTS = { ask: ["Fits within scope", "Bumps something else", "Declined"], decision: [], question: ["Open", "Answered"] };
-  var LOG_LABELS = { ask: ["The request", "From", "Outcome", "Tradeoff or rationale"], decision: ["The decision", "Decided with", "", "Rationale"], question: ["The question", "Asked of", "Status", "Answer"] };
 
-  function syncLogFields() {
-    var t = $("l-type").value, lb = LOG_LABELS[t];
-    $("l-text-label").textContent = lb[0]; $("l-who-label").textContent = lb[1]; $("l-state-label").textContent = lb[2]; $("l-detail-label").textContent = lb[3];
-    $("w-lstate").hidden = !STATE_OPTS[t].length;
-    var sel = $("l-state"); sel.textContent = "";
-    STATE_OPTS[t].forEach(function (o) { opt(sel, o); });
-  }
-
-  function openLog(entry) {
+  function openUpdate(entry) {
     editingLog = entry;
-    $("log-title").textContent = entry ? "Edit log entry" : "Add log entry";
+    $("log-title").textContent = entry ? "Edit update" : "Add update";
     $("l-delete").hidden = !entry;
-    var e = entry || { type: "ask", date: iso(today) };
-    $("l-type").value = e.type; syncLogFields();
-    $("l-date").value = e.date; $("l-text").value = e.text || ""; $("l-who").value = e.who || ""; $("l-detail").value = e.detail || "";
-    if (STATE_OPTS[e.type].length) $("l-state").value = e.state || STATE_OPTS[e.type][0];
+    var e = entry || { kind: "Timing", date: iso(today), project: "" };
+    var sel = $("l-project"); sel.textContent = "";
+    opt(sel, "", "(general)");
+    DATA.items.forEach(function (i) { opt(sel, i.id, i.name); });
+    $("l-kind").value = e.kind || "FYI"; $("l-date").value = e.date; $("l-project").value = e.project || "";
+    $("l-text").value = e.text || ""; $("l-who").value = e.who || ""; $("l-detail").value = e.detail || "";
     $("l-err").textContent = "";
     $("dlg-log").showModal();
   }
@@ -1693,8 +1695,8 @@
     var r = el("div", "rep flag");
     r.dataset.date = f.date || iso(today);
     var t = el("select"); FLAG_TYPES.forEach(function (x) { opt(t, x); }); t.value = f.type || "Risk"; t.setAttribute("aria-label", "Flag type");
-    var x = el("input"); x.type = "text"; x.value = f.text || ""; x.placeholder = "What is going on?"; x.setAttribute("aria-label", "Flag details");
-    var rc = el("input"); rc.type = "text"; rc.value = f.rec || ""; rc.placeholder = "My recommendation"; rc.setAttribute("aria-label", "Flag recommendation");
+    var x = el("textarea"); x.value = f.text || ""; x.placeholder = "What is going on? (one point per line)"; x.setAttribute("aria-label", "Flag details");
+    var rc = el("textarea"); rc.value = f.rec || ""; rc.placeholder = "My recommendation (one point per line)"; rc.setAttribute("aria-label", "Flag recommendation");
     var rm = el("button", "btn small", "Remove"); rm.type = "button"; rm.onclick = function () { r.remove(); };
     [t, x, rc, rm].forEach(function (e) { r.appendChild(e); });
     $("f-flags").appendChild(r);
@@ -1771,12 +1773,12 @@
 
     var flags = [], noRec = false;
     Array.prototype.forEach.call($("f-flags").children, function (r) {
-      var inp = r.querySelectorAll("input"), txt = inp[0].value.trim(), rec = inp[1].value.trim();
+      var tx = r.querySelectorAll("textarea"), txt = tx[0].value.trim(), rec = tx[1].value.trim(), type = r.querySelector("select").value;
       if (!txt) return;
-      if (!rec) noRec = true;
-      flags.push({ type: r.querySelector("select").value, text: txt, rec: rec, date: r.dataset.date });
+      if (!rec && type !== "Open question") noRec = true;
+      flags.push({ type: type, text: txt, rec: rec, date: r.dataset.date });
     });
-    if (noRec) { err.textContent = "Every flag needs a recommendation."; return; }
+    if (noRec) { err.textContent = "Every flag except an open question needs a recommendation."; return; }
 
     var oldLane = editing ? editing.lane : null;
     var it = editing || { id: uniqueId(name) };
@@ -1827,7 +1829,7 @@
       var it = DATA.items.filter(function (i) { return i.id === $("ff-item").value; })[0];
       var txt = $("ff-text").value.trim(), rec = $("ff-rec").value.trim();
       if (!it) return;
-      if (!txt || !rec) { $("ff-err").textContent = "Add what is going on and your recommendation."; return; }
+      if (!txt || (!rec && $("ff-type").value !== "Open question")) { $("ff-err").textContent = "Add what is going on and your recommendation (not needed for an open question)."; return; }
       (it.flags = it.flags || []).push({ type: $("ff-type").value, text: txt, rec: rec, date: iso(today) });
       $("dlg-flag").close(); commit();
     });
@@ -1859,24 +1861,24 @@
       $("dlg-settings").close(); commit();
     });
 
-    $("add-log").onclick = function () { openLog(null); };
-    $("l-type").onchange = syncLogFields;
+    $("add-update").onclick = function () { openUpdate(null); };
+    $("updates-tools").hidden = false;
+    $("updates-more").onclick = function () { window.__upShowAll = !window.__upShowAll; render(); };
     $("l-cancel").onclick = function () { $("dlg-log").close(); };
     $("l-delete").onclick = function () {
-      if (!editingLog || !confirm("Delete this log entry?")) return;
-      DATA.log = DATA.log.filter(function (e) { return e !== editingLog; });
+      if (!editingLog || !confirm("Delete this update?")) return;
+      DATA.updates = DATA.updates.filter(function (e) { return e !== editingLog; });
       $("dlg-log").close(); commit();
     };
     $("log-form").addEventListener("submit", function (ev) {
       ev.preventDefault();
       var text = $("l-text").value.trim();
-      if (!text) { $("l-err").textContent = "Describe the entry first."; return; }
-      var e = editingLog || { id: "l" + Date.now() };
-      e.type = $("l-type").value; e.date = $("l-date").value || iso(today); e.text = text;
+      if (!text) { $("l-err").textContent = "Say what the update is first."; return; }
+      var e = editingLog || { id: "u" + Date.now() };
+      e.kind = $("l-kind").value; e.date = $("l-date").value || iso(today); e.project = $("l-project").value; e.text = text;
       e.who = $("l-who").value.trim(); e.detail = $("l-detail").value.trim();
-      if (STATE_OPTS[e.type].length) e.state = $("l-state").value; else delete e.state;
-      if (!editingLog) (DATA.log = DATA.log || []).push(e);
-      $("dlg-log").close(); currentTab = "log"; commit();
+      if (!editingLog) (DATA.updates = DATA.updates || []).push(e);
+      $("dlg-log").close(); currentTab = "overview"; commit();
     });
 
     $("r-cancel").onclick = function () { $("dlg-recap").close(); };
