@@ -161,7 +161,7 @@
   .dlg-actions .danger { margin-right: auto; }
   .err { color: #9b2f1f; font-size: 13px; min-height: 1em; }
 
-  .snapshot { background: #eef6f3; border: 1px solid #cfe3dc; border-left: 4px solid var(--brand); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; }
+  .snapshot { background: #eef6f3; border: 1px solid #cfe3dc; border-left: 4px solid var(--brand); border-radius: 8px; padding: 10px 14px; margin: 24px 0 0; font-size: 14px; }
   .snapshot:empty { display: none; }
   .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
   .pri-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
@@ -238,8 +238,6 @@
 
   <div class="filters" id="filters" role="group" aria-label="Filter by pod"></div>
 
-  <div class="snapshot" id="snapshot"></div>
-
   <div class="tabs" role="tablist" aria-label="Sections" id="tabs"></div>
 
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
@@ -261,6 +259,8 @@
       <div class="pri-tools" id="pri-tools"></div>
       <div class="grid rows" id="active"></div>
     </section>
+
+    <div class="snapshot" id="snapshot"></div>
 
     <section id="attention-section">
       <h2>Flags <span class="count" id="attention-count"></span></h2>
