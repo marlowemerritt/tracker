@@ -108,7 +108,6 @@
   .ftype.risk, .ftype.needs-support, .ftype.direction-change { background: #fdebd9; color: #8a4a12; }
   .fdate { color: var(--muted); font-size: 13px; }
   
-  .rep.flag select { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; }
   [hidden] { display: none !important; }
   .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 20px; flex-wrap: wrap; }
   .tab { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border: 0; background: none; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
@@ -129,7 +128,7 @@
   dialog::backdrop { background: rgba(0,0,0,.4); }
   dialog form { padding: 18px 20px; display: grid; gap: 12px; }
   dialog h2 { margin: 0; font-size: 17px; }
-  .f { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
+  .f { display: grid; gap: 4px; align-content: start; font-size: 13px; font-weight: 600; }
   .f input, .f select, .f textarea { font: inherit; font-size: 13px; font-weight: 400; padding: 6px 8px; border: 1px solid #cfcbc2; border-radius: 6px; width: 100%; }
   .f textarea { min-height: 56px; resize: vertical; }
   .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -155,7 +154,8 @@
   .ch-dates .stepper { max-width: 340px; margin-bottom: 4px; }
   .ch-dates .pill { display: inline-block; margin-bottom: 8px; }
   .card-actions .links { margin: 0; padding: 0; border: 0; }
-  .toggle { font: inherit; font-size: 13px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
+  .toggle { font: inherit; font-size: 13px; font-weight: 600; padding: 3px 6px; border: 0; border-radius: 6px; background: none; color: var(--brand); cursor: pointer; }
+  .toggle:hover { text-decoration: underline; }
   .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 
   .snap-label { color: var(--ink); font-weight: 700; }
@@ -179,8 +179,6 @@
   .norec { font-size: 13px; color: var(--muted); font-style: italic; }
 
 
-  .rep.flag { grid-template-columns: 130px 1fr 1fr auto; }
-  @media (max-width: 560px) { .rep.flag { grid-template-columns: 1fr; } }
 
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
 
@@ -199,13 +197,12 @@
   .flag-sum { font-size: 13px; }
   .pill-slot { margin-bottom: 6px; line-height: 1; }
   .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
-  .flag-card { background: #fff6f4; border-color: #f0c9c1; }
+  .flag-card { background: var(--card); }
   .bul { margin: 0; padding-left: 18px; font-size: 13px; }
   .bul li { padding: 1px 0; }
   .ch-dates .bul { margin-top: 6px; }
   .flagrow { display: grid; gap: 4px; margin-top: 8px; font-size: 13px; justify-items: start; }
   .rec .bul { margin-top: 2px; }
-  .rep.flag textarea { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; min-height: 58px; resize: vertical; }
   .pods-proj { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13px; }
   .pods-proj li { padding: 2px 0; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
   @media (max-width: 820px) { .rows .card-head { grid-template-columns: 1fr; } }
@@ -224,7 +221,7 @@
   .pl-line .stepper { flex: 0 0 150px; width: 150px; margin: 0; }
   .pl-line .stage-label { margin: 0; }
   .rows .card.compact { padding: 10px 14px; }
-  .flag-item + .flag-item { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0c9c1; }
+  .flag-item + .flag-item { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
   .flag-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 6px; }
   .recap-card { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
   .recap-card:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
@@ -235,6 +232,26 @@
 
   .focus-not { margin-top: 10px; font-size: 13px; color: var(--muted); }
   .focus-not b { color: var(--ink); }
+  .sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 16px; margin-bottom: 4px; }
+  .sec-head h2 { margin: 0; }
+  .sec-head .pri-tools { margin: 0; }
+  #week-notes { margin-top: 18px; }
+  #week-notes .snapshot { margin-top: 6px; }
+  #dlg { width: min(980px, calc(100vw - 24px)); overflow: hidden; }
+  #dlg form { padding: 0; display: flex; flex-direction: column; max-height: calc(100vh - 24px); }
+  .dlg-body { overflow: auto; padding: 20px 24px; display: grid; gap: 14px; }
+  #dlg .dlg-actions { padding: 12px 24px; border-top: 1px solid var(--line); background: var(--card); }
+  .dlg-sec { font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 4px; }
+  .dlg-sec:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+  .f3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .f4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .help { font-weight: 400; color: var(--muted); font-size: 13px; }
+  .flagbox { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 10px; background: #faf9f6; }
+  .flagbox-top { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+  .flagbox-top select { font: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 200px; }
+  .flagbox .f textarea { min-height: 96px; }
+  @media (max-width: 720px) { .f3, .f4 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .f3, .f4 { grid-template-columns: 1fr; } }
   .wk-note { font-size: 15px; font-weight: 600; }
   .wk-note.muted { font-size: 13px; font-weight: 400; font-style: italic; color: var(--muted); }
 </style>
@@ -265,7 +282,16 @@
   <div class="tabs" role="tablist" aria-label="Sections" id="tabs"></div>
 
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
-        <section id="timeline-section" class="first">
+        <section id="active-section" class="first">
+      <div class="sec-head">
+        <h2 id="active-title">Top priorities</h2>
+        <div class="pri-tools" id="pri-tools"></div>
+      </div>
+      <p class="hint">In the order I am putting my time. The bar shows how far each project has moved through its stages.</p>
+      <div class="grid" id="active"></div>
+    </section>
+
+    <section id="timeline-section">
       <h2><button type="button" class="h2btn" id="tl-toggle" aria-expanded="true" aria-controls="tl-wrap">Timeline <span id="tl-chev" aria-hidden="true">&#9662;</span></button></h2>
       <div id="tl-wrap">
         <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). <button type="button" class="linkbtn" id="tl-info-btn" aria-expanded="false" aria-controls="tl-info">Legend</button></p>
@@ -274,13 +300,9 @@
       </div>
     </section>
 
-    <section id="active-section">
-      <h2 id="active-title">Top priorities</h2>
-      <p class="hint">In the order I am putting my time. The bar shows how far each project has moved through its stages.</p>
-      <div class="pri-tools" id="pri-tools"></div>
-      <div class="grid rows" id="active"></div>
+    <section id="week-notes">
       <div class="snapshot" id="snapshot"></div>
-      <div class="focus-not" id="focus-foot" hidden></div>
+      <div class="snapshot" id="focus-foot" hidden></div>
     </section>
 
     <section id="attention-section">
@@ -290,14 +312,6 @@
       <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
       <div class="rows" id="attention"></div>
     </div>
-    </section>
-
-    <section id="updates-section">
-      <h2>Updates I've shared <span class="count" id="updates-count"></span></h2>
-      <p class="hint">What I've decided, asked for, or timed, and when, so nothing comes as a surprise.</p>
-      <div id="updates-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-update">+ Add update</button></div>
-      <div class="rows" id="updates"></div>
-      <div style="margin-top:8px"><button type="button" class="btn small" id="updates-more" hidden>Show all</button></div>
     </section>
 
     <section id="ongoing-section">
@@ -315,6 +329,13 @@
       <div class="pri-tools" id="recap-tools"></div>
       <div id="recap"></div>
     </section>
+    <section id="updates-section">
+      <h2>Updates I've shared</h2>
+      <p class="hint">What I've decided, asked for, or timed, and when, so nothing comes as a surprise.</p>
+      <div id="updates-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-update">+ Add update</button></div>
+      <div class="rows" id="updates"></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="updates-more" hidden>Show all</button></div>
+    </section>
   </div>
 
   <div role="tabpanel" id="panel-backlog" aria-labelledby="tab-backlog" hidden>
@@ -322,6 +343,14 @@
       <h2>Up next <span class="count" id="backlog-count"></span></h2>
       <p class="hint">Queued or being scoped, in the order I plan to pick them up. Nothing here has kicked off yet.</p>
       <div class="rows" id="backlog"></div>
+    </section>
+    <section id="parked-section" hidden>
+      <h2><button type="button" class="h2btn" id="parked-toggle" aria-expanded="false" aria-controls="parked-wrap">Parked notes <span id="parked-chev" aria-hidden="true">&#9656;</span></button></h2>
+      <div id="parked-wrap" hidden>
+        <p class="hint">Ideas and notes to come back to later. Only visible to me in admin mode.</p>
+        <div class="pri-tools" id="parked-tools"></div>
+        <div class="rows" id="parked"></div>
+      </div>
     </section>
   </div>
 
@@ -429,42 +458,77 @@
 
 <dialog id="dlg" aria-labelledby="dlg-title">
   <form method="dialog" id="dlg-form">
+    <div class="dlg-body">
     <h2 id="dlg-title">Edit project</h2>
+
+    <div class="dlg-sec">Basics</div>
     <label class="f">Name<input type="text" id="f-name" required></label>
-    <div class="f2">
+    <div class="f3">
       <label class="f">Pod<select id="f-pod"></select></label>
       <label class="f">List<select id="f-lane">
         <option value="active">In progress</option><option value="backlog">Up next (backlog)</option><option value="done">Completed</option><option value="ongoing">Also on my plate (no dates)</option>
       </select></label>
+      <label class="f">Priority<input type="number" id="f-priority" min="1" step="1"><span class="help">1 = highest in its list</span></label>
     </div>
-    <div class="f2">
-      <label class="f">Priority (1 = highest)<input type="number" id="f-priority" min="1" step="1"></label>
+    <div class="f3">
+      <label class="f" id="w-status">Status<select id="f-status"></select><span class="help">How it is going: on track, needs support, awaiting review, blocked</span></label>
+      <label class="f" id="w-stage">Stage<select id="f-stage"></select><span class="help">Where it is in the process</span></label>
       <label class="f" id="w-kind">Type<select id="f-kind"></select></label>
-      <label class="f" id="w-status">Status<select id="f-status"></select></label>
     </div>
-    <label class="f" id="w-stage">Stage<select id="f-stage"></select></label>
-    <div class="f2" id="w-dates">
-      <label class="f">Start date<input type="date" id="f-start"></label>
-      <label class="f">Design deliverable date<input type="date" id="f-end"></label>
-    </div>
-    <div class="f2" id="w-launch">
-      <label class="f">Design QA starts (back on my plate)<input type="date" id="f-dqastart"></label>
-      <label class="f">Launch date<input type="date" id="f-launch"></label>
+
+    <div id="w-dates">
+      <div class="dlg-sec">Dates</div>
+      <div class="f4" style="margin-top:12px">
+        <label class="f">Start<input type="date" id="f-start"></label>
+        <label class="f">Design deliverable<input type="date" id="f-end"><span class="help">When my design work is done or handed off</span></label>
+        <label class="f">Design QA starts<input type="date" id="f-dqastart"><span class="help">When it comes back to me after Eng</span></label>
+        <label class="f">Launch<input type="date" id="f-launch"></label>
+      </div>
     </div>
     <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
     <label class="f" id="w-support"><span><input type="checkbox" id="f-support"> Still supporting this (shows as Ongoing support)</span></label>
-    <label class="f">Summary<textarea id="f-summary"></textarea></label>
-    <label class="f" id="w-week">This week's outcome (shows on the priority row)<input type="text" id="f-week"></label>
-    <label class="f">Next step<input type="text" id="f-next"></label>
-    <label class="f">Decision needed (shows under Flags until cleared; one point per line)<textarea id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></textarea></label>
-    <div class="f">Flags (blockers, risks, direction changes - each needs a recommendation)<div class="reps" id="f-flags"></div><div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div></div>
-    <div class="f">Milestones<div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div></div>
-    <div class="f">Links<div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div></div>
+
+    <div class="dlg-sec">What people see</div>
+    <label class="f">Summary<textarea id="f-summary"></textarea><span class="help">One or two sentences anyone can follow</span></label>
+    <div class="f2">
+      <label class="f" id="w-week">This week's outcome<input type="text" id="f-week"><span class="help">Shows as "This week" on the priority card</span></label>
+      <label class="f">Next step<input type="text" id="f-next"></label>
+    </div>
+
+    <div class="dlg-sec">Flags</div>
+    <div class="help" style="margin-top:-8px">Add a flag when something is blocked, risky, changing direction, needs a decision, or is an open question. Everything except an open question needs a recommendation.</div>
+    <div class="reps" id="f-flags"></div>
+    <div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div>
+    <label class="f">Decision I need from someone<textarea id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></textarea><span class="help">Shows under Flags until you clear it. One point per line.</span></label>
+
+    <div class="dlg-sec">Milestones</div>
+    <div class="reps" id="f-ms"></div><div><button type="button" class="btn small" id="add-ms">+ Add milestone</button></div>
+    <div class="dlg-sec">Links</div>
+    <div class="reps" id="f-links"></div><div><button type="button" class="btn small" id="add-link">+ Add link</button></div>
     <div class="err" id="f-err" role="alert"></div>
+    </div>
     <div class="dlg-actions">
       <button type="button" class="btn danger" id="f-delete">Delete</button>
+      <button type="button" class="btn" id="f-done">Mark done</button>
       <button type="button" class="btn" id="f-cancel">Cancel</button>
       <button type="submit" class="btn primary" id="f-save">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-park" aria-labelledby="park-title">
+  <form method="dialog" id="park-form">
+    <h2 id="park-title">Parked note</h2>
+    <div class="f2">
+      <label class="f">Type<select id="pk-kind"></select></label>
+      <label class="f">Project (optional)<select id="pk-project"></select></label>
+    </div>
+    <label class="f">Note<textarea id="pk-text"></textarea></label>
+    <div class="err" id="pk-err" role="alert"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="pk-delete">Delete</button>
+      <button type="button" class="btn" id="pk-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
     </div>
   </form>
 </dialog>
@@ -525,7 +589,7 @@
       "pod": "insights",
       "lane": "active",
       "priority": 1,
-      "status": "Needs Support",
+      "status": "On Track",
       "stage": "Iteration",
       "start": "2026-09-14",
       "end": "2026-10-09",
@@ -542,7 +606,7 @@
           "done": true
         },
         {
-          "name": "Kickoff",
+          "name": "Design <> ENG Kickoff",
           "date": "2026-10-09",
           "done": false
         }
@@ -584,31 +648,27 @@
       "launch": "2026-11-16",
       "flags": [
         {
-          "type": "Risk",
-          "date": "2026-10-02",
-          "text": "The tentative Nov 16 release (for testing ahead of full customer release) is at risk.\nMarketing and CSM reviews brought new learnings and conflicting views on the opt-in model.\nI am ramping onto Insights alongside other pods.",
-          "rec": "Nov 16 stays the tentative date, based on engineering and design decisions and requirements.\nI will take the placement and opt-in questions to CX crit on Tuesday and confirm where Nov 16 stands afterwards."
+          "type": "Direction change",
+          "text": "Marketing and CSM reviews brought new learnings and conflicting views on the opt-in model",
+          "rec": "Iterating on UI based on new learnings and perspectives; some complexity added here",
+          "date": "2026-10-02"
         },
         {
           "type": "Open question",
-          "date": "2026-10-03",
-          "text": "Should customers be able to opt in for US only, or by region?\nMACs go out in English only today, and some customers turn comms off because they do not fit a global population.\nRegional customization is also requested.\nMy lean: US only. Region is too specific and needs manual CSM involvement.\nI am noting this for my own learning and information gathering."
-        },
-        {
-          "type": "Open question",
-          "date": "2026-10-04",
-          "text": "Where should the Campaign Planner live?\nOption 1: new top-level 'Communications' page (planner plus MAC).\nOption 2: new 'Communications' tab inside Resources (MAC moves there).\nShould opt-in be managed inside the planner or in Settings?\nI need more context and feedback from designers who know Insights before I can recommend an option.\nI want these answered in CX crit."
+          "text": "Placement - whats too prominent vs not prominent enough; Conflicting viewpoints from Marketing + CSMs",
+          "rec": "",
+          "date": "2026-10-04"
         }
       ],
-      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya.",
-      "changed": "2026-10-04"
+      "next": "Iterate the designs on the Marketing and CSM feedback, align on placement with design team and Ramya.",
+      "changed": "2026-10-05"
     },
     {
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 4,
+      "priority": 3,
       "stage": "Iteration",
       "start": "2026-10-12",
       "end": "2026-10-23",
@@ -635,7 +695,7 @@
       "name": "IBX Remediation Plan",
       "pod": "payer-global",
       "lane": "done",
-      "priority": 2,
+      "priority": 3,
       "stage": "Complete",
       "summary": "Shared quick design ideas for the IBX iteration.\nHanded off and awaiting next steps. Nothing more for me to do until scope is understood; the team is scoping next week.",
       "links": [
@@ -662,7 +722,7 @@
       "name": "Thoughtful Integration into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 3,
+      "priority": 1,
       "summary": "Still to be defined, so it stays in Up next until there is more clarity. Regina is keeping track as the previous team transitions it off.",
       "milestones": [],
       "links": [
@@ -682,7 +742,7 @@
       "name": "Business review builder",
       "pod": "insights",
       "lane": "backlog",
-      "priority": 3,
+      "priority": 2,
       "summary": "Self-serve business review (QBR) generation in Spring Insights to cut the time CSMs spend preparing them.",
       "milestones": [],
       "links": [
@@ -741,7 +801,7 @@
       "name": "Sales demo prototype: insurance filter",
       "pod": "payer-global",
       "lane": "done",
-      "priority": 1,
+      "priority": 2,
       "summary": "Approved prototype used in sales demos. Requests come in now and then to change names and customers. Requester: Matt Vargeese, PM: Vera.",
       "flags": [],
       "milestones": [],
@@ -804,12 +864,12 @@
   ],
   "focus": [
     {
-      "id": "necl-marketing-planner",
-      "note": "Share it in CX crit on Tuesday"
-    },
-    {
       "id": "me-design-qa-web-native",
       "note": ""
+    },
+    {
+      "id": "necl-marketing-planner",
+      "note": "Handoff designs to ENG"
     }
   ],
   "notThisWeek": "Channel Partners"
@@ -1024,8 +1084,8 @@
 
   var expanded = {};
   var flagOpen = {};
-  var priView = "rows";
-  try { if (localStorage.getItem("tracker_pri_view") === "cards") priView = "cards"; } catch (e) { /* default rows */ }
+  var priView = "cards";
+  try { if (localStorage.getItem("tracker_pri_view_v2") === "rows") priView = "rows"; } catch (e) { /* default cards */ }
 
   // Every list uses the same four columns: name and chips, stage or type, dates and details, status and actions.
   function rowCard(o) {
@@ -1086,6 +1146,13 @@
     var out = [];
     var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openEditor(item); };
     out.push(b);
+    if (item.lane !== "done") {
+      var fl = el("button", "btn small", "+ Flag"); fl.type = "button"; fl.onclick = function () { openFlagDialog(item.id); };
+      out.push(fl);
+      var dn = el("button", "btn small", "Mark done"); dn.type = "button";
+      dn.onclick = function () { markDone(item); commit(); };
+      out.push(dn);
+    }
     if (item.lane === "backlog") {
       var mv = el("button", "btn small primary", "Move to Top priorities"); mv.type = "button";
       mv.onclick = function () { openEditor(item, "active"); };
@@ -1191,7 +1258,7 @@
     [["rows", "Rows"], ["cards", "Cards"]].forEach(function (v) {
       var b = el("button", null, v[1]); b.type = "button";
       b.setAttribute("aria-pressed", String(priView === v[0]));
-      b.onclick = function () { priView = v[0]; try { localStorage.setItem("tracker_pri_view", priView); } catch (e) { /* ignore */ } render(); };
+      b.onclick = function () { priView = v[0]; try { localStorage.setItem("tracker_pri_view_v2", priView); } catch (e) { /* ignore */ } render(); };
       seg.appendChild(b);
     });
     box.appendChild(seg);
@@ -1520,7 +1587,6 @@
     var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     var showAll = !!window.__upShowAll;
     $("updates-section").hidden = !ups.length && !ADMIN;
-    $("updates-count").textContent = "(" + ups.length + ")";
     fill("updates", (showAll ? ups : ups.slice(0, 4)).map(updateCard), "Nothing shared yet.");
     $("updates-more").hidden = ups.length <= 4;
     $("updates-more").textContent = showAll ? "Show fewer" : "Show all " + ups.length;
@@ -1531,6 +1597,7 @@
     renderPriTools(active);
     fill("active", active.map(activeCard), "Nothing in progress for this pod.");
     renderTimeline();
+    renderParked();
     fill("backlog", backlog.map(function (i, n) { return backlogRow(i, n + 1); }), "Nothing queued for this pod.");
     var supporting = done.filter(function (i) { return i.support; });
     var finished = done.filter(function (i) { return !i.support; });
@@ -1562,8 +1629,8 @@
     ff.textContent = "";
     ff.hidden = !DATA.notThisWeek;
     if (!DATA.notThisWeek) return;
-    ff.appendChild(el("b", null, "Not this week: "));
-    ff.appendChild(document.createTextNode(DATA.notThisWeek));
+    ff.appendChild(el("span", "snap-label", "Not this week"));
+    ff.appendChild(el("span", "snap-note", DATA.notThisWeek));
   }
 
   function renderPods() {
@@ -1766,6 +1833,70 @@
   function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   var editing = null;
 
+  function markDone(item) {
+    var old = item.lane;
+    item.lane = "done"; item.stage = "Complete"; item.completed = iso(today); item.changed = iso(today);
+    delete item.status;
+    DATA.focus = (DATA.focus || []).filter(function (f) { return f.id !== item.id; });
+    renumber(DATA, "done", item); renumber(DATA, old, null);
+  }
+
+  function openFlagDialog(id) {
+    var sel = $("ff-item"); sel.textContent = "";
+    DATA.items.filter(function (i) { return i.lane !== "done"; }).forEach(function (i) { opt(sel, i.id, i.name); });
+    if (id) sel.value = id;
+    $("ff-text").value = ""; $("ff-rec").value = ""; $("ff-err").textContent = ""; $("dlg-flag").showModal();
+  }
+
+  var PARK_KINDS = ["Other", "Fast follow", "Will not do"];
+  var parkFilter = "all", parkOpen = false, editingPark = null;
+
+  function parkCard(p) {
+    var item = DATA.items.filter(function (i) { return i.id === p.project; })[0] || null;
+    var slot = el("div", "pill-slot"); slot.appendChild(el("span", "ftype", p.kind));
+    var meta = el("div", "meta");
+    if (item) meta.appendChild(el("span", "pod pod-" + item.pod, podName(item.pod)));
+    var c3 = [labelRow("Parked", fmt(p.date))];
+    var tb = bullets(p.text); if (tb) c3.push(tb);
+    var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openPark(p); };
+    return rowCard({ cls: item ? item.pod : "", c1: [slot, item ? el("h3", null, item.name) : null, meta], c3: c3, c4: [b] });
+  }
+
+  function renderParked() {
+    $("parked-section").hidden = !ADMIN;
+    if (!ADMIN) return;
+    $("parked-wrap").hidden = !parkOpen;
+    $("parked-toggle").setAttribute("aria-expanded", String(parkOpen));
+    $("parked-chev").textContent = parkOpen ? "\u25BE" : "\u25B8";
+    var tools = $("parked-tools"); tools.textContent = "";
+    var seg = el("div", "seg"); seg.setAttribute("role", "group"); seg.setAttribute("aria-label", "Filter parked notes");
+    ["all"].concat(PARK_KINDS).forEach(function (k) {
+      var b = el("button", null, k === "all" ? "All" : k); b.type = "button";
+      b.setAttribute("aria-pressed", String(parkFilter === k));
+      b.onclick = function () { parkFilter = k; render(); };
+      seg.appendChild(b);
+    });
+    tools.appendChild(seg);
+    var add = el("button", "btn small primary", "+ Add parked note"); add.type = "button"; add.onclick = function () { openPark(null); };
+    tools.appendChild(add);
+    var list = (DATA.parked || []).filter(function (p) { return parkFilter === "all" || p.kind === parkFilter; });
+    list.sort(function (a, b) { return (PARK_KINDS.indexOf(a.kind) - PARK_KINDS.indexOf(b.kind)) || (a.date < b.date ? 1 : -1); });
+    fill("parked", list.map(parkCard), "Nothing parked yet.");
+  }
+
+  function openPark(p) {
+    editingPark = p;
+    $("park-title").textContent = p ? "Edit parked note" : "Add parked note";
+    $("pk-delete").hidden = !p;
+    var sel = $("pk-project"); sel.textContent = ""; opt(sel, "", "(none)");
+    DATA.items.forEach(function (i) { opt(sel, i.id, i.name); });
+    $("pk-kind").value = p ? p.kind : "Other";
+    sel.value = p ? p.project || "" : "";
+    $("pk-text").value = p ? p.text : "";
+    $("pk-err").textContent = "";
+    $("dlg-park").showModal();
+  }
+
   function commit() {
     DATA.updated = iso(today);
     staleDraft = null;
@@ -1837,13 +1968,20 @@
   }
 
   function flagRow(f) {
-    var r = el("div", "rep flag");
+    var r = el("div", "flagbox");
     r.dataset.date = f.date || iso(today);
+    var top = el("div", "flagbox-top");
     var t = el("select"); FLAG_TYPES.forEach(function (x) { opt(t, x); }); t.value = f.type || "Risk"; t.setAttribute("aria-label", "Flag type");
-    var x = el("textarea"); x.value = f.text || ""; x.placeholder = "What is going on? (one point per line)"; x.setAttribute("aria-label", "Flag details");
-    var rc = el("textarea"); rc.value = f.rec || ""; rc.placeholder = "My recommendation (one point per line)"; rc.setAttribute("aria-label", "Flag recommendation");
-    var rm = el("button", "btn small", "Remove"); rm.type = "button"; rm.onclick = function () { r.remove(); };
-    [t, x, rc, rm].forEach(function (e) { r.appendChild(e); });
+    var rm = el("button", "btn small", "Remove flag"); rm.type = "button"; rm.onclick = function () { r.remove(); };
+    top.appendChild(t); top.appendChild(rm);
+    var x = el("textarea"); x.value = f.text || ""; x.placeholder = "One point per line";
+    var rc = el("textarea"); rc.value = f.rec || ""; rc.placeholder = "One point per line";
+    var l1 = el("label", "f"); l1.appendChild(el("span", null, "What is going on?")); l1.appendChild(x);
+    var l2 = el("label", "f"); var s2 = el("span", null); l2.appendChild(s2); l2.appendChild(rc);
+    function sync() { s2.textContent = t.value === "Open question" ? "My recommendation (optional for an open question)" : "My recommendation (required)"; }
+    t.onchange = sync; sync();
+    var cols = el("div", "f2"); cols.appendChild(l1); cols.appendChild(l2);
+    r.appendChild(top); r.appendChild(cols);
     $("f-flags").appendChild(r);
   }
 
@@ -1854,7 +1992,6 @@
     $("w-stage").hidden = lane === "done" || lane === "ongoing";
     $("w-kind").hidden = lane !== "ongoing";
     $("w-dates").hidden = lane === "ongoing";
-    $("w-launch").hidden = lane === "ongoing";
     $("w-completed").hidden = lane !== "done";
     $("w-support").hidden = lane !== "done";
   }
@@ -1863,6 +2000,7 @@
     editing = item;
     $("dlg-title").textContent = toLane ? "Move to Top priorities" : item ? "Edit project" : "Add project";
     $("f-delete").hidden = !item;
+    $("f-done").hidden = !item || item.lane === "done" || !!toLane;
     var it = item || { lane: "active", pod: "other", status: "On Track", stage: "Awaiting kickoff", milestones: [], links: [] };
     $("f-name").value = it.name || "";
     $("f-pod").value = it.pod;
@@ -1967,10 +2105,29 @@
     $("f-lane").onchange = syncLaneFields;
     $("add-flagrow").onclick = function () { flagRow({}); };
     $("attention-tools").hidden = false;
-    $("add-flag").onclick = function () {
-      var sel = $("ff-item"); sel.textContent = "";
-      DATA.items.filter(function (i) { return i.lane !== "done"; }).forEach(function (i) { opt(sel, i.id, i.name); });
-      $("ff-text").value = ""; $("ff-rec").value = ""; $("ff-err").textContent = ""; $("dlg-flag").showModal();
+    $("add-flag").onclick = function () { openFlagDialog(); };
+    PARK_KINDS.forEach(function (k) { opt($("pk-kind"), k); });
+    $("parked-toggle").onclick = function () { parkOpen = !parkOpen; renderParked(); };
+    $("pk-cancel").onclick = function () { $("dlg-park").close(); };
+    $("pk-delete").onclick = function () {
+      if (!editingPark || !confirm("Delete this parked note?")) return;
+      DATA.parked = DATA.parked.filter(function (x) { return x !== editingPark; });
+      $("dlg-park").close(); commit();
+    };
+    $("park-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var text = $("pk-text").value.trim();
+      if (!text) { $("pk-err").textContent = "Write the note first."; return; }
+      var x = editingPark || { id: "k" + Date.now(), date: iso(today) };
+      x.kind = $("pk-kind").value; x.project = $("pk-project").value; x.text = text;
+      if (!x.project) delete x.project;
+      if (!editingPark) (DATA.parked = DATA.parked || []).push(x);
+      $("dlg-park").close(); currentTab = "backlog"; parkOpen = true; commit();
+    });
+    $("f-done").onclick = function () {
+      $("f-lane").value = "done"; syncLaneFields();
+      $("f-completed").value = $("f-completed").value || iso(today);
+      $("dlg-form").requestSubmit();
     };
     FLAG_TYPES.forEach(function (x) { opt($("ff-type"), x); });
     $("ff-cancel").onclick = function () { $("dlg-flag").close(); };
