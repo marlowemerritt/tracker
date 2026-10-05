@@ -41,21 +41,24 @@
   .card.benefits-me { border-left-color: var(--benefits-me); } .card.payer-global { border-left-color: var(--payer-global); }
   .card.insights { border-left-color: var(--insights); } .card.channel-partners { border-left-color: var(--channel-partners); }
   .card-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
-  .prio { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
+  .prio { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .04em; }
   .card h3 { font-size: 15px; margin: 2px 0 6px; }
   .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
-  .pod { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eeece6; color: #46453f; }
-  .pill { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+  .pod, .tag { font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eeece6; color: #46453f; }
+  .pod::before, .chip.pod-dot::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--other); margin-right: 7px; }
+  .pod-benefits-me::before { background: var(--benefits-me) !important; } .pod-payer-global::before { background: var(--payer-global) !important; }
+  .pod-insights::before { background: var(--insights) !important; } .pod-channel-partners::before { background: var(--channel-partners) !important; }
+  .pill { font-size: 13px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
   .pill::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 6px; }
   .pill.on-track { background: #e3f1ec; color: #17594a; }
   .pill.needs-support { background: #fdebd9; color: #8a4a12; }
-  .pill.awaiting-review { background: #e8e4f3; color: #4d3f7f; }
+  .pill.awaiting-review { background: #eeece6; color: #46453f; }
   .pill.blocked { background: #fbe3df; color: #9b2f1f; }
 
   .stepper { display: flex; gap: 3px; margin: 2px 0 4px; }
   .stepper i { flex: 1; height: 6px; border-radius: 3px; background: #e5e3de; }
   .stepper i.done { background: var(--brand); } .stepper i.current { background: #4fae97; }
-  .stage-label { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .stage-label { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
   .stage-label b { color: var(--ink); }
 
   .row { font-size: 13px; margin-top: 6px; }
@@ -63,58 +66,54 @@
   .warn { color: #9b2f1f; font-weight: 600; }
   .summary { font-size: 13px; margin: 0 0 8px; }
   .links { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
-  .ms { list-style: none; margin: 4px 0 0; padding: 0; font-size: 12px; }
+  .ms { list-style: none; margin: 4px 0 0; padding: 0; font-size: 13px; }
   .ms li { display: flex; gap: 6px; padding: 2px 0; }
   .ms .box { width: 14px; flex-shrink: 0; color: var(--brand); font-weight: 700; }
   .ms li.done { color: var(--muted); text-decoration: line-through; }
 
   .timeline { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
-  .tl { position: relative; min-width: 760px; padding-left: 190px; }
-  .tl-head { position: relative; height: 28px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  .tl { --lab: 230px; position: relative; min-width: 760px; padding-left: var(--lab); }
+  .tl-head { position: relative; overflow: hidden; height: 28px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
   .tl-month { position: absolute; top: 0; bottom: 0; padding: 6px 6px; border-left: 1px solid var(--line); }
-  .tl-row { position: relative; height: 40px; border-bottom: 1px solid #f0eee9; }
+  .tl-row { position: relative; height: 48px; border-bottom: 1px solid #f0eee9; }
   .tl-row:last-child { border-bottom: 0; }
-  .tl-name { position: absolute; left: -190px; width: 190px; padding: 0 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; font-weight: 600; text-decoration: none; color: var(--ink); overflow: hidden; }
-  .tl-name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tl-bar { position: absolute; top: 9px; height: 22px; border-radius: 4px; background: var(--other); color: #fff; font-size: 11px; padding: 0 7px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-decoration: none; }
+  .tl-name { position: absolute; left: calc(-1 * var(--lab)); width: var(--lab); padding: 0 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink); overflow: hidden; }
+  .tl-name span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.25; }
+  .tl-bar { position: absolute; top: 13px; height: 22px; border-radius: 4px; background: var(--other); color: #fff; font-size: 13px; padding: 0 7px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-decoration: none; }
   .tl-bar.planned { background: transparent; border: 2px dashed var(--other); color: var(--ink); }
   .tl-bar.benefits-me { background: var(--benefits-me); border-color: var(--benefits-me); } .tl-bar.payer-global { background: var(--payer-global); border-color: var(--payer-global); }
   .tl-bar.insights { background: var(--insights); border-color: var(--insights); } .tl-bar.channel-partners { background: var(--channel-partners); border-color: var(--channel-partners); }
   .tl-bar.planned { background: transparent; }
-  .tl-ms { position: absolute; top: 14px; width: 12px; height: 12px; margin-left: -6px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
+  .tl-ms { position: absolute; top: 18px; width: 12px; height: 12px; margin-left: -6px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
   .tl-ms.done { background: var(--ink); }
-  .tl-start { position: absolute; top: 11px; margin-left: -9px; height: 18px; display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); font-size: 11px; white-space: nowrap; }
+  .tl-start { position: absolute; top: 15px; margin-left: -9px; height: 18px; display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); font-size: 13px; white-space: nowrap; }
   .tl-start::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--other); border: 3px solid var(--card); box-shadow: 0 0 0 2px var(--other); flex-shrink: 0; }
   .tl-start.benefits-me::before { box-shadow: 0 0 0 2px var(--benefits-me); } .tl-start.payer-global::before { background: var(--payer-global); box-shadow: 0 0 0 2px var(--payer-global); }
   .tl-start.insights::before { background: var(--insights); box-shadow: 0 0 0 2px var(--insights); } .tl-start.channel-partners::before { background: var(--channel-partners); box-shadow: 0 0 0 2px var(--channel-partners); }
-  .tl-dev { position: absolute; top: 15px; height: 10px; border-radius: 5px; border: 1px solid var(--c, var(--other)); background: repeating-linear-gradient(135deg, var(--c, var(--other)) 0 3px, transparent 3px 7px); opacity: .5; text-decoration: none; }
+  .tl-dev { position: absolute; top: 19px; height: 10px; border-radius: 5px; border: 1px solid var(--c, var(--other)); background: repeating-linear-gradient(135deg, var(--c, var(--other)) 0 3px, transparent 3px 7px); opacity: .5; text-decoration: none; }
   .tl-dev.benefits-me { --c: var(--benefits-me); } .tl-dev.payer-global { --c: var(--payer-global); }
   .tl-dev.insights { --c: var(--insights); } .tl-dev.channel-partners { --c: var(--channel-partners); }
-  .card.with-eng { background: #f6f4ef; }
   .card.with-eng .stepper i.done, .card.with-eng .stepper i.current { opacity: .55; }
-  .card.with-eng h3 { color: #55544f; }
-  .tl-launch { position: absolute; top: 6px; height: 28px; width: 2px; background: var(--ink); }
-  .tl-launch span { position: absolute; top: -1px; left: 3px; font-size: 10px; font-weight: 700; background: var(--card); padding: 0 3px; border-radius: 2px; white-space: nowrap; }
+  .tl-launch { position: absolute; top: 9px; height: 28px; width: 2px; background: var(--ink); }
+  .tl-launch span { position: absolute; top: -1px; left: 3px; font-size: 13px; font-weight: 700; background: var(--card); padding: 0 3px; border-radius: 2px; white-space: nowrap; }
   .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
-  .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 11px; font-weight: 700; color: var(--today); }
-  .tl-legend { font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 13px; font-weight: 700; color: var(--today); }
+  .tl-legend { font-size: 13px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 
-  .kind { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
-  .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #e8e4f3; color: #4d3f7f; }
-  .kind.support { background: #fdebd9; color: #8a4a12; } .kind.other { background: #eeece6; color: #46453f; }
-  .ftype { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; white-space: nowrap; text-transform: uppercase; background: #eeece6; color: #46453f; }
+  .kind { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
+  .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #eeece6; color: #46453f; }
+  .kind.support { background: #eeece6; color: #46453f; } .kind.other { background: #eeece6; color: #46453f; }
+  .ftype { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; white-space: nowrap; text-transform: uppercase; background: #eeece6; color: #46453f; }
   .ftype.blocker, .ftype.overdue, .ftype.blocked { background: #fbe3df; color: #9b2f1f; }
-  .ftype.risk, .ftype.needs-support { background: #fdebd9; color: #8a4a12; }
-  .ftype.direction-change { background: #e8e4f3; color: #4d3f7f; }
-  .ftype.decision-needed { background: #dfeaf2; color: #1f4f6b; }
-  .fdate { color: var(--muted); font-size: 12px; }
+  .ftype.risk, .ftype.needs-support, .ftype.direction-change { background: #fdebd9; color: #8a4a12; }
+  .fdate { color: var(--muted); font-size: 13px; }
   
   .rep.flag select { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; }
   [hidden] { display: none !important; }
   .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 20px; flex-wrap: wrap; }
   .tab { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 16px; border: 0; background: none; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; }
   .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brand); }
-  .tab .badge { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 6px; border-radius: 999px; background: #eeece6; color: var(--ink); font-size: 12px; text-align: center; }
+  .tab .badge { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 6px; border-radius: 999px; background: #eeece6; color: var(--ink); font-size: 13px; text-align: center; }
   .tab .badge.alert { background: #fbe3df; color: #9b2f1f; }
   section.first { margin-top: 0; margin-bottom: 20px; }
 
@@ -124,13 +123,13 @@
   .btn { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 6px; border: 1px solid #cfcbc2; background: var(--card); color: var(--ink); cursor: pointer; }
   .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
   .btn.danger { color: #9b2f1f; border-color: #e3b5ac; }
-  .btn.small { padding: 2px 9px; font-size: 12px; }
+  .btn.small { padding: 2px 9px; font-size: 13px; }
 
   dialog { border: 0; border-radius: 12px; padding: 0; width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 24px); box-shadow: 0 12px 40px rgba(0,0,0,.25); color: var(--ink); }
   dialog::backdrop { background: rgba(0,0,0,.4); }
   dialog form { padding: 18px 20px; display: grid; gap: 12px; }
   dialog h2 { margin: 0; font-size: 17px; }
-  .f { display: grid; gap: 4px; font-size: 12px; font-weight: 600; }
+  .f { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
   .f input, .f select, .f textarea { font: inherit; font-size: 13px; font-weight: 400; padding: 6px 8px; border: 1px solid #cfcbc2; border-radius: 6px; width: 100%; }
   .f textarea { min-height: 56px; resize: vertical; }
   .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -138,17 +137,17 @@
   .rep { display: grid; grid-template-columns: 140px 1fr auto auto; gap: 6px; align-items: center; }
   .rep.link { grid-template-columns: 1fr 2fr auto; }
   .rep input[type=text], .rep input[type=date], .rep input[type=url] { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; }
-  .rep label { font-size: 12px; font-weight: 400; white-space: nowrap; }
+  .rep label { font-size: 13px; font-weight: 400; white-space: nowrap; }
   .dlg-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
   .dlg-actions .danger { margin-right: auto; }
   .err { color: #9b2f1f; font-size: 13px; min-height: 1em; }
 
-  .snapshot { background: #eef6f3; border: 1px solid #cfe3dc; border-left: 4px solid var(--brand); border-radius: 8px; padding: 10px 14px; margin: 24px 0 0; font-size: 14px; }
+  .snapshot { margin: 12px 0 0; font-size: 14px; }
   .snapshot:empty { display: none; }
-  .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  .snap-cap { display: block; }
   .pri-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
   .seg { display: inline-flex; border: 1px solid #cfcbc2; border-radius: 6px; overflow: hidden; }
-  .seg button { font: inherit; font-size: 12px; padding: 4px 12px; border: 0; background: var(--card); color: var(--ink); cursor: pointer; }
+  .seg button { font: inherit; font-size: 13px; padding: 4px 12px; border: 0; background: var(--card); color: var(--ink); cursor: pointer; }
   .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
   .card-head { display: block; }
   .ch-dates { margin-top: 6px; }
@@ -156,22 +155,15 @@
   .ch-dates .stepper { max-width: 340px; margin-bottom: 4px; }
   .ch-dates .pill { display: inline-block; margin-bottom: 8px; }
   .card-actions .links { margin: 0; padding: 0; border: 0; }
-  .toggle { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
+  .toggle { font: inherit; font-size: 13px; padding: 3px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer; }
   .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 
-  .snap-cap { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
-  .snap-label { color: var(--muted); font-weight: 600; }
+  .snap-label { color: var(--ink); font-weight: 700; }
+  .snap-label::after { content: ":"; }
+  .snap-label + .pill, .snap-label + .snap-note { margin-left: 5px; }
   .snap-note { color: var(--ink); }
   .updated.stale { color: #9b2f1f; font-weight: 600; }
 
-  .focus { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
-  .focus-item { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--other); border-radius: 10px; padding: 10px 14px; }
-  .focus-item.benefits-me { border-left-color: var(--benefits-me); } .focus-item.payer-global { border-left-color: var(--payer-global); }
-  .focus-item.insights { border-left-color: var(--insights); } .focus-item.channel-partners { border-left-color: var(--channel-partners); }
-  .focus-n { font-size: 22px; font-weight: 700; color: #a9a89f; line-height: 1.1; }
-  .focus-not { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
-  .focus-not b { color: var(--ink); }
-  .focus-note { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
   #f-support { width: auto; margin-right: 6px; }
   .recap-sec { margin-top: 16px; }
@@ -184,14 +176,11 @@
   .info .k { color: var(--muted); }
   .rec { font-size: 13px; margin-top: 3px; color: #3a3935; }
   .rec b { font-weight: 600; }
-  .norec { font-size: 12px; color: var(--muted); font-style: italic; }
+  .norec { font-size: 13px; color: var(--muted); font-style: italic; }
 
-  .kind.leadership { background: #dfeaf2; color: #1f4f6b; }
 
   .rep.flag { grid-template-columns: 130px 1fr 1fr auto; }
   @media (max-width: 560px) { .rep.flag { grid-template-columns: 1fr; } }
-  footer { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
-  footer p { margin: 0 0 6px; }
 
   @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
 
@@ -206,6 +195,8 @@
   .toggle.corner { position: absolute; top: 12px; right: 14px; white-space: nowrap; }
   .metas { display: grid; gap: 6px; justify-items: start; }
   .metas .meta { margin-bottom: 0; }
+  .flag-top .toggle { margin-left: auto; }
+  .flag-sum { font-size: 13px; }
   .pill-slot { margin-bottom: 6px; line-height: 1; }
   .card-actions { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
   .flag-card { background: #fff6f4; border-color: #f0c9c1; }
@@ -214,12 +205,38 @@
   .ch-dates .bul { margin-top: 6px; }
   .flagrow { display: grid; gap: 4px; margin-top: 8px; font-size: 13px; justify-items: start; }
   .rec .bul { margin-top: 2px; }
-  .ftype.update-decided { background: #e3f1ec; color: #17594a; } .ftype.update-requested { background: #e8e4f3; color: #4d3f7f; } .ftype.update-timing { background: #fdebd9; color: #8a4a12; } .ftype.update-fyi { background: #eeece6; color: #46453f; }
-  .ftype.open-question { background: #dff1ee; color: #17594a; }
   .rep.flag textarea { font: inherit; font-size: 13px; padding: 5px 7px; border: 1px solid #cfcbc2; border-radius: 6px; min-width: 0; min-height: 58px; resize: vertical; }
   .pods-proj { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13px; }
   .pods-proj li { padding: 2px 0; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
   @media (max-width: 820px) { .rows .card-head { grid-template-columns: 1fr; } }
+
+  header { align-items: flex-start; }
+  .hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .legend { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: var(--muted); }
+  .legend p { margin: 0 0 6px; }
+  .legend p:last-child { margin: 0; }
+  .h2btn { font: inherit; font-size: 16px; font-weight: 700; background: none; border: 0; padding: 0; cursor: pointer; color: var(--ink); }
+  .linkbtn { font: inherit; font-size: 13px; background: none; border: 0; padding: 0; color: var(--brand); text-decoration: underline; cursor: pointer; }
+  .upd-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #c4523f; margin-left: 8px; vertical-align: middle; }
+  .pl-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+  .pl-line + .pl-line { margin-top: 6px; }
+  .pl-line .row, .pl-line .pill { margin: 0; }
+  .pl-line .stepper { flex: 0 0 150px; width: 150px; margin: 0; }
+  .pl-line .stage-label { margin: 0; }
+  .rows .card.compact { padding: 10px 14px; }
+  .flag-item + .flag-item { margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0c9c1; }
+  .flag-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 6px; }
+  .recap-card { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .recap-card:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  .recap-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .recap-head h3 { margin: 0; font-size: 16px; }
+  .recap-sum { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  @media (max-width: 560px) { .tl { --lab: 100px; min-width: 0; } .tl-row { height: 60px; } .tl-name span { -webkit-line-clamp: 3; } .tl-bar { top: 19px; } .tl-ms { top: 24px; } .tl-start { top: 21px; } .tl-dev { top: 25px; } .tl-launch { top: 15px; } }
+
+  .focus-not { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .focus-not b { color: var(--ink); }
+  .wk-note { font-size: 15px; font-weight: 600; }
+  .wk-note.muted { font-size: 13px; font-weight: 400; font-style: italic; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -230,40 +247,49 @@
       <h1>Marlowe's priorities and pipeline</h1>
       <div class="sub">What's on my plate: what's in flight, where I need help, what's queued next, and what I've shipped.</div>
     </div>
-    <div class="updated" id="updated"></div>
+    <div class="hdr-right">
+      <div class="updated" id="updated"></div>
+      <button type="button" class="toggle" id="legend-btn" aria-expanded="false" aria-controls="legend">Legend</button>
+    </div>
   </header>
+
+  <div class="legend" id="legend" hidden>
+    <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
+    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question, Overdue. Everything except an open question comes with my recommendation.</p>
+    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
+    <p><b>Colors:</b> The dot on a pod label and the left edge of a card show the pod: Benefits / ME teal, Payer &amp; Global orange, Insights blue, Channel Partners purple. Red and amber mean something needs attention, green means on track, and gray labels are just types.</p>
+  </div>
 
   <div class="filters" id="filters" role="group" aria-label="Filter by pod"></div>
 
   <div class="tabs" role="tablist" aria-label="Sections" id="tabs"></div>
 
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
-    <section id="timeline-section" class="first">
-      <h2>Timeline</h2>
-      <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A hatched line means handed off and with Eng; the bar is solid again when Design QA starts. A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
-      <div class="timeline"><div class="tl" id="tl"></div></div>
-    </section>
-
-    <section id="focus-section">
-      <h2>This week's focus</h2>
-      <p class="hint">The two or three things that matter most this week.</p>
-      <div class="focus" id="focus"></div>
+        <section id="timeline-section" class="first">
+      <h2><button type="button" class="h2btn" id="tl-toggle" aria-expanded="true" aria-controls="tl-wrap">Timeline <span id="tl-chev" aria-hidden="true">&#9662;</span></button></h2>
+      <div id="tl-wrap">
+        <p class="hint">Bars run from start to design deliverable date (solid = active, dashed = planned). <button type="button" class="linkbtn" id="tl-info-btn" aria-expanded="false" aria-controls="tl-info">Legend</button></p>
+        <p class="hint" id="tl-info" hidden>Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A hatched line means handed off and with Eng; the bar is solid again when Design QA starts. A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
+        <div class="timeline"><div class="tl" id="tl"></div></div>
+      </div>
     </section>
 
     <section id="active-section">
-      <h2>Top priorities <span class="count" id="active-count"></span></h2>
+      <h2 id="active-title">Top priorities</h2>
       <p class="hint">In the order I am putting my time. The bar shows how far each project has moved through its stages.</p>
       <div class="pri-tools" id="pri-tools"></div>
       <div class="grid rows" id="active"></div>
+      <div class="snapshot" id="snapshot"></div>
+      <div class="focus-not" id="focus-foot" hidden></div>
     </section>
 
-    <div class="snapshot" id="snapshot"></div>
-
     <section id="attention-section">
-      <h2>Flags <span class="count" id="attention-count"></span></h2>
+      <h2><button type="button" class="h2btn" id="flags-toggle" aria-expanded="true" aria-controls="flags-wrap">Flags <span class="count" id="attention-count"></span> <span id="flags-chev" aria-hidden="true">&#9662;</span></button></h2>
+      <div id="flags-wrap">
       <p class="hint">Risks, blockers, open questions and decisions I need, plus anything overdue.</p>
       <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
       <div class="rows" id="attention"></div>
+    </div>
     </section>
 
     <section id="updates-section">
@@ -279,6 +305,7 @@
       <p class="hint">Smaller items and ongoing work with no start or end date: bugs, support, learning.</p>
       <div class="rows" id="ongoing"></div>
     </section>
+
   </div>
 
   <div role="tabpanel" id="panel-recap" aria-labelledby="tab-recap" hidden>
@@ -318,11 +345,6 @@
     </section>
   </div>
 
-  <footer>
-    <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
-    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question, Overdue. Everything except an open question comes with my recommendation.</p>
-    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
-  </footer>
 </div>
 
 <dialog id="dlg-flag" aria-labelledby="flag-title">
@@ -347,7 +369,6 @@
       <label class="f">Capacity<select id="s-cap"></select></label>
       <label class="f">Capacity note<input type="text" id="s-capnote" placeholder="e.g. New asks go to Up next unless something moves"></label>
     </div>
-    <div class="f">This week's focus (2 or 3 priorities)<div class="reps" id="s-focus"></div></div>
     <label class="f">Not this week (one line)<input type="text" id="s-not" placeholder="e.g. Channel Partners"></label>
     <div class="dlg-actions">
       <button type="button" class="btn" id="s-cancel">Cancel</button>
@@ -433,6 +454,7 @@
     <label class="f" id="w-completed">Completed on<input type="date" id="f-completed"></label>
     <label class="f" id="w-support"><span><input type="checkbox" id="f-support"> Still supporting this (shows as Ongoing support)</span></label>
     <label class="f">Summary<textarea id="f-summary"></textarea></label>
+    <label class="f" id="w-week">This week's outcome (shows on the priority row)<input type="text" id="f-week"></label>
     <label class="f">Next step<input type="text" id="f-next"></label>
     <label class="f">Decision needed (shows under Flags until cleared; one point per line)<textarea id="f-decision" placeholder="e.g. Henry to choose option A or B by Oct 14"></textarea></label>
     <div class="f">Flags (blockers, risks, direction changes - each needs a recommendation)<div class="reps" id="f-flags"></div><div><button type="button" class="btn small" id="add-flagrow">+ Add flag</button></div></div>
@@ -449,7 +471,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-04",
+  "updated": "2026-10-05",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -578,7 +600,8 @@
           "text": "Where should the Campaign Planner live?\nOption 1: new top-level 'Communications' page (planner plus MAC).\nOption 2: new 'Communications' tab inside Resources (MAC moves there).\nShould opt-in be managed inside the planner or in Settings?\nI need more context and feedback from designers who know Insights before I can recommend an option.\nI want these answered in CX crit."
         }
       ],
-      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya."
+      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya.",
+      "changed": "2026-10-04"
     },
     {
       "id": "gottman-marketplace",
@@ -631,7 +654,8 @@
       ],
       "milestones": [],
       "support": true,
-      "flags": []
+      "flags": [],
+      "changed": "2026-10-04"
     },
     {
       "id": "thoughtful-integration-into-marketplace",
@@ -821,8 +845,18 @@
     return data;
   }
   var DATA = prepare(JSON.parse(PUBLISHED));
+  // A draft is stamped with the published build it started from. If the page has been republished since,
+  // the draft is held back (not applied) until the admin chooses, so stale data never silently wins.
+  var BUILD = (function () { var h = 5381; for (var k = 0; k < PUBLISHED.length; k++) h = ((h * 33) ^ PUBLISHED.charCodeAt(k)) >>> 0; return h.toString(36); })();
+  var staleDraft = null;
   if (ADMIN) {
-    try { var draft = localStorage.getItem(DRAFT_KEY); if (draft) DATA = prepare(JSON.parse(draft)); } catch (e) { /* use published */ }
+    try {
+      var saved = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+      var draftData = saved && saved.data ? saved.data : saved;
+      if (draftData && JSON.stringify(prepare(draftData)) === JSON.stringify(DATA)) localStorage.removeItem(DRAFT_KEY);
+      else if (draftData && saved.base === BUILD) DATA = prepare(draftData);
+      else if (draftData) staleDraft = draftData;
+    } catch (e) { /* use published */ }
   }
   var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Decision needed", "Open question"];
   var UPDATE_KINDS = ["Decided", "Requested", "Timing", "FYI"];
@@ -912,6 +946,36 @@
     return ls.length > 1 ? bullets(text) : el("p", "summary", ls[0]);
   }
 
+  var SEVERITY = { "Blocker": 0, "Blocked": 0, "Overdue": 1, "Risk": 1, "Direction change": 2, "Needs support": 2, "Decision needed": 3, "Open question": 4 };
+  function sevOf(type) { return SEVERITY[type] == null ? 5 : SEVERITY[type]; }
+
+  // One group per project, most severe flag first: Blocker, Risk, Decision needed, Open question.
+  function flagGroups(list) {
+    var groups = [];
+    list.forEach(function (i) {
+      var fl = attentionFor(i).slice().sort(function (a, b) { return sevOf(a.type) - sevOf(b.type); });
+      if (fl.length) groups.push({ item: i, flags: fl, sev: sevOf(fl[0].type) });
+    });
+    groups.sort(function (a, b) { return (a.sev - b.sev) || byPriority(a.item, b.item); });
+    return groups;
+  }
+
+  function baselineDate() { var r = recapList()[0]; return r ? r.week : lastFriday(); }
+  function isNew(dateStr) { return !!dateStr && dateStr > baselineDate(); }
+  function itemChanged(item) { return isNew(item.changed) || (item.flags || []).some(function (f) { return isNew(f.date); }); }
+  function changeDot() {
+    var d = el("span", "upd-dot");
+    d.setAttribute("role", "img");
+    d.setAttribute("aria-label", "Updated since the last Friday recap");
+    d.title = "Updated since the last Friday recap";
+    return d;
+  }
+  function labelDiv(text, changed) {
+    var l = el("div", "prio", text);
+    if (changed) l.appendChild(changeDot());
+    return l;
+  }
+
   function recBlock(rec) {
     var d = el("div", "rec");
     d.appendChild(el("b", null, "Recommendation"));
@@ -959,6 +1023,7 @@
   }
 
   var expanded = {};
+  var flagOpen = {};
   var priView = "rows";
   try { if (localStorage.getItem("tracker_pri_view") === "cards") priView = "cards"; } catch (e) { /* default rows */ }
 
@@ -994,10 +1059,10 @@
   function metaRow(item, extra) {
     var wrap = el("div", "metas");
     var m = el("div", "meta");
-    m.appendChild(el("span", "pod", podName(item.pod)));
+    m.appendChild(el("span", "pod pod-" + item.pod, podName(item.pod)));
     wrap.appendChild(m);
     var m2 = el("div", "meta");
-    (extra || []).forEach(function (t) { m2.appendChild(el("span", "pod", t)); });
+    (extra || []).forEach(function (t) { m2.appendChild(el("span", "tag", t)); });
     var seen = {};
     attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m2.appendChild(ftypePill(f.type)); } });
     if (m2.children.length) wrap.appendChild(m2);
@@ -1076,6 +1141,13 @@
     return out;
   }
 
+  function priTitle(n) { return n === 1 ? "Top priority" : n > 1 ? "Top " + n + " priorities" : "Top priorities"; }
+
+  function focusNote(item) {
+    var f = (DATA.focus || []).filter(function (x) { return x.id === item.id; })[0];
+    return f && f.note ? f.note : "";
+  }
+
   function activeCard(item) {
     var open = !!expanded[item.id];
     var dates = [];
@@ -1089,11 +1161,22 @@
     }
     if (item.dqaStart || withEng(item)) dates.push(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
     if (item.launch) dates.push(labelRow("Launch", launchText(item)));
+    var wkNote = focusNote(item);
+    var weekLine = null;
+    if (wkNote || ADMIN) {
+      weekLine = el("div", "pl-line");
+      weekLine.appendChild(labelRow("This week", wkNote || "Add this week's outcome", wkNote ? "wk-note" : "wk-note muted"));
+    }
+    var line1 = el("div", "pl-line");
+    line1.appendChild(pill(item.status));
+    stageCol(item, true).forEach(function (n) { line1.appendChild(n); });
+    var line2 = el("div", "pl-line");
+    dates.forEach(function (n) { line2.appendChild(n); });
     return rowCard({
-      id: item.id, cls: item.pod + (withEng(item) ? " with-eng" : "") + (open ? " open" : ""),
-      c1: [el("div", "prio", "PRIORITY " + item.priority), el("h3", null, item.name), metaRow(item, withEng(item) ? ["With Eng"] : [])],
-      c2: [pill(item.status)].concat(stageCol(item, true)),
-      c3: dates,
+      id: item.id, cls: item.pod + " compact" + (withEng(item) ? " with-eng" : "") + (open ? " open" : ""),
+      c1: [labelDiv("PRIORITY " + item.priority, itemChanged(item)), el("h3", null, item.name), metaRow(item, withEng(item) ? ["With Eng"] : [])],
+      c2: [weekLine, line1],
+      c3: [line2],
       c4: adminBtns(item),
       toggle: toggleBtn(item),
       body: open ? itemBody(item) : null
@@ -1128,7 +1211,7 @@
     if (item.launch) dates.push(labelRow("Launch", launchText(item)));
     return rowCard({
       id: item.id, cls: item.pod + (open ? " open" : ""),
-      c1: [el("div", "prio", "UP NEXT " + rank), el("h3", null, item.name), metaRow(item)],
+      c1: [labelDiv("UP NEXT " + rank, itemChanged(item)), el("h3", null, item.name), metaRow(item)],
       c2: stageCol(item, false),
       c3: dates,
       c4: adminBtns(item),
@@ -1142,7 +1225,7 @@
     var dates = item.completed ? [labelRow("Completed", fmt(item.completed))] : [];
     return rowCard({
       id: item.id, cls: item.pod + (open ? " open" : ""),
-      c1: [el("div", "prio", item.support ? "ONGOING SUPPORT" : "COMPLETED"), el("h3", null, item.name), metaRow(item)],
+      c1: [labelDiv(item.support ? "ONGOING SUPPORT" : "COMPLETED", itemChanged(item)), el("h3", null, item.name), metaRow(item)],
       c2: [],
       c3: dates,
       c4: adminBtns(item),
@@ -1156,7 +1239,7 @@
     var sm = textBlock(item.summary);
     return rowCard({
       id: item.id, cls: item.pod,
-      c1: [el("div", "prio", (item.kind || "Other").toUpperCase()), el("h3", null, item.name), metaRow(item)],
+      c1: [labelDiv((item.kind || "Other").toUpperCase(), itemChanged(item)), el("h3", null, item.name), metaRow(item)],
       c2: [],
       c3: [sm],
       c4: [links].concat(adminBtns(item))
@@ -1171,29 +1254,47 @@
     return h;
   }
 
-  function flagCard(entry) {
-    var item = entry.item, f = entry.flag;
-    var c3 = [];
-    if (f.date) c3.push(labelRow("Raised", fmt(f.date)));
-    var tb = bullets(f.text); if (tb) c3.push(tb);
-    if (f.rec) c3.push(recBlock(f.rec));
-    else if (f.manual && ADMIN && f.type !== "Open question") c3.push(el("div", "norec", "No recommendation yet. Edit to add one."));
-    var c4 = [];
-    if (ADMIN) {
-      var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(item); };
-      c4.push(ed);
-      if (f.manual) {
-        var rs = el("button", "btn small", "Resolve"); rs.type = "button";
-        rs.onclick = function () { item.flags.splice(f.idx, 1); commit(); };
-        c4.push(rs);
+  function flagGroupCard(g) {
+    var item = g.item;
+    var list = g.flags.map(function (f, n) {
+      var key = item.id + "|" + n + "|" + f.type;
+      var open = flagOpen[key] !== false;
+      var box = el("div", "flag-item");
+      var top = el("div", "flag-top");
+      top.appendChild(ftypePill(f.type));
+      if (f.date) top.appendChild(el("span", "fdate", "Raised " + fmt(f.date)));
+      if (isNew(f.date)) top.appendChild(changeDot());
+      var tg = el("button", "toggle", open ? "Collapse " : "Expand ");
+      tg.type = "button"; tg.setAttribute("aria-expanded", String(open));
+      tg.appendChild(el("span", null, open ? "\u25B4" : "\u25BE"));
+      tg.onclick = function () { flagOpen[key] = !open; render(); };
+      top.appendChild(tg);
+      box.appendChild(top);
+      if (!open) {
+        box.appendChild(el("div", "flag-sum", lines(f.text)[0] || ""));
+        return box;
       }
-    }
-    var slot = el("div", "pill-slot"); slot.appendChild(ftypePill(f.type));
+      var tb = bullets(f.text); if (tb) box.appendChild(tb);
+      if (f.rec) box.appendChild(recBlock(f.rec));
+      else if (f.manual && ADMIN && f.type !== "Open question") box.appendChild(el("div", "norec", "No recommendation yet. Edit to add one."));
+      if (ADMIN) {
+        var act = el("div", "card-actions");
+        var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(item); };
+        act.appendChild(ed);
+        if (f.manual) {
+          var rs = el("button", "btn small", "Resolve"); rs.type = "button";
+          rs.onclick = function () { item.flags.splice(f.idx, 1); item.changed = iso(today); commit(); };
+          act.appendChild(rs);
+        }
+        box.appendChild(act);
+      }
+      return box;
+    });
+    var meta = el("div", "meta"); meta.appendChild(el("span", "pod pod-" + item.pod, podName(item.pod)));
     return rowCard({
       cls: item.pod + " flag-card",
-      c1: [slot, projectLink(item), (function () { var m = el("div", "meta"); m.appendChild(el("span", "pod", podName(item.pod))); return m; })()],
-      c3: c3,
-      c4: c4
+      c1: [labelDiv(g.flags.length + (g.flags.length === 1 ? " FLAG" : " FLAGS"), g.flags.some(function (f) { return isNew(f.date); })), projectLink(item), meta],
+      c2: list
     });
   }
 
@@ -1206,8 +1307,9 @@
     var c4 = [];
     if (ADMIN) { var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openUpdate(u); }; c4.push(b); }
     var meta = el("div", "meta");
-    if (item) meta.appendChild(el("span", "pod", podName(item.pod)));
+    if (item) meta.appendChild(el("span", "pod pod-" + item.pod, podName(item.pod)));
     var slot = el("div", "pill-slot"); slot.appendChild(el("span", "ftype update-" + slug(u.kind), u.kind));
+    if (isNew(u.date)) slot.appendChild(changeDot());
     return rowCard({
       cls: item ? item.pod : "",
       c1: [slot, projectLink(item), meta],
@@ -1271,7 +1373,7 @@
       return DATA.items.some(function (i) { return i.pod === k; });
     }));
     keys.forEach(function (k) {
-      var b = el("button", "chip", k === "all" ? "All pods" : podName(k));
+      var b = el("button", "chip" + (k === "all" ? "" : " pod-dot pod-" + k), k === "all" ? "All pods" : podName(k));
       b.type = "button";
       b.setAttribute("aria-pressed", String(podFilter === k));
       b.onclick = function () { podFilter = k; render(); };
@@ -1286,15 +1388,17 @@
     if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
     tl.style.paddingLeft = "";
 
-    var starts = rows.map(function (i) { return pd(i.start); }).concat([today]);
-    var ends = rows.map(function (i) { return pd(i.launch || i.dqaStart || i.end || i.start); }).concat([today]);
-    var min = new Date(Math.min.apply(null, starts) - 7 * DAY);
-    var max = new Date(Math.max.apply(null, ends) + 14 * DAY);
+    // Rolling window: about 2 weeks back and 10 weeks ahead of today.
+    var min = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 14);
+    var max = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 70);
     // Weekends are skipped so the chart reads in working days.
     var base = new Date(min.getFullYear(), min.getMonth(), min.getDate() - ((min.getDay() + 6) % 7));
     function bx(dt) { var days = Math.round((dt - base) / DAY), wk = Math.floor(days / 7); return wk * 5 + Math.min(days - wk * 7, 5); }
     var x0 = bx(min), span = bx(max) - x0;
     function pct(dt) { return ((bx(dt) - x0) / span) * 100; }
+    function cl(dt) { return Math.max(0, Math.min(100, pct(dt))); }
+    function inWin(dt) { return dt >= min && dt <= max; }
+    function overlaps(a, z) { return z >= min && a <= max; }
 
     var head = el("div", "tl-head");
     var m = new Date(min.getFullYear(), min.getMonth() + 1, 1);
@@ -1316,47 +1420,54 @@
       name.title = item.name;
       name.appendChild(el("span", null, item.name));
       row.appendChild(name);
+      var s0 = pd(item.start);
       if (item.end) {
-        var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : withEng(item) ? "Design" : item.stage);
-        bar.href = "#" + item.id;
-        bar.style.left = pct(pd(item.start)) + "%";
-        bar.style.width = Math.max(1, pct(pd(item.end)) - pct(pd(item.start))) + "%";
-        bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
-        row.appendChild(bar);
-      } else {
+        var e0 = pd(item.end);
+        if (overlaps(s0, e0)) {
+          var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : withEng(item) ? "Design" : item.stage);
+          bar.href = "#" + item.id;
+          bar.style.left = cl(s0) + "%";
+          bar.style.width = Math.max(1, cl(e0) - cl(s0)) + "%";
+          bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
+          row.appendChild(bar);
+        }
+      } else if (inWin(s0)) {
         var dot = el("a", "tl-start " + item.pod);
         dot.href = "#" + item.id;
-        dot.style.left = pct(pd(item.start)) + "%";
+        dot.style.left = pct(s0) + "%";
         dot.title = item.name + ": starts " + fmt(item.start) + ", design handoff TBD";
         dot.appendChild(el("span", null, "Starts " + fmt(item.start) + " - handoff TBD"));
         row.appendChild(dot);
       }
       var devTo = item.dqaStart || item.launch;
-      if (item.end && devTo && item.lane === "active" && pd(devTo) > pd(item.end)) {
+      if (item.end && devTo && item.lane === "active" && pd(devTo) > pd(item.end) && overlaps(pd(item.end), pd(devTo))) {
         var dev = el("div", "tl-dev " + item.pod);
-        dev.style.left = pct(pd(item.end)) + "%";
-        dev.style.width = Math.max(0.5, pct(pd(devTo)) - pct(pd(item.end))) + "%";
+        dev.style.left = cl(pd(item.end)) + "%";
+        dev.style.width = Math.max(0.5, cl(pd(devTo)) - cl(pd(item.end))) + "%";
         dev.title = item.name + ": with Eng " + fmt(item.end) + " to " + fmt(devTo);
         row.appendChild(dev);
       }
       if (item.dqaStart && item.lane === "active") {
-        if (item.launch && pd(item.launch) > pd(item.dqaStart)) {
-          var qb = el("a", "tl-bar " + item.pod, "Design QA");
-          qb.href = "#" + item.id;
-          qb.style.left = pct(pd(item.dqaStart)) + "%";
-          qb.style.width = Math.max(1, pct(pd(item.launch)) - pct(pd(item.dqaStart))) + "%";
-          qb.title = item.name + ": Design QA " + fmt(item.dqaStart) + " to " + fmt(item.launch);
-          row.appendChild(qb);
-        } else {
+        var q0 = pd(item.dqaStart);
+        if (item.launch && pd(item.launch) > q0) {
+          if (overlaps(q0, pd(item.launch))) {
+            var qb = el("a", "tl-bar " + item.pod, "Design QA");
+            qb.href = "#" + item.id;
+            qb.style.left = cl(q0) + "%";
+            qb.style.width = Math.max(1, cl(pd(item.launch)) - cl(q0)) + "%";
+            qb.title = item.name + ": Design QA " + fmt(item.dqaStart) + " to " + fmt(item.launch);
+            row.appendChild(qb);
+          }
+        } else if (inWin(q0)) {
           var qd = el("a", "tl-start " + item.pod);
           qd.href = "#" + item.id;
-          qd.style.left = pct(pd(item.dqaStart)) + "%";
+          qd.style.left = pct(q0) + "%";
           qd.title = item.name + ": Design QA starts " + fmt(item.dqaStart);
           qd.appendChild(el("span", null, "Design QA " + fmt(item.dqaStart)));
           row.appendChild(qd);
         }
       }
-      if (item.launch) {
+      if (item.launch && inWin(pd(item.launch))) {
         var fl = el("div", "tl-launch");
         fl.style.left = pct(pd(item.launch)) + "%";
         fl.title = "Launch - " + fmt(item.launch);
@@ -1364,6 +1475,7 @@
         row.appendChild(fl);
       }
       (item.milestones || []).forEach(function (ms) {
+        if (!inWin(pd(ms.date))) return;
         var d = el("div", "tl-ms" + (ms.done ? " done" : ""));
         d.style.left = pct(pd(ms.date)) + "%";
         d.title = ms.name + " - " + fmt(ms.date) + (ms.done ? " (done)" : "");
@@ -1373,8 +1485,7 @@
     });
 
     var line = el("div", "tl-today");
-    line.style.left = "calc(190px + (100% - 190px) * " + (pct(today) / 100) + ")";
-    if (window.matchMedia("(max-width: 560px)").matches) line.style.left = "calc(120px + (100% - 120px) * " + (pct(today) / 100) + ")";
+    line.style.left = "calc(var(--lab) + (100% - var(--lab)) * " + (pct(today) / 100) + ")";
     tl.appendChild(line);
   }
 
@@ -1396,15 +1507,15 @@
 
     renderTabs(flags.length, backlog.length, done.length);
     renderSnapshot();
-    renderFocus();
+    renderNotThisWeek();
     renderPods();
     renderRecap();
 
     document.getElementById("attention-count").textContent = "(" + flags.length + ")";
-    document.getElementById("active-count").textContent = "(" + active.length + ")";
+    document.getElementById("active-title").textContent = priTitle(active.length);
     document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
 
-    fill("attention", flags.map(flagCard), "Nothing flagged right now.");
+    fill("attention", flagGroups(active.concat(backlog, ongoing)).map(flagGroupCard), "Nothing flagged right now.");
 
     var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     var showAll = !!window.__upShowAll;
@@ -1446,32 +1557,13 @@
     }
   }
 
-  function renderFocus() {
-    var focus = (DATA.focus || []).map(function (f) {
-      return { item: DATA.items.filter(function (i) { return i.id === f.id; })[0], note: f.note };
-    }).filter(function (f) { return f.item; });
-    $("focus-section").hidden = !focus.length && !ADMIN;
-    var box = $("focus");
-    box.textContent = "";
-    if (!focus.length) { box.appendChild(el("div", "empty", "No focus set yet. Use Weekly settings.")); return; }
-    if (DATA.notThisWeek) box.dataset.not = DATA.notThisWeek; else delete box.dataset.not;
-    focus.forEach(function (f, n) {
-      var c = el("div", "focus-item " + f.item.pod);
-      c.appendChild(el("span", "focus-n", String(n + 1)));
-      var b = el("div");
-      if (f.item.lane === "active" || f.item.lane === "ongoing") {
-        var a = el("a", null, f.item.name); a.href = "#" + f.item.id; a.style.fontWeight = "600"; b.appendChild(a);
-      } else b.appendChild(el("b", null, f.item.name));
-      if (f.note) b.appendChild(el("div", "focus-note", f.note));
-      c.appendChild(b);
-      box.appendChild(c);
-    });
-    if (DATA.notThisWeek) {
-      var nt = el("div", "focus-not");
-      nt.appendChild(el("b", null, "Not this week: "));
-      nt.appendChild(document.createTextNode(DATA.notThisWeek));
-      box.appendChild(nt);
-    }
+  function renderNotThisWeek() {
+    var ff = $("focus-foot");
+    ff.textContent = "";
+    ff.hidden = !DATA.notThisWeek;
+    if (!DATA.notThisWeek) return;
+    ff.appendChild(el("b", null, "Not this week: "));
+    ff.appendChild(document.createTextNode(DATA.notThisWeek));
   }
 
   function renderPods() {
@@ -1515,38 +1607,39 @@
     var L = [];
     var long = today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     L.push("Weekly update - " + long);
-    if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push((DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
-    var focus = (DATA.focus || []).map(function (f) { return { item: DATA.items.filter(function (i) { return i.id === f.id; })[0], note: f.note }; }).filter(function (f) { return f.item; });
-    if (focus.length) { L.push("", "Focus this week:"); focus.forEach(function (f, n) { L.push((n + 1) + ". " + f.item.name + (f.note ? " - " + f.note : "")); }); if (DATA.notThisWeek) L.push("Not this week: " + DATA.notThisWeek); }
-    var rc = recapList()[0];
-    if (rc) RECAP_NOTES.slice(0, 2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var active = DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority);
-    L.push("", "In progress:");
+    L.push("", priTitle(active.length) + ":");
     if (!active.length) L.push("- None");
     active.forEach(function (i) {
-      L.push("- " + i.name + " (" + i.stage + ", " + i.status + "), " + (withEng(i) ? "handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") : "design deliverable " + fmt(i.end)) + (i.launch ? ", launch " + fmt(i.launch) : ""));
+      L.push("- " + i.name + " (" + i.stage + ", " + statusLabel(i.status) + "), " + (withEng(i) ? "handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") : "design deliverable " + fmt(i.end)) + (i.launch ? ", launch " + fmt(i.launch) : ""));
+      if (focusNote(i)) L.push("    This week: " + focusNote(i));
       if (i.next) L.push("    Next step: " + i.next);
     });
-    var flags = [];
-    DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { flags.push({ i: i, f: f }); }); });
-    L.push("", "Flags and blockers:");
-    if (!flags.length) L.push("- None");
-    flags.forEach(function (x) { L.push("- [" + x.f.type + "] " + x.i.name + ": " + lines(x.f.text).join(" ") + (x.f.rec ? " Recommendation: " + lines(x.f.rec).join(" ") : "")); });
-    var ups = (DATA.updates || []).filter(function (e) { return daysBetween(pd(e.date), today) <= 7; });
+    if (DATA.notThisWeek) L.push("Not this week: " + DATA.notThisWeek);
+    if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push("", (DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
+    var groups = flagGroups(DATA.items.filter(function (i) { return i.lane !== "done"; }));
+    L.push("", "Flags:");
+    if (!groups.length) L.push("- None");
+    groups.forEach(function (g) {
+      L.push("- " + g.item.name + " (" + g.flags.length + (g.flags.length === 1 ? " flag" : " flags") + ")");
+      g.flags.forEach(function (f) { L.push("    [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); });
+    });
+    var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 4);
     if (ups.length) {
-      L.push("", "Updates I shared:");
+      L.push("", "Updates I've shared:");
       ups.forEach(function (e) {
         var it = DATA.items.filter(function (i) { return i.id === e.project; })[0];
         L.push("- [" + e.kind + "] " + (it ? it.name + ": " : "") + e.text + (e.who ? " (with " + e.who + ")" : "") + (e.detail ? " - " + lines(e.detail).join("; ") : ""));
       });
     }
-    if (rc) RECAP_NOTES.slice(2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
+    var rc = recapList()[0];
+    if (rc) RECAP_NOTES.forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var done = DATA.items.filter(function (i) { return i.lane === "done" && i.completed && daysBetween(pd(i.completed), today) <= 7; });
     if (done.length) { L.push("", "Completed this week:"); done.forEach(function (i) { L.push("- " + i.name); }); }
     return L.join("\n");
   }
 
-  var recapWeek = null, editingRecap = null;
+  var recapOpen = {}, editingRecap = null;
   function recapList() { return (DATA.recaps || []).slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; }); }
   function lastFriday() {
     var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -1562,59 +1655,70 @@
     return sec;
   }
 
+  function recapLine(r) {
+    var l = lines(r.done)[0] || lines(r.next)[0] || lines(r.other)[0] || "";
+    return l.length > 140 ? l.slice(0, 137) + "..." : l;
+  }
+
   function renderRecap() {
     var list = recapList();
     var tools = $("recap-tools"), box = $("recap");
     tools.textContent = ""; box.textContent = "";
-    if (!recapWeek || !list.some(function (r) { return r.week === recapWeek; })) recapWeek = list.length ? list[0].week : null;
-    if (list.length > 1) {
-      var sel = el("select"); sel.setAttribute("aria-label", "Week");
-      list.forEach(function (r) { opt(sel, r.week, "Week ending " + fmt(r.week)); });
-      sel.value = recapWeek;
-      sel.onchange = function () { recapWeek = sel.value; renderRecap(); };
-      tools.appendChild(sel);
-    }
     if (ADMIN) {
       var nw = el("button", "btn small primary", "+ New week"); nw.type = "button"; nw.onclick = function () { openRecap(null); };
       tools.appendChild(nw);
-      if (recapWeek) {
-        var ed = el("button", "btn small", "Edit this week"); ed.type = "button";
-        ed.onclick = function () { openRecap(list.filter(function (r) { return r.week === recapWeek; })[0]); };
-        tools.appendChild(ed);
-      }
     }
-    if (!recapWeek) { box.appendChild(el("div", "empty", "No weekly recap posted yet.")); return; }
-    var r = list.filter(function (x) { return x.week === recapWeek; })[0];
-    var latest = list[0].week === r.week;
-    box.appendChild(el("h3", "recap-week", "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })));
-
-    if (latest) {
-      var ol = el("ol");
-      DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
-        ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
+    if (!list.length) { box.appendChild(el("div", "empty", "No weekly recap posted yet.")); return; }
+    list.forEach(function (r, n) {
+      var open = recapOpen[r.week] != null ? recapOpen[r.week] : n === 0;
+      var latest = n === 0;
+      var card = el("div", "recap-card");
+      var hd = el("div", "recap-head");
+      hd.appendChild(el("h3", "recap-week", "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })));
+      var tg = el("button", "toggle", open ? "Collapse " : "Expand ");
+      tg.type = "button"; tg.setAttribute("aria-expanded", String(open));
+      tg.appendChild(el("span", null, open ? "\u25B4" : "\u25BE"));
+      tg.onclick = function () { recapOpen[r.week] = !open; renderRecap(); };
+      hd.appendChild(tg);
+      if (ADMIN) {
+        var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openRecap(r); };
+        hd.appendChild(ed);
+      }
+      card.appendChild(hd);
+      if (!open) {
+        var sum = recapLine(r);
+        if (sum) card.appendChild(el("div", "recap-sum", sum));
+        box.appendChild(card);
+        return;
+      }
+      if (latest) {
+        var ol = el("ol");
+        DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
+          ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
+        });
+        if (ol.children.length) card.appendChild(recapSection("Priorities", ol));
+      }
+      RECAP_NOTES.forEach(function (nt) { if (r[nt[0]]) card.appendChild(recapSection(nt[1], bullets(r[nt[0]]))); });
+      var shared = (DATA.updates || []).filter(function (e) {
+        var back = daysBetween(pd(e.date), pd(r.week));
+        return back >= 0 && back <= 6;
       });
-      if (ol.children.length) box.appendChild(recapSection("Priorities", ol));
-    }
-    RECAP_NOTES.forEach(function (n) { if (r[n[0]]) box.appendChild(recapSection(n[1], bullets(r[n[0]]))); });
-
-    var shared = (DATA.updates || []).filter(function (e) {
-      var back = daysBetween(pd(e.date), pd(r.week));
-      return back >= 0 && back <= 6;
-    });
-    if (shared.length) {
-      var dl = el("ul", "bul");
-      shared.forEach(function (e) { dl.appendChild(el("li", null, "[" + e.kind + "] " + e.text + (e.who ? " (with " + e.who + ")" : ""))); });
-      box.appendChild(recapSection("Updates I shared", dl));
-    }
-    if (latest) {
-      var fl = [];
-      DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
-      if (fl.length) {
-        var fu = el("ul", "bul");
-        fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
-        box.appendChild(recapSection("Flags", fu));
+      if (shared.length) {
+        var dl = el("ul", "bul");
+        shared.forEach(function (e) { dl.appendChild(el("li", null, "[" + e.kind + "] " + e.text + (e.who ? " (with " + e.who + ")" : ""))); });
+        card.appendChild(recapSection("Updates I shared", dl));
       }
-    }
+      if (latest) {
+        var fl = [];
+        DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
+        if (fl.length) {
+          var fu = el("ul", "bul");
+          fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
+          card.appendChild(recapSection("Flags", fu));
+        }
+      }
+      box.appendChild(card);
+    });
   }
 
   function openRecap(rc) {
@@ -1655,16 +1759,6 @@
     var cap = DATA.capacity || {};
     $("s-cap").value = cap.level || ""; $("s-capnote").value = cap.note || "";
     $("s-not").value = DATA.notThisWeek || "";
-    var box = $("s-focus"); box.textContent = "";
-    var cur = DATA.focus || [];
-    for (var n = 0; n < 3; n++) {
-      var r = el("div", "rep link");
-      var sel = el("select"); sel.setAttribute("aria-label", "Focus " + (n + 1)); opt(sel, "", "(none)");
-      DATA.items.filter(function (i) { return i.lane !== "done"; }).forEach(function (i) { opt(sel, i.id, i.name); });
-      sel.value = cur[n] ? cur[n].id : "";
-      var note = el("input"); note.type = "text"; note.placeholder = "Why / what specifically"; note.value = cur[n] ? cur[n].note || "" : "";
-      r.appendChild(sel); r.appendChild(note); box.appendChild(r);
-    }
     $("dlg-settings").showModal();
   }
 
@@ -1674,7 +1768,8 @@
 
   function commit() {
     DATA.updated = iso(today);
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(DATA));
+    staleDraft = null;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: BUILD, data: DATA }));
     render();
   }
 
@@ -1683,10 +1778,20 @@
     bar.hidden = !ADMIN;
     if (!ADMIN) return;
     bar.textContent = "";
+    var ver = "Published " + fmt(JSON.parse(PUBLISHED).updated) + " (build " + BUILD + ")";
+    if (staleDraft) {
+      bar.appendChild(el("span", "msg", "Admin mode. " + ver + ". This browser holds an older draft saved before the page was last published, so it is not applied."));
+      var useNew = el("button", "btn primary", "Use the newer published version"); useNew.type = "button";
+      useNew.onclick = function () { localStorage.removeItem(DRAFT_KEY); staleDraft = null; render(); };
+      var keep = el("button", "btn", "Keep my draft"); keep.type = "button";
+      keep.onclick = function () { DATA = prepare(staleDraft); staleDraft = null; commit(); };
+      bar.appendChild(useNew); bar.appendChild(keep);
+      return;
+    }
     var dirty = JSON.stringify(DATA) !== JSON.stringify(prepare(JSON.parse(PUBLISHED)));
     bar.appendChild(el("span", "msg", dirty
-      ? "Admin mode. You have unpublished draft changes, saved in this browser only. Copy the JSON to publish them."
-      : "Admin mode. Edits are drafts saved in this browser only. Viewers see the published data."));
+      ? "Admin mode. " + ver + ". You have unpublished draft changes, saved in this browser only. Copy the JSON to publish them."
+      : "Admin mode. " + ver + ". Edits are drafts saved in this browser only. Viewers see the published data."));
     var add = el("button", "btn primary", "+ Add project"); add.type = "button"; add.onclick = function () { openEditor(null); };
     var copy = el("button", "btn", "Copy data JSON"); copy.type = "button";
     copy.onclick = function () {
@@ -1745,6 +1850,7 @@
   function syncLaneFields() {
     var lane = $("f-lane").value;
     $("w-status").hidden = lane !== "active";
+    $("w-week").hidden = lane !== "active";
     $("w-stage").hidden = lane === "done" || lane === "ongoing";
     $("w-kind").hidden = lane !== "ongoing";
     $("w-dates").hidden = lane === "ongoing";
@@ -1773,6 +1879,7 @@
     $("f-support").checked = !!it.support;
     $("f-summary").value = it.summary || "";
     $("f-next").value = it.next || ""; $("f-decision").value = it.decision || "";
+    $("f-week").value = focusNote(it);
     $("f-flags").textContent = ""; (it.flags || []).forEach(flagRow);
     $("f-ms").textContent = ""; (it.milestones || []).forEach(msRow);
     $("f-links").textContent = ""; (it.links || []).forEach(linkRow);
@@ -1825,7 +1932,10 @@
     var prio = parseInt($("f-priority").value, 10);
     it.name = name; it.pod = $("f-pod").value; it.lane = lane;
     it.priority = prio > 0 ? prio : 999;
-    it.summary = $("f-summary").value.trim(); it.flags = flags;
+    it.summary = $("f-summary").value.trim(); it.flags = flags; it.changed = iso(today);
+    var wk = $("f-week").value.trim();
+    DATA.focus = (DATA.focus || []).filter(function (f) { return f.id !== it.id; });
+    if (lane === "active" && wk) DATA.focus.push({ id: it.id, note: wk });
     var nx = $("f-next").value.trim(), dc = $("f-decision").value.trim();
     if (nx) it.next = nx; else delete it.next;
     if (dc) it.decision = dc; else delete it.decision;
@@ -1871,6 +1981,7 @@
       if (!it) return;
       if (!txt || (!rec && $("ff-type").value !== "Open question")) { $("ff-err").textContent = "Add what is going on and your recommendation (not needed for an open question)."; return; }
       (it.flags = it.flags || []).push({ type: $("ff-type").value, text: txt, rec: rec, date: iso(today) });
+      it.changed = iso(today);
       $("dlg-flag").close(); commit();
     });
     $("add-ms").onclick = function () { msRow({}); };
@@ -1879,6 +1990,7 @@
     $("f-delete").onclick = function () {
       if (!editing || !confirm('Delete "' + editing.name + '"?')) return;
       var gone = editing.lane;
+      DATA.focus = (DATA.focus || []).filter(function (f) { return f.id !== editing.id; });
       DATA.items = DATA.items.filter(function (i) { return i !== editing; });
       renumber(DATA, gone, null);
       $("dlg").close(); commit();
@@ -1895,11 +2007,6 @@
       if (lvl || capNote) DATA.capacity = { level: lvl, note: capNote }; else delete DATA.capacity;
       var nt = $("s-not").value.trim();
       if (nt) DATA.notThisWeek = nt; else delete DATA.notThisWeek;
-      DATA.focus = [];
-      Array.prototype.forEach.call($("s-focus").children, function (r) {
-        var id = r.querySelector("select").value;
-        if (id) DATA.focus.push({ id: id, note: r.querySelector("input").value.trim() });
-      });
       $("dlg-settings").close(); commit();
     });
 
@@ -1935,7 +2042,7 @@
       r.week = $("r-week").value || lastFriday();
       RECAP_NOTES.forEach(function (n) { var v = $("r-" + n[0]).value.trim(); if (v) r[n[0]] = v; else delete r[n[0]]; });
       if (!editingRecap) (DATA.recaps = DATA.recaps || []).push(r);
-      recapWeek = r.week;
+      recapOpen[r.week] = true;
       $("dlg-recap").close(); currentTab = "recap"; commit();
     });
 
@@ -1947,6 +2054,38 @@
       $("dlg-pod").close(); currentTab = "pods"; commit();
     });
   }
+
+  (function () {
+    var KEY = "tracker_tl_choice", tlOpen = true;
+    // Open by default; a reader who collapses it keeps it collapsed on this browser.
+    try { if (localStorage.getItem(KEY) === "collapsed") tlOpen = false; } catch (e) { /* show open */ }
+    function apply() {
+      $("tl-wrap").hidden = !tlOpen;
+      $("tl-toggle").setAttribute("aria-expanded", String(tlOpen));
+      $("tl-chev").textContent = tlOpen ? "▾" : "▸";
+    }
+    $("tl-toggle").onclick = function () {
+      tlOpen = !tlOpen;
+      try { localStorage.setItem(KEY, tlOpen ? "open" : "collapsed"); } catch (e) { /* ignore */ }
+      apply();
+    };
+    apply();
+    $("tl-info-btn").onclick = function () { var h = $("tl-info").hidden; $("tl-info").hidden = !h; this.setAttribute("aria-expanded", String(h)); };
+    var FKEY = "tracker_flags_state", fOpen = true;
+    try { if (localStorage.getItem(FKEY) === "collapsed") fOpen = false; } catch (e) { /* show open */ }
+    function applyFlags() {
+      $("flags-wrap").hidden = !fOpen;
+      $("flags-toggle").setAttribute("aria-expanded", String(fOpen));
+      $("flags-chev").textContent = fOpen ? "▾" : "▸";
+    }
+    $("flags-toggle").onclick = function () {
+      fOpen = !fOpen;
+      try { localStorage.setItem(FKEY, fOpen ? "open" : "collapsed"); } catch (e) { /* ignore */ }
+      applyFlags();
+    };
+    applyFlags();
+    $("legend-btn").onclick = function () { var h = $("legend").hidden; $("legend").hidden = !h; this.setAttribute("aria-expanded", String(h)); };
+  })();
 
   render();
 })();
