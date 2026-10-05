@@ -169,6 +169,8 @@
   .focus-item.benefits-me { border-left-color: var(--benefits-me); } .focus-item.payer-global { border-left-color: var(--payer-global); }
   .focus-item.insights { border-left-color: var(--insights); } .focus-item.channel-partners { border-left-color: var(--channel-partners); }
   .focus-n { font-size: 22px; font-weight: 700; color: #a9a89f; line-height: 1.1; }
+  .focus-not { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+  .focus-not b { color: var(--ink); }
   .focus-note { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
   #f-support { width: auto; margin-right: 6px; }
@@ -346,6 +348,7 @@
       <label class="f">Capacity note<input type="text" id="s-capnote" placeholder="e.g. New asks go to Up next unless something moves"></label>
     </div>
     <div class="f">This week's focus (2 or 3 priorities)<div class="reps" id="s-focus"></div></div>
+    <label class="f">Not this week (one line)<input type="text" id="s-not" placeholder="e.g. Channel Partners"></label>
     <div class="dlg-actions">
       <button type="button" class="btn" id="s-cancel">Cancel</button>
       <button type="submit" class="btn primary">Save</button>
@@ -446,7 +449,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -500,7 +503,7 @@
       "pod": "insights",
       "lane": "active",
       "priority": 1,
-      "status": "On Track",
+      "status": "Needs Support",
       "stage": "Iteration",
       "start": "2026-09-14",
       "end": "2026-10-09",
@@ -519,7 +522,7 @@
         {
           "name": "Kickoff",
           "date": "2026-10-09",
-          "done": true
+          "done": false
         }
       ],
       "links": [
@@ -562,16 +565,20 @@
           "type": "Risk",
           "date": "2026-10-02",
           "text": "The tentative Nov 16 release (for testing ahead of full customer release) is at risk.\nMarketing and CSM reviews brought new learnings and conflicting views on the opt-in model.\nI am ramping onto Insights alongside other pods.",
-          "rec": "Draft: lock placement and the opt-in model this week with Andrea and Ramya.\nThen confirm whether Nov 16 holds or the first release is scoped down."
+          "rec": "Nov 16 stays the tentative date, based on engineering and design decisions and requirements.\nI will take the placement and opt-in questions to CX crit on Tuesday and confirm where Nov 16 stands afterwards."
         },
         {
           "type": "Open question",
           "date": "2026-10-03",
-          "text": "Should customers be able to opt in for US only, or by region?\nMACs go out in English only today, and some customers turn comms off because they do not fit a global population.\nRegional customization is also requested."
+          "text": "Should customers be able to opt in for US only, or by region?\nMACs go out in English only today, and some customers turn comms off because they do not fit a global population.\nRegional customization is also requested.\nMy lean: US only. Region is too specific and needs manual CSM involvement.\nI am noting this for my own learning and information gathering."
+        },
+        {
+          "type": "Open question",
+          "date": "2026-10-04",
+          "text": "Where should the Campaign Planner live?\nOption 1: new top-level 'Communications' page (planner plus MAC).\nOption 2: new 'Communications' tab inside Resources (MAC moves there).\nShould opt-in be managed inside the planner or in Settings?\nI need more context and feedback from designers who know Insights before I can recommend an option.\nI want these answered in CX crit."
         }
       ],
-      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya.",
-      "decision": "Where should Campaign Planner live?\nOption 1: new top-level 'Communications' page (planner plus MAC).\nOption 2: new 'Communications' tab inside Resources (MAC moves there).\nAlso: manage opt-in inside the planner or in Settings?"
+      "next": "Iterate the designs on the Marketing and CSM feedback, then align on placement with the design team and Ramya."
     },
     {
       "id": "gottman-marketplace",
@@ -607,7 +614,7 @@
       "lane": "done",
       "priority": 2,
       "stage": "Complete",
-      "summary": "Shared quick design ideas for the IBX iteration. A light, low-scope request that came in as urgent, so it meant a context switch. The team is scoping next week and I am waiting on next steps.",
+      "summary": "Shared quick design ideas for the IBX iteration.\nHanded off and awaiting next steps. Nothing more for me to do until scope is understood; the team is scoping next week.",
       "links": [
         {
           "label": "Escalation doc",
@@ -770,7 +777,18 @@
       "who": "Regina, James",
       "detail": "Shared my bandwidth up front so expectations are set.\nThe team already sent updated assets to apply when I start."
     }
-  ]
+  ],
+  "focus": [
+    {
+      "id": "necl-marketing-planner",
+      "note": "Share it in CX crit on Tuesday"
+    },
+    {
+      "id": "me-design-qa-web-native",
+      "note": ""
+    }
+  ],
+  "notThisWeek": "Channel Partners"
 }
 </script>
 
@@ -1436,6 +1454,7 @@
     var box = $("focus");
     box.textContent = "";
     if (!focus.length) { box.appendChild(el("div", "empty", "No focus set yet. Use Weekly settings.")); return; }
+    if (DATA.notThisWeek) box.dataset.not = DATA.notThisWeek; else delete box.dataset.not;
     focus.forEach(function (f, n) {
       var c = el("div", "focus-item " + f.item.pod);
       c.appendChild(el("span", "focus-n", String(n + 1)));
@@ -1447,6 +1466,12 @@
       c.appendChild(b);
       box.appendChild(c);
     });
+    if (DATA.notThisWeek) {
+      var nt = el("div", "focus-not");
+      nt.appendChild(el("b", null, "Not this week: "));
+      nt.appendChild(document.createTextNode(DATA.notThisWeek));
+      box.appendChild(nt);
+    }
   }
 
   function renderPods() {
@@ -1492,7 +1517,7 @@
     L.push("Weekly update - " + long);
     if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push((DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
     var focus = (DATA.focus || []).map(function (f) { return { item: DATA.items.filter(function (i) { return i.id === f.id; })[0], note: f.note }; }).filter(function (f) { return f.item; });
-    if (focus.length) { L.push("", "Focus this week:"); focus.forEach(function (f, n) { L.push((n + 1) + ". " + f.item.name + (f.note ? " - " + f.note : "")); }); }
+    if (focus.length) { L.push("", "Focus this week:"); focus.forEach(function (f, n) { L.push((n + 1) + ". " + f.item.name + (f.note ? " - " + f.note : "")); }); if (DATA.notThisWeek) L.push("Not this week: " + DATA.notThisWeek); }
     var rc = recapList()[0];
     if (rc) RECAP_NOTES.slice(0, 2).forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var active = DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority);
@@ -1629,6 +1654,7 @@
   function openSettings() {
     var cap = DATA.capacity || {};
     $("s-cap").value = cap.level || ""; $("s-capnote").value = cap.note || "";
+    $("s-not").value = DATA.notThisWeek || "";
     var box = $("s-focus"); box.textContent = "";
     var cur = DATA.focus || [];
     for (var n = 0; n < 3; n++) {
@@ -1867,6 +1893,8 @@
       var lvl = $("s-cap").value;
       var capNote = $("s-capnote").value.trim();
       if (lvl || capNote) DATA.capacity = { level: lvl, note: capNote }; else delete DATA.capacity;
+      var nt = $("s-not").value.trim();
+      if (nt) DATA.notThisWeek = nt; else delete DATA.notThisWeek;
       DATA.focus = [];
       Array.prototype.forEach.call($("s-focus").children, function (r) {
         var id = r.querySelector("select").value;
