@@ -26,8 +26,6 @@
 
   .filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 14px; font-size: 13px; }
   .filters span.label { color: var(--muted); margin-right: 2px; }
-  .chip { font: inherit; font-size: 13px; padding: 2px 10px; border-radius: 999px; border: 1px solid #cfcbc2; background: var(--card); color: var(--ink); cursor: pointer; }
-  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 
   section { margin-top: 28px; }
   h2 { font-size: 16px; margin: 0 0 4px; }
@@ -45,7 +43,7 @@
   .card h3 { font-size: 15px; margin: 2px 0 6px; }
   .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
   .pod, .tag { font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eeece6; color: #46453f; }
-  .pod::before, .chip.pod-dot::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--other); margin-right: 7px; }
+  .pod::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--other); margin-right: 7px; }
   .pod-benefits-me::before { background: var(--benefits-me) !important; } .pod-payer-global::before { background: var(--payer-global) !important; }
   .pod-insights::before { background: var(--insights) !important; } .pod-channel-partners::before { background: var(--channel-partners) !important; }
   .pill { font-size: 13px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
@@ -276,7 +274,7 @@
   .flag-first { font-size: 13px; }
   .flag-detail { margin-top: 8px; padding-left: 176px; }
   @media (max-width: 820px) { .flag-head { grid-template-columns: minmax(0, 1fr) auto; } .flag-proj, .flag-first { grid-column: 1 / -1; } .flag-head .toggle { grid-column: 2; grid-row: 1; } .flag-detail { padding-left: 0; } }
-  .recap-select { font: inherit; font-size: 13px; padding: 5px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); }
+  .select-ctl { font: inherit; font-size: 13px; padding: 5px 10px; border: 1px solid #cfcbc2; border-radius: 6px; background: var(--card); color: var(--ink); }
   .wk-note { font-size: 15px; font-weight: 600; }
   .wk-note.muted { font-size: 13px; font-weight: 400; font-style: italic; color: var(--muted); }
 </style>
@@ -351,21 +349,22 @@
     </section>
   </div>
 
+  <div role="tabpanel" id="panel-backlog" aria-labelledby="tab-backlog" hidden>
+    <section id="backlog-section" class="first">
+      <h2>Up next <span class="count" id="backlog-count"></span></h2>
+      <p class="hint">Queued or being scoped, in the order I plan to pick them up. Nothing here has kicked off yet.</p>
+      <div class="rows" id="backlog"></div>
+    </section>
+  </div>
+
   <div role="tabpanel" id="panel-work" aria-labelledby="tab-work" hidden>
     <nav class="subnav" id="work-nav" aria-label="Sections in All work">
-      <a href="#backlog-section">Up next</a>
       <a href="#ongoing-section">Also on my plate</a>
       <a href="#parked-section">Parked notes</a>
       <a href="#support-section">Ongoing support</a>
       <a href="#done-section">Completed</a>
       <a href="#pods-section">Pods</a>
     </nav>
-    <section id="backlog-section">
-      <h2>Up next <span class="count" id="backlog-count"></span></h2>
-      <p class="hint">Queued or being scoped, in the order I plan to pick them up. Nothing here has kicked off yet.</p>
-      <div class="rows" id="backlog"></div>
-    </section>
-
     <section id="ongoing-section">
       <h2>Also on my plate <span class="count" id="ongoing-count"></span></h2>
       <p class="hint">Smaller items and ongoing work with no start or end date: bugs, support, learning.</p>
@@ -559,7 +558,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -633,6 +632,11 @@
           "name": "Design <> ENG Kickoff",
           "date": "2026-10-09",
           "done": false
+        },
+        {
+          "name": "Crit w/Stella",
+          "date": "2026-10-06",
+          "done": false
         }
       ],
       "links": [
@@ -682,10 +686,16 @@
           "text": "Placement - whats too prominent vs not prominent enough; Conflicting viewpoints from Marketing + CSMs",
           "rec": "",
           "date": "2026-10-04"
+        },
+        {
+          "type": "Open question",
+          "text": "Toggle lives under settings OR can it stay on planner view?",
+          "rec": "",
+          "date": "2026-10-06"
         }
       ],
       "next": "Iterate the designs on the Marketing and CSM feedback, align on placement with design team and Ramya.",
-      "changed": "2026-10-05"
+      "changed": "2026-10-06"
     },
     {
       "id": "gottman-marketplace",
@@ -808,17 +818,35 @@
       "priority": 2,
       "summary": "",
       "flags": [],
-      "milestones": [],
+      "milestones": [
+        {
+          "name": "Native first pass delivered",
+          "date": "2026-10-09",
+          "done": false
+        },
+        {
+          "name": "Web first pass delivered",
+          "date": "2026-10-16",
+          "done": false
+        }
+      ],
       "links": [
         {
           "label": "Figma",
           "url": "https://www.figma.com/design/Hc0DHD2fKwH4G4RWVhmH58/ME-M1v1--Minimal-blend-UX?node-id=240-23061&t=Sh3DpmHpgnLmXqjx-1"
+        },
+        {
+          "label": "Slack thread",
+          "url": "https://sh-rnd-org.slack.com/archives/C0A3A93FT55/p1790887853252799?thread_ts=1790887784.195929&cid=C0A3A93FT55"
         }
       ],
       "start": "2026-10-05",
       "end": "2026-10-16",
       "status": "On Track",
-      "stage": "DQA"
+      "stage": "DQA",
+      "changed": "2026-10-06",
+      "launch": "2026-10-30",
+      "dqaStart": "2026-10-08"
     },
     {
       "id": "insurance-filter-sales-demo",
@@ -887,10 +915,6 @@
     }
   ],
   "focus": [
-    {
-      "id": "me-design-qa-web-native",
-      "note": ""
-    },
     {
       "id": "necl-marketing-planner",
       "note": "Handoff designs to ENG"
@@ -1409,11 +1433,11 @@
     nodes.forEach(function (n) { box.appendChild(n); });
   }
 
-  var TABS = [["overview", "Overview"], ["recap", "Weekly recap"], ["work", "All work"]];
+  var TABS = [["overview", "Overview"], ["recap", "Weekly recap"], ["backlog", "Up next"], ["work", "All work"]];
   var currentTab = "overview";
   (function () {
     var q = /[?&]tab=([a-z]+)/.exec(location.search);
-    var tn = q && ({ backlog: "work", done: "work", pods: "work" }[q[1]] || q[1]);
+    var tn = q && ({ done: "work", pods: "work" }[q[1]] || q[1]);
     if (tn && TABS.some(function (t) { return t[0] === tn; })) currentTab = tn;
   })();
 
@@ -1452,16 +1476,14 @@
     var box = document.getElementById("filters");
     box.textContent = "";
     box.appendChild(el("span", "label", "Pod:"));
-    var keys = ["all"].concat(Object.keys(DATA.pods).filter(function (k) {
+    var sel = el("select", "select-ctl"); sel.setAttribute("aria-label", "Filter by pod");
+    opt(sel, "all", "All pods");
+    Object.keys(DATA.pods).filter(function (k) {
       return DATA.items.some(function (i) { return i.pod === k; });
-    }));
-    keys.forEach(function (k) {
-      var b = el("button", "chip" + (k === "all" ? "" : " pod-dot pod-" + k), k === "all" ? "All pods" : podName(k));
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(podFilter === k));
-      b.onclick = function () { podFilter = k; render(); };
-      box.appendChild(b);
-    });
+    }).forEach(function (k) { opt(sel, k, podName(k)); });
+    sel.value = podFilter;
+    sel.onchange = function () { podFilter = sel.value; render(); };
+    box.appendChild(sel);
   }
 
   function renderTimeline() {
@@ -1530,7 +1552,8 @@
         dev.title = item.name + ": with Eng " + fmt(item.end) + " to " + fmt(devTo);
         row.appendChild(dev);
       }
-      if (item.dqaStart && item.lane === "active") {
+      // An item already in DQA is drawn by its main bar; a second Design QA bar would overlap it.
+      if (item.dqaStart && item.lane === "active" && item.stage !== "DQA") {
         var q0 = pd(item.dqaStart);
         if (item.launch && pd(item.launch) > q0) {
           if (overlaps(q0, pd(item.launch))) {
@@ -1752,7 +1775,7 @@
     tools.textContent = ""; box.textContent = "";
     if (list.length) {
       if (recapSel !== "all" && !list.some(function (r) { return r.week === recapSel; })) recapSel = list[0].week;
-      var sel = el("select", "recap-select"); sel.setAttribute("aria-label", "Choose a week");
+      var sel = el("select", "select-ctl"); sel.setAttribute("aria-label", "Choose a week");
       list.forEach(function (r) { opt(sel, r.week, "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })); });
       opt(sel, "all", "View all");
       sel.value = recapSel;
@@ -2125,7 +2148,7 @@
     renumber(DATA, lane, it);
     if (oldLane && oldLane !== lane) renumber(DATA, oldLane, null);
     $("dlg").close();
-    currentTab = lane === "active" ? "overview" : "work";
+    currentTab = lane === "active" ? "overview" : lane === "backlog" ? "backlog" : "work";
     commit();
   }
 
