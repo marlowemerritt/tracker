@@ -170,11 +170,6 @@
 
 
   #f-support { width: auto; margin-right: 6px; }
-  .recap-sec { margin-top: 16px; }
-  .recap-sec h3 { font-size: 14px; margin: 0 0 6px; }
-  .recap-sec .txt { white-space: pre-line; font-size: 14px; }
-  .recap-sec ol { margin: 0; padding-left: 20px; font-size: 14px; }
-  .recap-sec li { padding: 2px 0; }
   .recap-week { font-size: 17px; margin: 4px 0 0; }
   .info { font-size: 13px; margin-top: 6px; }
   .info .k { color: var(--muted); }
@@ -226,7 +221,40 @@
   .recap-card:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
   .recap-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
   .recap-head h3 { margin: 0; font-size: 16px; }
-  .recap-sum { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .recap-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
+  .recap-top h2 { margin: 0 0 4px; }
+  .recap-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .autosave { font-size: 13px; color: var(--muted); }
+  .recap-earlier { font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; }
+  .recap-card.open + .recap-card.open { margin-top: 18px; }
+  .recap-card:has(.recap-row) { margin-top: 0; padding-top: 0; border-top: 0; border-bottom: 1px solid var(--line); }
+  .recap-row { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; padding: 10px 0; border: 0; background: none; font: inherit; font-size: 14px; color: var(--ink); text-align: left; cursor: pointer; }
+  .recap-row:hover .rr-first { text-decoration: underline; }
+  .rr-date { font-weight: 600; }
+  .rr-first { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rr-chev { color: var(--brand); }
+  .recap-snap { margin: 8px 0 12px; }
+  .recap-snap-body { margin-top: 6px; padding: 10px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+  .recap-snap-body h4 { margin: 8px 0 4px; font-size: 13px; }
+  .recap-snap-body h4:first-child { margin-top: 0; }
+  .recap-snap-body ol { margin: 0; padding-left: 20px; }
+  .doc { font-size: 14px; line-height: 1.5; outline: none; }
+  .doc[contenteditable="true"] { margin: 0 -10px; padding: 6px 10px; border: 1px solid transparent; border-radius: 8px; cursor: text; }
+  .doc[contenteditable="true"]:hover { border-color: var(--line); }
+  .doc[contenteditable="true"]:focus { border-color: #cfcbc2; background: var(--card); }
+  .doc a { color: var(--brand); }
+  .blk { position: relative; min-height: 1.5em; padding: 1px 0; }
+  .blk[data-t="h"] { margin-top: 16px; font-size: 15px; font-weight: 700; }
+  .blk[data-t="h"]:first-child { margin-top: 0; }
+  .blk[data-t="h"][data-pod]::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; border-radius: 50%; background: var(--other); }
+  .blk[data-pod="benefits-me"]::before { background: var(--benefits-me); } .blk[data-pod="payer-global"]::before { background: var(--payer-global); }
+  .blk[data-pod="insights"]::before { background: var(--insights); } .blk[data-pod="channel-partners"]::before { background: var(--channel-partners); }
+  .blk[data-t="li"], .blk[data-t="todo"] { padding-left: 24px; }
+  .blk[data-t="li"]::before { content: "\2022"; position: absolute; left: 8px; color: var(--muted); }
+  .blk[data-t="todo"]::before { content: ""; position: absolute; left: 3px; top: 5px; width: 14px; height: 14px; border: 1.5px solid #8a8880; border-radius: 3px; background: var(--card); }
+  .blk[data-t="todo"][data-done]::before { background: var(--brand); border-color: var(--brand); }
+  .blk[data-t="todo"][data-done]::after { content: "\2713"; position: absolute; left: 6px; top: 2px; color: #fff; font-size: 12px; font-weight: 700; }
+  .blk[data-t="todo"][data-done] { color: var(--muted); text-decoration: line-through; }
   @media (max-width: 560px) { .tl { --lab: 100px; min-width: 520px; } .tl-row { height: 60px; } .tl-name span { -webkit-line-clamp: 3; } .tl-bar { top: 19px; } .tl-ms { top: 24px; } .tl-start { top: 21px; } .tl-dev { top: 25px; } .tl-launch { top: 15px; } }
 
   .focus-not { margin-top: 10px; font-size: 13px; color: var(--muted); }
@@ -341,17 +369,12 @@
 
   <div role="tabpanel" id="panel-recap" aria-labelledby="tab-recap" hidden>
     <section class="first">
-      <h2>Weekly recap</h2>
-      <p class="hint">A snapshot of the week: what I got done, what is next, and what is going on across my teams. The latest week also shows my current priorities and flags.</p>
-      <div class="pri-tools" id="recap-tools"></div>
+      <div class="recap-top">
+        <h2>Weekly recap</h2>
+        <div class="recap-tools" id="recap-tools"></div>
+      </div>
+      <p class="hint">Running notes for each week. The latest week is open; earlier weeks are one line each. The latest week also has a Snapshot of my current priorities and flags.</p>
       <div id="recap"></div>
-    </section>
-    <section id="updates-section">
-      <h2>Updates I've shared</h2>
-      <p class="hint">What I've decided, asked for, or timed, and when, so nothing comes as a surprise.</p>
-      <div id="updates-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-update">+ Add update</button></div>
-      <div class="rows" id="updates"></div>
-      <div style="margin-top:8px"><button type="button" class="btn small" id="updates-more" hidden>Show all</button></div>
     </section>
   </div>
 
@@ -430,43 +453,6 @@
     <label class="f">Not this week (one line)<input type="text" id="s-not" placeholder="e.g. Channel Partners"></label>
     <div class="dlg-actions">
       <button type="button" class="btn" id="s-cancel">Cancel</button>
-      <button type="submit" class="btn primary">Save</button>
-    </div>
-  </form>
-</dialog>
-
-<dialog id="dlg-log" aria-labelledby="log-title">
-  <form method="dialog" id="log-form">
-    <h2 id="log-title">Update I'm sharing</h2>
-    <div class="f2">
-      <label class="f">Type<select id="l-kind"><option value="Decided">Decided</option><option value="Requested">Requested</option><option value="Timing">Timing</option><option value="FYI">FYI</option></select></label>
-      <label class="f">Date<input type="date" id="l-date"></label>
-    </div>
-    <label class="f">Project<select id="l-project"></select></label>
-    <label class="f">What<input type="text" id="l-text"></label>
-    <label class="f">With (who I told or asked)<input type="text" id="l-who"></label>
-    <label class="f">Details (one per line)<textarea id="l-detail"></textarea></label>
-    <div class="err" id="l-err" role="alert"></div>
-    <div class="dlg-actions">
-      <button type="button" class="btn danger" id="l-delete">Delete</button>
-      <button type="button" class="btn" id="l-cancel">Cancel</button>
-      <button type="submit" class="btn primary">Save</button>
-    </div>
-  </form>
-</dialog>
-
-<dialog id="dlg-recap" aria-labelledby="recap-title">
-  <form method="dialog" id="recap-form">
-    <h2 id="recap-title">Weekly recap</h2>
-    <label class="f">Week ending (Friday)<input type="date" id="r-week"></label>
-    <label class="f">What I got done<textarea id="r-done"></textarea></label>
-    <label class="f">What's next<textarea id="r-next"></textarea></label>
-    <label class="f">Other teams and things going on<textarea id="r-other"></textarea></label>
-    <label class="f">Bandwidth and timeline changes<textarea id="r-bandwidth"></textarea></label>
-    <label class="f">Calendar check (focus blocks, meeting load)<textarea id="r-calendar"></textarea></label>
-    <div class="dlg-actions">
-      <button type="button" class="btn danger" id="r-delete">Delete</button>
-      <button type="button" class="btn" id="r-cancel">Cancel</button>
       <button type="submit" class="btn primary">Save</button>
     </div>
   </form>
@@ -795,7 +781,8 @@
       "stage": "Awaiting kickoff",
       "start": "2026-10-19",
       "flags": [],
-      "changed": "2026-10-08"
+      "changed": "2026-10-08",
+      "end": "2026-10-30"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -899,25 +886,11 @@
   "recaps": [
     {
       "week": "2026-10-02",
-      "done": "Insights: met with Marketing and CSMs to review the first design and get their perspectives. Lots of learnings and some competing feelings.\nGlobal T2: handed off to dev. They are heads down until it is time for Design QA.",
-      "next": "Insights: put top focus on the iterations next week.\nBenefits: ME DQA kicks off next week.\nGlobal T2: still overseeing and supporting questions as they come up, but it is no longer my top focus.",
-      "other": "Partner: told Regina and James my bandwidth and that I plan to pick up Gottman the week of 10/12. Received updated assets to apply when ready.\nPartner: Thoughtful integration is still TBD, so it stays in the backlog until there is more clarity. The previous team is transitioning it off and Regina is staying on top of it.\nPayer: shared quick ideas for the IBX iteration and am waiting on next steps. Not top of mind, but it was an urgent request that needed support right away."
+      "doc": "## What I got done\n- Insights: met with Marketing and CSMs to review the first design and get their perspectives. Lots of learnings and some competing feelings.\n- Global T2: handed off to dev. They are heads down until it is time for Design QA.\n## What's next\n- Insights: put top focus on the iterations next week.\n- Benefits: ME DQA kicks off next week.\n- Global T2: still overseeing and supporting questions as they come up, but it is no longer my top focus.\n## Other teams and things going on\n- Partner: told Regina and James my bandwidth and that I plan to pick up Gottman the week of 10/12. Received updated assets to apply when ready.\n- Partner: Thoughtful integration is still TBD, so it stays in the backlog until there is more clarity. The previous team is transitioning it off and Regina is staying on top of it.\n- Payer: shared quick ideas for the IBX iteration and am waiting on next steps. Not top of mind, but it was an urgent request that needed support right away.\n## Decisions and asks\n- Oct 3 - Timing: Gottman design starts the week of Oct 12 (with Regina, James)\n- Shared my bandwidth up front so expectations are set.\n- The team already sent updated assets to apply when I start."
     },
     {
       "week": "2026-09-25",
-      "done": "Insights: marketing campaign design V1.\nMet the team and got a general understanding of pod goals across Insights, Payer & Global, and Partnerships.",
-      "next": "Transition off Benefits and Payer/PSS."
-    }
-  ],
-  "updates": [
-    {
-      "id": "u-gottman-timing",
-      "date": "2026-10-03",
-      "project": "gottman-marketplace",
-      "kind": "Timing",
-      "text": "Gottman design starts the week of Oct 12",
-      "who": "Regina, James",
-      "detail": "Shared my bandwidth up front so expectations are set.\nThe team already sent updated assets to apply when I start."
+      "doc": "## What I got done\n- Insights: marketing campaign design V1.\n- Met the team and got a general understanding of pod goals across Insights, Payer & Global, and Partnerships.\n## What's next\n- Transition off Benefits and Payer/PSS."
     }
   ],
   "focus": [
@@ -955,8 +928,41 @@
       }));
       delete data.log;
     }
+    migrateRecaps(data);
     ["active", "backlog", "done", "ongoing"].forEach(function (l) { renumber(data, l, null); });
     return data;
+  }
+
+  // Older recaps kept five text fields and a separate updates list; each week is now one notes document.
+  function migrateRecaps(data) {
+    var legacy = [["done", "What I got done"], ["next", "What's next"], ["other", "Other teams and things going on"], ["bandwidth", "Bandwidth and timeline changes"], ["calendar", "Calendar check"]];
+    var recaps = data.recaps || [];
+    recaps.forEach(function (r) {
+      if (r.doc != null) return;
+      var out = [];
+      legacy.forEach(function (k) {
+        var ls = lines(r[k[0]]);
+        if (ls.length) { out.push("## " + k[1]); ls.forEach(function (l) { out.push("- " + l); }); }
+        delete r[k[0]];
+      });
+      r.doc = out.join("\n");
+    });
+    if (!data.updates || !data.updates.length || !recaps.length) return;
+    var asc = recaps.slice().sort(function (a, b) { return a.week < b.week ? -1 : 1; });
+    var rest = [];
+    data.updates.forEach(function (u) {
+      var rc = asc.filter(function (r) { return r.week >= u.date; })[0] || asc[asc.length - 1];
+      var add = ["- " + fmt(u.date) + " - " + u.kind + ": " + u.text + (u.who ? " (with " + u.who + ")" : "")].concat(lines(u.detail).map(function (l) { return "- " + l; }));
+      var ls = rc.doc ? rc.doc.split("\n") : [], at = -1, i;
+      for (i = 0; i < ls.length; i++) { if (/^#{1,3}\s+Decisions and asks\s*$/.test(ls[i])) { at = i; break; } }
+      if (at < 0) { ls.push("## Decisions and asks"); at = ls.length - 1; }
+      var end = at + 1;
+      while (end < ls.length && !/^#{1,3}\s/.test(ls[end])) end++;
+      while (end - 1 > at && !ls[end - 1].replace(/^-\s?/, "").trim()) end--;
+      Array.prototype.splice.apply(ls, [end, 0].concat(add));
+      rc.doc = ls.join("\n");
+    });
+    delete data.updates;
   }
   var DATA = prepare(JSON.parse(PUBLISHED));
   // A draft is stamped with the published build it started from. If the page has been republished since,
@@ -1074,7 +1080,7 @@
     return groups;
   }
 
-  function baselineDate() { var r = recapList()[0]; return r ? r.week : lastFriday(); }
+  function baselineDate() { var past = recapList().filter(function (r) { return r.week <= iso(today); })[0]; return past ? past.week : lastFriday(); }
   function isNew(dateStr) { return !!dateStr && dateStr > baselineDate(); }
   function itemChanged(item) { return isNew(item.changed) || (item.flags || []).some(function (f) { return isNew(f.date); }); }
   function changeDot() {
@@ -1412,26 +1418,6 @@
     return box;
   }
 
-  function updateCard(u) {
-    var item = DATA.items.filter(function (i) { return i.id === u.project; })[0] || null;
-    var c3 = [labelRow("Shared", fmt(u.date))];
-    var tb = bullets(u.text); if (tb) c3.push(tb);
-    if (u.who) c3.push(labelRow("With", u.who));
-    var db = bullets(u.detail); if (db) c3.push(db);
-    var c4 = [];
-    if (ADMIN) { var b = el("button", "btn small", "Edit"); b.type = "button"; b.onclick = function () { openUpdate(u); }; c4.push(b); }
-    var meta = el("div", "meta");
-    if (item) meta.appendChild(el("span", "pod pod-" + item.pod, podName(item.pod)));
-    var slot = el("div", "pill-slot"); slot.appendChild(el("span", "ftype update-" + slug(u.kind), u.kind));
-    if (isNew(u.date)) slot.appendChild(changeDot());
-    return rowCard({
-      cls: item ? item.pod : "",
-      c1: [slot, projectLink(item), meta],
-      c3: c3,
-      c4: c4
-    });
-  }
-
   function fill(id, nodes, emptyText) {
     var box = document.getElementById(id);
     box.textContent = "";
@@ -1631,13 +1617,6 @@
     flagGroups(active.concat(backlog, ongoing)).forEach(function (g) { g.flags.forEach(function (f, n) { flagNodes.push(flagLine(g.item, f, n)); }); });
     fill("attention", flagNodes, "Nothing flagged right now.");
 
-    var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-    var showAll = !!window.__upShowAll;
-    $("updates-section").hidden = !ups.length && !ADMIN;
-    fill("updates", (showAll ? ups : ups.slice(0, 4)).map(updateCard), "Nothing shared yet.");
-    $("updates-more").hidden = ups.length <= 4;
-    $("updates-more").textContent = showAll ? "Show fewer" : "Show all " + ups.length;
-
     document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
     fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
@@ -1739,143 +1718,376 @@
       L.push("- " + g.item.name + " (" + g.flags.length + (g.flags.length === 1 ? " flag" : " flags") + ")");
       g.flags.forEach(function (f) { L.push("    [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); });
     });
-    var ups = (DATA.updates || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 4);
-    if (ups.length) {
-      L.push("", "Updates I've shared:");
-      ups.forEach(function (e) {
-        var it = DATA.items.filter(function (i) { return i.id === e.project; })[0];
-        L.push("- [" + e.kind + "] " + (it ? it.name + ": " : "") + e.text + (e.who ? " (with " + e.who + ")" : "") + (e.detail ? " - " + lines(e.detail).join("; ") : ""));
+    var rc = recapList()[0];
+    if (rc && rc.doc) {
+      L.push("", "Notes for the week ending " + fmt(rc.week) + ":");
+      parseDoc(rc.doc).forEach(function (p) {
+        var t = plainOf(p.s);
+        if (p.t === "h") { if (t.trim()) L.push("", t + ":"); }
+        else if (t.trim()) L.push(p.t === "p" ? t : "- " + (p.t === "todo" && p.done ? "(done) " : "") + t);
       });
     }
-    var rc = recapList()[0];
-    if (rc) RECAP_NOTES.forEach(function (n) { if (rc[n[0]]) L.push("", n[1] + ":", rc[n[0]]); });
     var done = DATA.items.filter(function (i) { return i.lane === "done" && i.completed && daysBetween(pd(i.completed), today) <= 7; });
     if (done.length) { L.push("", "Completed this week:"); done.forEach(function (i) { L.push("- " + i.name); }); }
     return L.join("\n");
   }
 
-  var recapOpen = {}, editingRecap = null;
+  var recapOpen = {}, recapSnapOpen = false, recapMsg = "", pendingFocus = null, recapMore = false, flushPending = null;
   function recapList() { return (DATA.recaps || []).slice().sort(function (a, b) { return a.week < b.week ? 1 : -1; }); }
   function lastFriday() {
     var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     while (dt.getDay() !== 5) dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() - 1);
     return iso(dt);
   }
-  var RECAP_NOTES = [["done", "What I got done"], ["next", "What's next"], ["other", "Other teams and things going on"], ["bandwidth", "Bandwidth and timeline changes"], ["calendar", "Calendar check"]];
-
-  function recapSection(title, node) {
-    var sec = el("div", "recap-sec");
-    sec.appendChild(el("h3", null, title));
-    sec.appendChild(node);
-    return sec;
+  function nextFriday() {
+    var dt = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    while (dt.getDay() !== 5) dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + 1);
+    return iso(dt);
   }
 
-  function recapLine(r) {
-    var l = lines(r.done)[0] || lines(r.next)[0] || lines(r.other)[0] || "";
-    return l.length > 140 ? l.slice(0, 137) + "..." : l;
+  // Each week is one markdown string: "## heading", "- bullet", "- [ ] todo", plain lines, **bold**, [text](https://url).
+  var TEMPLATE = ["## This week's focus", "- ", "- ", "- ", "## Not this week", "- ",
+    "## Insights", "- ", "## Benefits / ME", "- ", "## Payer & Global", "- ", "## Channel Partners", "- ",
+    "## Decisions and asks", "- ", "## Calendar and focus time", "- "].join("\n");
+
+  function podOfHeading(t) {
+    var x = t.toLowerCase();
+    return x.indexOf("insights") === 0 ? "insights" : x.indexOf("benefits") === 0 ? "benefits-me" : x.indexOf("payer") === 0 ? "payer-global" : x.indexOf("channel") === 0 ? "channel-partners" : "";
   }
 
-  var recapSel = null;
-
-  function renderRecap() {
-    var list = recapList();
-    var tools = $("recap-tools"), box = $("recap");
-    tools.textContent = ""; box.textContent = "";
-    if (list.length) {
-      if (recapSel !== "all" && !list.some(function (r) { return r.week === recapSel; })) recapSel = list[0].week;
-      var sel = el("select", "select-ctl"); sel.setAttribute("aria-label", "Choose a week");
-      list.forEach(function (r) { opt(sel, r.week, "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })); });
-      opt(sel, "all", "View all");
-      sel.value = recapSel;
-      sel.onchange = function () { recapSel = sel.value; renderRecap(); };
-      tools.appendChild(sel);
-    }
-    if (ADMIN) {
-      var nw = el("button", "btn small primary", "+ New week"); nw.type = "button"; nw.onclick = function () { openRecap(null); };
-      tools.appendChild(nw);
-    }
-    if (!list.length) { box.appendChild(el("div", "empty", "No weekly recap posted yet.")); return; }
-    var viewAll = recapSel === "all";
-    list.forEach(function (r, n) {
-      if (!viewAll && r.week !== recapSel) return;
-      var open = viewAll ? (recapOpen[r.week] != null ? recapOpen[r.week] : n === 0) : true;
-      var latest = n === 0;
-      var card = el("div", "recap-card");
-      var hd = el("div", "recap-head");
-      hd.appendChild(el("h3", "recap-week", "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })));
-      if (viewAll) {
-        var tg = el("button", "toggle", open ? "Collapse " : "Expand ");
-        tg.type = "button"; tg.setAttribute("aria-expanded", String(open));
-        tg.appendChild(el("span", null, open ? "\u25B4" : "\u25BE"));
-        tg.onclick = function () { recapOpen[r.week] = !open; renderRecap(); };
-        hd.appendChild(tg);
-      }
-      if (ADMIN) {
-        var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openRecap(r); };
-        hd.appendChild(ed);
-      }
-      card.appendChild(hd);
-      if (!open) {
-        var sum = recapLine(r);
-        if (sum) card.appendChild(el("div", "recap-sum", sum));
-        box.appendChild(card);
-        return;
-      }
-      if (latest) {
-        var ol = el("ol");
-        DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
-          ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
-        });
-        if (ol.children.length) card.appendChild(recapSection("Priorities", ol));
-      }
-      RECAP_NOTES.forEach(function (nt) { if (r[nt[0]]) card.appendChild(recapSection(nt[1], bullets(r[nt[0]]))); });
-      var shared = (DATA.updates || []).filter(function (e) {
-        var back = daysBetween(pd(e.date), pd(r.week));
-        return back >= 0 && back <= 6;
-      });
-      if (shared.length) {
-        var dl = el("ul", "bul");
-        shared.forEach(function (e) { dl.appendChild(el("li", null, "[" + e.kind + "] " + e.text + (e.who ? " (with " + e.who + ")" : ""))); });
-        card.appendChild(recapSection("Updates I shared", dl));
-      }
-      if (latest) {
-        var fl = [];
-        DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
-        if (fl.length) {
-          var fu = el("ul", "bul");
-          fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
-          card.appendChild(recapSection("Flags", fu));
-        }
-      }
-      box.appendChild(card);
+  function parseDoc(md) {
+    return String(md || "").split("\n").map(function (line) {
+      var m;
+      if ((m = /^#{1,3}\s+(.*)$/.exec(line))) return { t: "h", s: m[1] };
+      if ((m = /^[-*]\s+\[( |x|X)\]\s?(.*)$/.exec(line))) return { t: "todo", done: m[1] !== " ", s: m[2] };
+      if ((m = /^[-*](?:\s(.*))?$/.exec(line))) return { t: "li", s: m[1] || "" };
+      return { t: "p", s: line };
     });
   }
 
-  function openRecap(rc) {
-    editingRecap = rc;
-    $("recap-title").textContent = rc ? "Edit weekly recap" : "New weekly recap";
-    $("r-delete").hidden = !rc;
-    var r = rc || { week: lastFriday() };
-    $("r-week").value = r.week;
-    RECAP_NOTES.forEach(function (n) { $("r-" + n[0]).value = r[n[0]] || ""; });
-    $("dlg-recap").showModal();
+  function parseInline(s, parent) {
+    var i = 0, buf = "";
+    function flush() { if (buf) { parent.appendChild(document.createTextNode(buf)); buf = ""; } }
+    while (i < s.length) {
+      var c = s.charAt(i);
+      if (c === "\\" && i + 1 < s.length) { buf += s.charAt(i + 1); i += 2; continue; }
+      if (c === "*" && s.charAt(i + 1) === "*") {
+        var j = s.indexOf("**", i + 2);
+        if (j > i + 2) { flush(); var b = document.createElement("b"); parseInline(s.slice(i + 2, j), b); parent.appendChild(b); i = j + 2; continue; }
+      }
+      if (c === "[") {
+        var m = /^\[((?:\\.|[^\]\\])*)\]\((https?:\/\/[^\s)]+)\)/.exec(s.slice(i));
+        if (m) { flush(); var a = document.createElement("a"); a.href = m[2]; a.target = "_blank"; a.rel = "noopener"; parseInline(m[1], a); parent.appendChild(a); i += m[0].length; continue; }
+      }
+      buf += c; i++;
+    }
+    flush();
   }
 
-  var editingLog = null, editingPod = null;
-
-  function openUpdate(entry) {
-    editingLog = entry;
-    $("log-title").textContent = entry ? "Edit update" : "Add update";
-    $("l-delete").hidden = !entry;
-    var e = entry || { kind: "Timing", date: iso(today), project: "" };
-    var sel = $("l-project"); sel.textContent = "";
-    opt(sel, "", "(general)");
-    DATA.items.forEach(function (i) { opt(sel, i.id, i.name); });
-    $("l-kind").value = e.kind || "FYI"; $("l-date").value = e.date; $("l-project").value = e.project || "";
-    $("l-text").value = e.text || ""; $("l-who").value = e.who || ""; $("l-detail").value = e.detail || "";
-    $("l-err").textContent = "";
-    $("dlg-log").showModal();
+  function inlineMd(node) {
+    var out = "";
+    Array.prototype.forEach.call(node.childNodes, function (n) {
+      if (n.nodeType === 3) out += n.nodeValue.replace(/\u200b/g, "").replace(/\u00a0/g, " ").replace(/[\\*\[\]]/g, "\\$&");
+      else if (n.nodeType === 1 && n.tagName !== "BR") {
+        var inner = inlineMd(n), href = n.tagName === "A" ? n.getAttribute("href") : "";
+        if (n.tagName === "B" || n.tagName === "STRONG") out += inner ? "**" + inner + "**" : "";
+        else if (href && safeUrl(href)) out += "[" + inner + "](" + href.replace(/\)/g, "%29") + ")";
+        else out += inner;
+      }
+    });
+    return out;
   }
+  function blockMd(b) {
+    var t = b.dataset.t, s = inlineMd(b);
+    return t === "h" ? "## " + s : t === "li" ? "- " + s : t === "todo" ? "- [" + (b.dataset.done ? "x" : " ") + "] " + s : s;
+  }
+  function docMd(box) { return Array.prototype.map.call(box.children, blockMd).join("\n"); }
+
+  function fixEmpty(b) { if (!b.textContent) { b.textContent = ""; b.appendChild(document.createElement("br")); } }
+  function buildBlock(p) {
+    var d = el("div", "blk");
+    d.dataset.t = p.t;
+    if (p.t === "todo" && p.done) d.dataset.done = "1";
+    parseInline(p.s, d);
+    if (p.t === "h") { var pk = podOfHeading(d.textContent); if (pk) d.dataset.pod = pk; }
+    fixEmpty(d);
+    return d;
+  }
+  function plainOf(s) { var d = document.createElement("div"); parseInline(s, d); return d.textContent; }
+  function firstLine(md) {
+    var ps = parseDoc(md).filter(function (p) { return p.s.trim(); });
+    var p = ps.filter(function (x) { return x.t !== "h"; })[0] || ps[0];
+    return p ? plainOf(p.s) : "";
+  }
+
+  function setCaret(node, offset) {
+    var r = document.createRange(); r.setStart(node, offset); r.collapse(true);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  }
+  function caretBlock(box) {
+    var sel = window.getSelection(), n = sel.rangeCount ? sel.anchorNode : null;
+    while (n && n.parentNode !== box) n = n.parentNode;
+    return n && n.nodeType === 1 && n.classList.contains("blk") ? n : null;
+  }
+  function caretOffsetIn(b) {
+    var r = window.getSelection().getRangeAt(0), pre = document.createRange();
+    pre.selectNodeContents(b); pre.setEnd(r.startContainer, r.startOffset);
+    return pre.toString().length;
+  }
+  function stripLeading(b, n) {
+    var w = document.createTreeWalker(b, NodeFilter.SHOW_TEXT), node;
+    while (n > 0 && (node = w.nextNode())) {
+      var take = Math.min(n, node.nodeValue.length);
+      node.nodeValue = node.nodeValue.slice(take); n -= take;
+    }
+    fixEmpty(b);
+  }
+
+  function wireEditor(box, rec, saved) {
+    var timer = null, hideTimer = null;
+    function save() {
+      clearTimeout(timer); timer = null; flushPending = null;
+      rec.doc = docMd(box); saveDraft();
+      saved.textContent = "Draft saved";
+      clearTimeout(hideTimer); hideTimer = setTimeout(function () { saved.textContent = ""; }, 2500);
+    }
+    function schedule() { clearTimeout(timer); flushPending = save; timer = setTimeout(save, 300); }
+    function normalize() {
+      Array.prototype.slice.call(box.childNodes).forEach(function (n) {
+        if (n.nodeType === 1 && n.classList.contains("blk")) return;
+        var b = el("div", "blk"); b.dataset.t = "p";
+        if (n.nodeType === 3) b.appendChild(document.createTextNode(n.nodeValue));
+        else while (n.firstChild) b.appendChild(n.firstChild);
+        box.replaceChild(b, n); fixEmpty(b);
+      });
+      if (!box.children.length) { var b0 = buildBlock({ t: "p", s: "" }); box.appendChild(b0); setCaret(b0, 0); }
+    }
+    function shortcuts(b) {
+      var txt = b.textContent.replace(/\u00a0/g, " ").replace(/\u200b/g, ""), m;
+      if (b.dataset.t === "p") {
+        var to = null, n = 0;
+        if ((m = /^#{1,3} /.exec(txt))) { to = "h"; n = m[0].length; }
+        else if ((m = /^(?:[-*] )?\[( |x|X)?\] /.exec(txt))) { to = "todo"; n = m[0].length; if (m[1] === "x" || m[1] === "X") b.dataset.done = "1"; }
+        else if ((m = /^[-*] /.exec(txt))) { to = "li"; n = 2; }
+        if (to && caretOffsetIn(b) === n) { b.dataset.t = to; stripLeading(b, n); setCaret(b, 0); }
+      }
+      if ((m = /^\/d /.exec(txt)) && caretOffsetIn(b) === 3) {
+        var stamp = today.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ":\u00a0";
+        stripLeading(b, 3); b.insertBefore(document.createTextNode(stamp), b.firstChild);
+        var tn = b.firstChild; setCaret(tn, stamp.length);
+      }
+      if (b.dataset.t === "h") { var pk = podOfHeading(b.textContent); if (pk) b.dataset.pod = pk; else delete b.dataset.pod; }
+    }
+    function inlineRules() {
+      var sel = window.getSelection();
+      if (!sel.rangeCount || !sel.isCollapsed || sel.anchorNode.nodeType !== 3) return;
+      var node = sel.anchorNode, off = sel.anchorOffset, before = node.nodeValue.slice(0, off), m, el2, start;
+      if ((m = /\*\*([^*]+)\*\*$/.exec(before))) { el2 = document.createElement("b"); el2.textContent = m[1]; }
+      else if ((m = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/.exec(before))) { el2 = document.createElement("a"); el2.href = m[2]; el2.target = "_blank"; el2.rel = "noopener"; el2.textContent = m[1]; }
+      if (!el2) return;
+      start = off - m[0].length;
+      var rest = node.nodeValue.slice(off);
+      // A zero-width space gives the caret a text node of its own, so typing continues outside the bold or link.
+      var after = document.createTextNode(rest || "\u200b");
+      node.nodeValue = node.nodeValue.slice(0, start);
+      node.parentNode.insertBefore(el2, node.nextSibling);
+      node.parentNode.insertBefore(after, el2.nextSibling);
+      setCaret(after, rest ? 0 : 1);
+    }
+    box.addEventListener("input", function () {
+      normalize();
+      var b = caretBlock(box);
+      if (b) { shortcuts(b); inlineRules(); }
+      schedule();
+    });
+    box.addEventListener("blur", function () { if (timer) save(); }, true);
+    box.addEventListener("drop", function (e) { e.preventDefault(); });
+    box.addEventListener("click", function (e) {
+      var b = e.target;
+      if (b.classList && b.classList.contains("blk") && b.dataset.t === "todo" && e.offsetX < 24) {
+        if (b.dataset.done) delete b.dataset.done; else b.dataset.done = "1";
+        schedule();
+      }
+    });
+    box.addEventListener("keydown", function (e) {
+      var mod = e.metaKey || e.ctrlKey, b = caretBlock(box), sel = window.getSelection();
+      if (mod && e.key.toLowerCase() === "b") { e.preventDefault(); document.execCommand("bold"); schedule(); return; }
+      if (mod && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        var url = prompt("Link address (starts with https://)");
+        if (url && safeUrl(url.trim())) { document.execCommand("createLink", false, url.trim()); schedule(); }
+        return;
+      }
+      if (!b || !sel.rangeCount) return;
+      if (e.key === "Enter") {
+        e.preventDefault();
+        var r = sel.getRangeAt(0);
+        if (!r.collapsed) r.deleteContents();
+        var t = b.dataset.t;
+        if (!b.textContent && (t === "li" || t === "todo")) { b.dataset.t = "p"; delete b.dataset.done; fixEmpty(b); setCaret(b, 0); schedule(); return; }
+        var tail = document.createRange(); tail.selectNodeContents(b); tail.setStart(r.endContainer, r.endOffset);
+        var nb = el("div", "blk"); nb.dataset.t = t === "h" ? "p" : t;
+        nb.appendChild(tail.extractContents());
+        fixEmpty(nb); fixEmpty(b);
+        b.parentNode.insertBefore(nb, b.nextSibling); setCaret(nb, 0);
+        schedule(); return;
+      }
+      if (e.key === "Backspace" && sel.isCollapsed && caretOffsetIn(b) === 0) {
+        if (b.dataset.t !== "p") { e.preventDefault(); b.dataset.t = "p"; delete b.dataset.done; delete b.dataset.pod; schedule(); return; }
+        var prev = b.previousElementSibling;
+        if (!prev) return;
+        e.preventDefault();
+        if (!prev.textContent) { prev.remove(); setCaret(b, 0); schedule(); return; }
+        var lastBr = prev.lastChild; if (lastBr && lastBr.nodeName === "BR") prev.removeChild(lastBr);
+        var at = prev.childNodes.length;
+        while (b.firstChild) prev.appendChild(b.firstChild);
+        b.remove(); fixEmpty(prev); setCaret(prev, at); schedule();
+      }
+    });
+    box.addEventListener("paste", function (e) {
+      e.preventDefault();
+      var txt = ((e.clipboardData || window.clipboardData).getData("text/plain") || "").replace(/\r/g, "");
+      var ls = txt.split("\n").filter(function (l, n, a) { return l.length || n < a.length - 1; });
+      if (ls.length <= 1) { document.execCommand("insertText", false, ls[0] || ""); return; }
+      var b = caretBlock(box), last = b;
+      document.execCommand("insertText", false, ls[0]);
+      ls.slice(1).forEach(function (l) { var nb = buildBlock(parseDoc(l)[0]); last.parentNode.insertBefore(nb, last.nextSibling); last = nb; });
+      setCaret(last, last.childNodes.length); schedule();
+    });
+  }
+
+  function renderDoc(md, rec, saved) {
+    var box = el("div", "doc");
+    var parsed = parseDoc(md);
+    if (ADMIN) {
+      if (!parsed.length) parsed = [{ t: "p", s: "" }];
+      parsed.forEach(function (p) { box.appendChild(buildBlock(p)); });
+      box.contentEditable = "true";
+      box.setAttribute("role", "textbox"); box.setAttribute("aria-multiline", "true");
+      box.setAttribute("aria-label", "Notes for the week ending " + fmt(rec.week));
+      wireEditor(box, rec, saved);
+      return box;
+    }
+    // Viewers see no empty bullets and no heading without notes under it.
+    var pend = null, kept = [];
+    parsed.forEach(function (p) {
+      if (p.t === "h") { pend = p.s.trim() ? p : null; return; }
+      if (!p.s.trim()) return;
+      if (pend) { kept.push(pend); pend = null; }
+      kept.push(p);
+    });
+    if (!kept.length) box.appendChild(el("div", "empty", "No notes yet."));
+    kept.forEach(function (p) { box.appendChild(buildBlock(p)); });
+    return box;
+  }
+
+  function snapshotBlock() {
+    var wrap = el("div", "recap-snap");
+    var tg = el("button", "toggle", "Snapshot ");
+    tg.type = "button"; tg.setAttribute("aria-expanded", String(recapSnapOpen));
+    tg.appendChild(el("span", null, recapSnapOpen ? "▴" : "▾"));
+    tg.onclick = function () { recapSnapOpen = !recapSnapOpen; renderRecap(); };
+    wrap.appendChild(tg);
+    if (!recapSnapOpen) return wrap;
+    var body = el("div", "recap-snap-body");
+    var ol = el("ol");
+    DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
+      ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
+    });
+    if (ol.children.length) { body.appendChild(el("h4", null, "Priorities")); body.appendChild(ol); }
+    var fl = [];
+    DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
+    if (fl.length) {
+      var fu = el("ul", "bul");
+      fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
+      body.appendChild(el("h4", null, "Open flags")); body.appendChild(fu);
+    }
+    if (!body.children.length) body.appendChild(el("div", "empty", "Nothing to show."));
+    wrap.appendChild(body);
+    return wrap;
+  }
+
+  function weekCard(r, isLatest) {
+    var open = isLatest || !!recapOpen[r.week];
+    var card = el("div", "recap-card" + (open ? " open" : ""));
+    if (!open) {
+      var row = el("button", "recap-row");
+      row.type = "button"; row.setAttribute("aria-expanded", "false");
+      row.appendChild(el("span", "rr-date", pd(r.week).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })));
+      row.appendChild(el("span", "rr-first", firstLine(r.doc)));
+      row.appendChild(el("span", "rr-chev", "▾"));
+      row.onclick = function () { recapOpen[r.week] = true; renderRecap(); };
+      card.appendChild(row);
+      return card;
+    }
+    var hd = el("div", "recap-head");
+    hd.appendChild(el("h3", "recap-week", "Week ending " + pd(r.week).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })));
+    var saved = el("span", "autosave"); saved.setAttribute("aria-live", "polite");
+    if (!isLatest) {
+      var tg = el("button", "toggle", "Collapse ");
+      tg.type = "button"; tg.setAttribute("aria-expanded", "true");
+      tg.appendChild(el("span", null, "▴"));
+      tg.onclick = function () { recapOpen[r.week] = false; renderRecap(); };
+      hd.appendChild(tg);
+    }
+    if (ADMIN) {
+      var del = el("button", "btn small danger", "Delete week"); del.type = "button";
+      del.onclick = function () {
+        if (!confirm("Delete the notes for the week ending " + fmt(r.week) + "?")) return;
+        DATA.recaps = DATA.recaps.filter(function (x) { return x !== r; }); commit();
+      };
+      hd.appendChild(saved); hd.appendChild(del);
+    }
+    card.appendChild(hd);
+    if (isLatest) card.appendChild(snapshotBlock());
+    card.appendChild(renderDoc(r.doc, r, saved));
+    return card;
+  }
+
+  function newWeek() {
+    var fr = nextFriday();
+    var ex = (DATA.recaps || []).filter(function (r) { return r.week === fr; })[0];
+    if (ex) {
+      recapOpen[fr] = true; pendingFocus = fr;
+      recapMsg = "The week ending " + fmt(fr) + " already exists.";
+      renderRecap(); return;
+    }
+    (DATA.recaps = DATA.recaps || []).push({ week: fr, doc: TEMPLATE });
+    recapMsg = ""; recapOpen[fr] = true; pendingFocus = fr;
+    commit();
+  }
+
+  function renderRecap() {
+    if (flushPending) flushPending();
+    var list = recapList();
+    var tools = $("recap-tools"), box = $("recap");
+    tools.textContent = ""; box.textContent = "";
+    if (ADMIN) {
+      var nw = el("button", "btn small primary", "+ New week"); nw.type = "button"; nw.onclick = newWeek;
+      tools.appendChild(nw);
+      if (recapMsg) tools.appendChild(el("span", "autosave", recapMsg));
+    }
+    if (!list.length) { box.appendChild(el("div", "empty", "No weekly recap posted yet.")); return; }
+    list.forEach(function (r, n) {
+      if (n === 1) box.appendChild(el("h3", "recap-earlier", "Earlier weeks"));
+      if (n > 6 && !recapMore) return;
+      box.appendChild(weekCard(r, n === 0));
+    });
+    if (list.length > 7) {
+      var more = el("button", "btn small", recapMore ? "Show fewer" : "Show all " + list.length + " weeks"); more.type = "button";
+      more.onclick = function () { recapMore = !recapMore; renderRecap(); };
+      box.appendChild(more);
+    }
+    if (pendingFocus) {
+      var target = list.filter(function (r) { return r.week === pendingFocus; })[0];
+      pendingFocus = null;
+      var docs = box.querySelectorAll(".doc[contenteditable]");
+      var idx = list.indexOf(target) === 0 ? 0 : -1;
+      if (idx === 0 && docs[0]) { var fb = docs[0].querySelector('.blk[data-t="li"]') || docs[0].firstChild; docs[0].focus(); setCaret(fb, 0); fb.scrollIntoView({ block: "center" }); }
+    }
+  }
+
+  var editingPod = null;
 
   function openPod(key) {
     editingPod = key;
@@ -2018,10 +2230,15 @@
     $("dlg-park").showModal();
   }
 
-  function commit() {
+  function saveDraft() {
     DATA.updated = iso(today);
     staleDraft = null;
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: BUILD, data: DATA }));
+    renderAdminBar();
+  }
+
+  function commit() {
+    saveDraft();
     render();
   }
 
@@ -2284,42 +2501,6 @@
       var nt = $("s-not").value.trim();
       if (nt) DATA.notThisWeek = nt; else delete DATA.notThisWeek;
       $("dlg-settings").close(); commit();
-    });
-
-    $("add-update").onclick = function () { openUpdate(null); };
-    $("updates-tools").hidden = false;
-    $("updates-more").onclick = function () { window.__upShowAll = !window.__upShowAll; render(); };
-    $("l-cancel").onclick = function () { $("dlg-log").close(); };
-    $("l-delete").onclick = function () {
-      if (!editingLog || !confirm("Delete this update?")) return;
-      DATA.updates = DATA.updates.filter(function (e) { return e !== editingLog; });
-      $("dlg-log").close(); commit();
-    };
-    $("log-form").addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var text = $("l-text").value.trim();
-      if (!text) { $("l-err").textContent = "Say what the update is first."; return; }
-      var e = editingLog || { id: "u" + Date.now() };
-      e.kind = $("l-kind").value; e.date = $("l-date").value || iso(today); e.project = $("l-project").value; e.text = text;
-      e.who = $("l-who").value.trim(); e.detail = $("l-detail").value.trim();
-      if (!editingLog) (DATA.updates = DATA.updates || []).push(e);
-      $("dlg-log").close(); currentTab = "overview"; commit();
-    });
-
-    $("r-cancel").onclick = function () { $("dlg-recap").close(); };
-    $("r-delete").onclick = function () {
-      if (!editingRecap || !confirm("Delete this weekly recap?")) return;
-      DATA.recaps = DATA.recaps.filter(function (r) { return r !== editingRecap; });
-      $("dlg-recap").close(); commit();
-    };
-    $("recap-form").addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var r = editingRecap || {};
-      r.week = $("r-week").value || lastFriday();
-      RECAP_NOTES.forEach(function (n) { var v = $("r-" + n[0]).value.trim(); if (v) r[n[0]] = v; else delete r[n[0]]; });
-      if (!editingRecap) (DATA.recaps = DATA.recaps || []).push(r);
-      recapOpen[r.week] = true; recapSel = r.week;
-      $("dlg-recap").close(); currentTab = "recap"; commit();
     });
 
     $("p-cancel").onclick = function () { $("dlg-pod").close(); };
