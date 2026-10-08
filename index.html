@@ -152,6 +152,12 @@
   .ch-dates .stepper { max-width: 340px; margin-bottom: 4px; }
   .ch-dates .pill { display: inline-block; margin-bottom: 8px; }
   .card-actions .links { margin: 0; padding: 0; border: 0; }
+  .card.sortable { padding-left: 32px; }
+  .grip { position: absolute; left: 8px; top: 12px; width: 20px; height: 24px; padding: 0; border: 0; background: none; color: var(--muted); font-size: 16px; line-height: 1; letter-spacing: -3px; cursor: grab; }
+  .grip:active { cursor: grabbing; }
+  .card.dragging { opacity: .45; }
+  .card.drop-before { box-shadow: 0 -3px 0 0 var(--brand); }
+  .card.drop-after { box-shadow: 0 3px 0 0 var(--brand); }
   .toggle { font: inherit; font-size: 13px; font-weight: 600; padding: 3px 6px; border: 0; border-radius: 6px; background: none; color: var(--brand); cursor: pointer; }
   .toggle:hover { text-decoration: underline; }
   .card-body { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
@@ -486,12 +492,11 @@
 
     <div class="dlg-sec">Basics</div>
     <label class="f">Name<input type="text" id="f-name" required></label>
-    <div class="f3">
+    <div class="f2">
       <label class="f">Pod<select id="f-pod"></select></label>
       <label class="f">List<select id="f-lane">
         <option value="active">In progress</option><option value="backlog">Up next (backlog)</option><option value="done">Completed</option><option value="ongoing">Also on my plate (no dates)</option>
       </select></label>
-      <label class="f">Priority<input type="number" id="f-priority" min="1" step="1"><span class="help">1 = highest in its list</span></label>
     </div>
     <div class="f3">
       <label class="f" id="w-status">Status<select id="f-status"></select><span class="help">How it is going: on track, needs support, awaiting review, blocked</span></label>
@@ -558,7 +563,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-06",
+  "updated": "2026-10-08",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -604,7 +609,9 @@
           "url": "https://springhealth.atlassian.net/browse/MG-54"
         }
       ],
-      "launch": "2026-11-02"
+      "launch": "2026-11-02",
+      "flags": [],
+      "changed": "2026-10-08"
     },
     {
       "id": "necl-marketing-planner",
@@ -630,19 +637,24 @@
         },
         {
           "name": "Design <> ENG Kickoff",
-          "date": "2026-10-09",
+          "date": "2026-10-13",
           "done": false
         },
         {
           "name": "Crit w/Stella",
           "date": "2026-10-06",
+          "done": true
+        },
+        {
+          "name": "Customer review, gut check",
+          "date": "2026-10-08",
           "done": false
         }
       ],
       "links": [
         {
           "label": "Figma",
-          "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=106-26462&t=n0Wg9ixbdVON37jw-1"
+          "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=255-32403&t=R4MkAXNWXXz00t2N-1"
         },
         {
           "label": "PRD",
@@ -674,37 +686,18 @@
         }
       ],
       "launch": "2026-11-16",
-      "flags": [
-        {
-          "type": "Direction change",
-          "text": "Marketing and CSM reviews brought new learnings and conflicting views on the opt-in model",
-          "rec": "Iterating on UI based on new learnings and perspectives; some complexity added here",
-          "date": "2026-10-02"
-        },
-        {
-          "type": "Open question",
-          "text": "Placement - whats too prominent vs not prominent enough; Conflicting viewpoints from Marketing + CSMs",
-          "rec": "",
-          "date": "2026-10-04"
-        },
-        {
-          "type": "Open question",
-          "text": "Toggle lives under settings OR can it stay on planner view?",
-          "rec": "",
-          "date": "2026-10-06"
-        }
-      ],
+      "flags": [],
       "next": "Iterate the designs on the Marketing and CSM feedback, align on placement with design team and Ramya.",
-      "changed": "2026-10-06"
+      "changed": "2026-10-08"
     },
     {
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 3,
+      "priority": 1,
       "stage": "Iteration",
-      "start": "2026-10-12",
+      "start": "2026-10-13",
       "end": "2026-10-23",
       "summary": "",
       "milestones": [],
@@ -722,7 +715,9 @@
           "url": "https://www.figma.com/design/I8L1Z1TELyObB37104XsrJ/Marketplace?node-id=5448-26030&t=6B2nHYd1mflMBOPe-1"
         }
       ],
-      "next": "Design starts the week of Oct 12. The team sent updated assets for me to apply when I start."
+      "next": "Design starts the week of Oct 12. The team sent updated assets for me to apply when I start.",
+      "flags": [],
+      "changed": "2026-10-08"
     },
     {
       "id": "ibx-remediation",
@@ -756,7 +751,7 @@
       "name": "Thoughtful Integration into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 1,
+      "priority": 3,
       "summary": "Still to be defined, so it stays in Up next until there is more clarity. Regina is keeping track as the previous team transitions it off.",
       "milestones": [],
       "links": [
@@ -787,9 +782,20 @@
         {
           "label": "FigJam (CS x CV AI workshop)",
           "url": "https://www.figma.com/board/BdZULB88cW5ruecPz9mBzv/CS-x-CV--AI-Opportunities-Workshop?node-id=0-1"
+        },
+        {
+          "label": "Proposed Q/A/HBR template",
+          "url": "https://www.google.com/url?sa=t&rct=j&esrc=s&source=appssearch&uact=8&cd=1&cad=rja&q&sig2=tyHEyx7jbgof_5HI7HhSfw&ved=0ahUKEwjygsvEk_OWAxVCD2gIHWUDAMw4ABABKAEwAQ&url=https://drive.google.com/a/springhealth.com/open?id%3D1_pQOUd8qo91aAwJIUaOdkm_3xQIsMKGdVAao7VOjCDs&usg=AOvVaw2QVXjjoEh5I_Bf9XGIJMWk"
+        },
+        {
+          "label": "Figma board / MVP exploration",
+          "url": "https://www.figma.com/board/BdZULB88cW5ruecPz9mBzv/CS-x-CV--AI-Opportunities-Workshop?node-id=520-950&p=f&t=t1ylxifAYN5j6RYB-0"
         }
       ],
-      "stage": "Awaiting kickoff"
+      "stage": "Awaiting kickoff",
+      "start": "2026-10-19",
+      "flags": [],
+      "changed": "2026-10-08"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -820,8 +826,8 @@
       "flags": [],
       "milestones": [
         {
-          "name": "Native first pass delivered",
-          "date": "2026-10-09",
+          "name": "Web first pass delivered",
+          "date": "2026-10-14",
           "done": false
         },
         {
@@ -840,11 +846,11 @@
           "url": "https://sh-rnd-org.slack.com/archives/C0A3A93FT55/p1790887853252799?thread_ts=1790887784.195929&cid=C0A3A93FT55"
         }
       ],
-      "start": "2026-10-05",
+      "start": "2026-10-08",
       "end": "2026-10-16",
       "status": "On Track",
       "stage": "DQA",
-      "changed": "2026-10-06",
+      "changed": "2026-10-08",
       "launch": "2026-10-30",
       "dqaStart": "2026-10-08"
     },
@@ -917,7 +923,7 @@
   "focus": [
     {
       "id": "necl-marketing-planner",
-      "note": "Handoff designs to ENG"
+      "note": "Designs ready for ENG"
     }
   ],
   "notThisWeek": "Channel Partners"
@@ -1636,9 +1642,11 @@
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
     fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
     fill("active", active.map(priRow), "Nothing in progress for this pod.");
+    makeSortable($("active"), "active");
     renderTimeline();
     renderParked();
     fill("backlog", backlog.map(function (i, n) { return backlogRow(i, n + 1); }), "Nothing queued for this pod.");
+    makeSortable($("backlog"), "backlog");
     var supporting = done.filter(function (i) { return i.support; });
     var finished = done.filter(function (i) { return !i.support; });
     $("support-section").hidden = !supporting.length;
@@ -1888,6 +1896,64 @@
   function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   var editing = null;
 
+  // Reorders one lane. While a pod filter hides some items, the visible ones swap among their own slots.
+  function moveItem(lane, id, targetId, after) {
+    var full = DATA.items.filter(function (i) { return i.lane === lane; }).sort(byPriority);
+    var seen = function (i) { return podFilter === "all" || i.pod === podFilter; };
+    var vis = full.filter(seen);
+    var moved = vis.filter(function (i) { return i.id === id; })[0];
+    var rest = vis.filter(function (i) { return i.id !== id; });
+    var at = rest.map(function (i) { return i.id; }).indexOf(targetId);
+    if (!moved || at < 0) return;
+    rest.splice(after ? at + 1 : at, 0, moved);
+    var k = 0;
+    var order = full.map(function (i) { return seen(i) ? rest[k++] : i; });
+    order.forEach(function (i, n) { i.priority = n + 1; });
+    moved.changed = iso(today);
+    commit();
+  }
+
+  var focusGrip = null;
+  function makeSortable(box, lane) {
+    if (!ADMIN) return;
+    var cards = Array.prototype.filter.call(box.children, function (c) { return c.classList.contains("card"); });
+    var dragId = null;
+    function clear() { cards.forEach(function (c) { c.classList.remove("drop-before", "drop-after", "dragging"); }); }
+    cards.forEach(function (card, n) {
+      card.classList.add("sortable");
+      var name = (card.querySelector("h3") || {}).textContent || "item";
+      var g = el("button", "grip", "\u22EE\u22EE");
+      g.type = "button"; g.title = "Drag to reorder";
+      g.setAttribute("aria-label", "Reorder " + name + ". Drag, or press the up or down arrow key.");
+      g.onmousedown = function () { card.draggable = true; };
+      g.onmouseup = function () { card.draggable = false; };
+      g.onkeydown = function (e) {
+        var nb = e.key === "ArrowUp" ? cards[n - 1] : e.key === "ArrowDown" ? cards[n + 1] : null;
+        if (!nb) return;
+        e.preventDefault(); focusGrip = card.id;
+        moveItem(lane, card.id, nb.id, e.key === "ArrowDown");
+      };
+      if (focusGrip === card.id) { setTimeout(function () { g.focus(); }, 0); focusGrip = null; }
+      card.appendChild(g);
+      card.addEventListener("dragstart", function (e) { dragId = card.id; e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", card.id); card.classList.add("dragging"); });
+      card.addEventListener("dragend", function () { card.draggable = false; dragId = null; clear(); });
+      card.addEventListener("dragover", function (e) {
+        if (!dragId || dragId === card.id) return;
+        e.preventDefault();
+        var r = card.getBoundingClientRect(), after = e.clientY > r.top + r.height / 2;
+        card.classList.toggle("drop-after", after); card.classList.toggle("drop-before", !after);
+      });
+      card.addEventListener("dragleave", function () { card.classList.remove("drop-before", "drop-after"); });
+      card.addEventListener("drop", function (e) {
+        if (!dragId || dragId === card.id) return;
+        e.preventDefault();
+        var id = dragId, after = card.classList.contains("drop-after");
+        clear(); dragId = null;
+        moveItem(lane, id, card.id, after);
+      });
+    });
+  }
+
   function markDone(item) {
     var old = item.lane;
     item.lane = "done"; item.stage = "Complete"; item.completed = iso(today); item.changed = iso(today);
@@ -2060,7 +2126,6 @@
     $("f-name").value = it.name || "";
     $("f-pod").value = it.pod;
     $("f-lane").value = toLane || it.lane;
-    $("f-priority").value = it.priority || "";
     $("f-status").value = it.status || "On Track";
     $("f-kind").value = it.kind || "Bug";
     $("f-stage").value = STAGES.indexOf(it.stage) > -1 || (it.stage === "Scoping" && !toLane) ? it.stage : "Awaiting kickoff";
@@ -2122,9 +2187,8 @@
 
     var oldLane = editing ? editing.lane : null;
     var it = editing || { id: uniqueId(name) };
-    var prio = parseInt($("f-priority").value, 10);
     it.name = name; it.pod = $("f-pod").value; it.lane = lane;
-    it.priority = prio > 0 ? prio : 999;
+    if (!editing || oldLane !== lane) it.priority = 999;
     it.summary = $("f-summary").value.trim(); it.flags = flags; it.changed = iso(today);
     var wk = $("f-week").value.trim();
     DATA.focus = (DATA.focus || []).filter(function (f) { return f.id !== it.id; });
