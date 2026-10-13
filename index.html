@@ -221,6 +221,7 @@
   .recap-card:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
   .recap-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
   .recap-head h3 { margin: 0; font-size: 16px; }
+  .pubmsg { flex: 1 1 100%; font-weight: 600; color: #fff; }
   .recap-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
   .recap-top h2 { margin: 0 0 4px; }
   .recap-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
@@ -277,6 +278,14 @@
   @media (max-width: 720px) { .f3, .f4 { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 480px) { .f3, .f4 { grid-template-columns: 1fr; } }
   .subnav { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; margin-bottom: 8px; }
+  .h2-sub { font-size: 14px; }
+  #hold-section { margin-top: 18px; }
+  .hold-row { padding: 8px 14px; }
+  .hold-line { display: grid; grid-template-columns: minmax(240px, 1.5fr) minmax(170px, 1fr) minmax(190px, 1fr) auto; gap: 6px 16px; align-items: center; font-size: 13px; }
+  .hold-line > * { min-width: 0; }
+  .hold-line h3 { margin: 0; font-size: 14px; }
+  .hold-row .row { margin: 0; }
+  @media (max-width: 960px) { .hold-line { grid-template-columns: minmax(0, 1fr) auto; } .hold-line > .hold-qa, .hold-line > .hold-launch { grid-column: 1 / -1; } .hold-line > .toggle { grid-column: 2; grid-row: 1; } .hold-launch:empty { display: none; } }
   .pri-row { padding: 10px 14px; }
   .pri-line { display: grid; grid-template-columns: minmax(240px, 1.5fr) 130px minmax(170px, 2fr) 250px auto; gap: 6px 16px; align-items: center; }
   .pri-line > * { min-width: 0; }
@@ -330,7 +339,7 @@
   <div class="legend" id="legend" hidden>
     <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
     <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question, Overdue. Everything except an open question comes with my recommendation.</p>
-    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
+    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete. A project in Development is handed off, so it moves from Top priorities to In development, awaiting Design QA.</p>
     <p><b>Timeline:</b> Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A hatched line means handed off and with Eng; the bar is solid again when Design QA starts. A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
     <p><b>Updated:</b> A small <span class="upd-dot" style="margin-left:0"></span> dot means this changed since the last Friday recap.</p>
     <p><b>Colors:</b> The dot on a pod label and the left edge of a card show the pod: Benefits / ME teal, Payer &amp; Global orange, Insights blue, Channel Partners purple. Red and amber mean something needs attention, green means on track, and gray labels are just types.</p>
@@ -350,6 +359,11 @@
       <h2 id="active-title">Top priorities</h2>
       <p class="hint">In the order I am putting my time.</p>
       <div class="rows" id="active"></div>
+    </section>
+
+    <section id="hold-section" hidden>
+      <h2 class="h2-sub">In development, awaiting Design QA</h2>
+      <div class="rows" id="hold"></div>
     </section>
 
     <section id="week-notes">
@@ -458,6 +472,27 @@
   </form>
 </dialog>
 
+<dialog id="dlg-token" aria-labelledby="token-title">
+  <form method="dialog" id="token-form">
+    <h2 id="token-title">Set up Publish</h2>
+    <p class="help">Publish saves your changes to the live page in one click. It needs a GitHub token that only works for this one repo. The token is stored only in this browser.</p>
+    <ol class="help" style="margin:0;padding-left:20px">
+      <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
+      <li>Name it "tracker publish" and set the expiry to 90 days.</li>
+      <li>Under Repository access, choose Only select repositories, then marlowemerritt/tracker.</li>
+      <li>Under Repository permissions, set Contents to Read and write.</li>
+      <li>Generate the token and paste it below.</li>
+    </ol>
+    <label class="f">Token<input type="password" id="t-token" autocomplete="off"></label>
+    <div class="err" id="t-err" role="alert"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="t-forget">Remove saved token</button>
+      <button type="button" class="btn" id="t-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save and publish</button>
+    </div>
+  </form>
+</dialog>
+
 <dialog id="dlg-pod" aria-labelledby="pod-title">
   <form method="dialog" id="pod-form">
     <h2 id="pod-title">Edit pod</h2>
@@ -486,7 +521,7 @@
     </div>
     <div class="f3">
       <label class="f" id="w-status">Status<select id="f-status"></select><span class="help">How it is going: on track, needs support, awaiting review, blocked</span></label>
-      <label class="f" id="w-stage">Stage<select id="f-stage"></select><span class="help">Where it is in the process</span></label>
+      <label class="f" id="w-stage">Stage<select id="f-stage"></select><span class="help">Where it is in the process. Development moves it out of Top priorities.</span></label>
       <label class="f" id="w-kind">Type<select id="f-kind"></select></label>
     </div>
 
@@ -549,7 +584,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-08",
+  "updated": "2026-10-13",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -563,11 +598,11 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 3,
+      "priority": 4,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
-      "end": "2026-10-02",
+      "end": "2026-10-06",
       "summary": "Booking flow and restricted-market experience for global (T2) members. Handed to Eng; I answer questions as they come up until Design QA.",
       "milestones": [
         {
@@ -597,18 +632,18 @@
       ],
       "launch": "2026-11-02",
       "flags": [],
-      "changed": "2026-10-08"
+      "changed": "2026-10-13"
     },
     {
       "id": "necl-marketing-planner",
       "name": "NECL Marketing Planner",
       "pod": "insights",
       "lane": "active",
-      "priority": 1,
+      "priority": 3,
       "status": "On Track",
       "stage": "Iteration",
       "start": "2026-09-14",
-      "end": "2026-10-09",
+      "end": "2026-10-13",
       "summary": "Full-year calendar of upcoming marketing campaigns with content previews and a single opt-in action for customers, plus an internal CSM view to manage participation. Nov 16 is the tentative release the pod is aiming for, so we can test and be ready for full customer release.",
       "milestones": [
         {
@@ -632,9 +667,9 @@
           "done": true
         },
         {
-          "name": "Customer review, gut check",
+          "name": "Customer review - Navy Fed review w/CSM",
           "date": "2026-10-08",
-          "done": false
+          "done": true
         }
       ],
       "links": [
@@ -674,19 +709,30 @@
       "launch": "2026-11-16",
       "flags": [],
       "next": "Iterate the designs on the Marketing and CSM feedback, align on placement with design team and Ramya.",
-      "changed": "2026-10-08"
+      "changed": "2026-10-13"
     },
     {
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
-      "lane": "backlog",
-      "priority": 1,
+      "lane": "active",
+      "priority": 2,
       "stage": "Iteration",
       "start": "2026-10-13",
       "end": "2026-10-23",
       "summary": "",
-      "milestones": [],
+      "milestones": [
+        {
+          "name": "Design concept handoff - direction, placement, overview",
+          "date": "2026-10-16",
+          "done": false
+        },
+        {
+          "name": "Finalize visual/polish",
+          "date": "2026-10-23",
+          "done": false
+        }
+      ],
       "links": [
         {
           "label": "Loom",
@@ -701,9 +747,17 @@
           "url": "https://www.figma.com/design/I8L1Z1TELyObB37104XsrJ/Marketplace?node-id=5448-26030&t=6B2nHYd1mflMBOPe-1"
         }
       ],
-      "next": "Design starts the week of Oct 12. The team sent updated assets for me to apply when I start.",
-      "flags": [],
-      "changed": "2026-10-08"
+      "next": "Kicking off designs Oct 13. Using assets from Gottman and previous iterations to handoff direction by EOW",
+      "flags": [
+        {
+          "type": "Risk",
+          "text": "Ask to bump up 'Design ready for eng' to this week",
+          "rec": "Deliver direction with room to polish design/vision details into next week",
+          "date": "2026-10-13"
+        }
+      ],
+      "changed": "2026-10-13",
+      "status": "On Track"
     },
     {
       "id": "ibx-remediation",
@@ -737,7 +791,7 @@
       "name": "Thoughtful Integration into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 3,
+      "priority": 2,
       "summary": "Still to be defined, so it stays in Up next until there is more clarity. Regina is keeping track as the previous team transitions it off.",
       "milestones": [],
       "links": [
@@ -757,7 +811,7 @@
       "name": "Business review builder",
       "pod": "insights",
       "lane": "backlog",
-      "priority": 2,
+      "priority": 1,
       "summary": "Self-serve business review (QBR) generation in Spring Insights to cut the time CSMs spend preparing them.",
       "milestones": [],
       "links": [
@@ -808,17 +862,24 @@
       "name": "ME M1v1 DQA-Web+Native",
       "pod": "benefits-me",
       "lane": "active",
-      "priority": 2,
+      "priority": 1,
       "summary": "",
-      "flags": [],
+      "flags": [
+        {
+          "type": "Risk",
+          "text": "Native design QA - short turnaround considering short week and time it was received",
+          "rec": "Goal to deliver by EOW, but flagging in case it is not fully complete and moves into next week",
+          "date": "2026-10-13"
+        }
+      ],
       "milestones": [
         {
           "name": "Web first pass delivered",
-          "date": "2026-10-14",
+          "date": "2026-10-15",
           "done": false
         },
         {
-          "name": "Web first pass delivered",
+          "name": "Native first pass delivered",
           "date": "2026-10-16",
           "done": false
         }
@@ -837,9 +898,10 @@
       "end": "2026-10-16",
       "status": "On Track",
       "stage": "DQA",
-      "changed": "2026-10-08",
+      "changed": "2026-10-13",
       "launch": "2026-10-30",
-      "dqaStart": "2026-10-08"
+      "dqaStart": "2026-10-08",
+      "next": "Deliver Web/MWeb"
     },
     {
       "id": "insurance-filter-sales-demo",
@@ -891,12 +953,24 @@
     {
       "week": "2026-09-25",
       "doc": "## What I got done\n- Insights: marketing campaign design V1.\n- Met the team and got a general understanding of pod goals across Insights, Payer & Global, and Partnerships.\n## What's next\n- Transition off Benefits and Payer/PSS."
+    },
+    {
+      "week": "2026-10-09",
+      "doc": "**✅ Completed this week**\n- Insights - finalized planner with eng on Frdiay; Ready for eng kickoff and review with Marketing on Tuesday\n- Benefits/ME - Web/MWeb DQA in progress\n- Global specs/open questions 90% - still awaiting sign off from legal + confirmation from ENG on Restricted flow\n\n**❗️Learnings**\n- Picked up Notifications pod UI work because no designer on team, didn't realize extent of design/QA needs, should have flagged earlier\n## ❌ Not this week\n- ME DQA - Native flows, ready 10/13\n- Partner channels - Gottman, Thoughtful - aligned with team\n\n**Pods at a glance**\n**Insights **\n- Shared planner with Stella, wrapped up design iterations, handing off planner for ENG. Kickoff scheduled next Tuesday\n- Shared with Customer for feedback\n- Got overview of QBR - next project to pick up\n\n**Benefits / ME**\n- ME DQA came in delayed, picked up Thursday instead of Monday\n\n**Payer & Global**\n- IBX escalation should be clear now, path forward with copy\n- Global - Restricted flow, new requirement, needs to be signed-off by legal- ask to put together overview of the flow...\n\n**Channel Partners**\n- Sync'd with Regina - Gottman picked up next week\n## Other\n- P0 Rev Engine: Notifications pod, custom customer terminology configs - pulled in to support"
     }
   ],
   "focus": [
     {
       "id": "necl-marketing-planner",
       "note": "Designs ready for ENG"
+    },
+    {
+      "id": "me-design-qa-web-native",
+      "note": "First pass of Design QA"
+    },
+    {
+      "id": "gottman-marketplace",
+      "note": "Designs for ENG"
     }
   ],
   "notThisWeek": "Channel Partners"
@@ -967,7 +1041,8 @@
   var DATA = prepare(JSON.parse(PUBLISHED));
   // A draft is stamped with the published build it started from. If the page has been republished since,
   // the draft is held back (not applied) until the admin chooses, so stale data never silently wins.
-  var BUILD = (function () { var h = 5381; for (var k = 0; k < PUBLISHED.length; k++) h = ((h * 33) ^ PUBLISHED.charCodeAt(k)) >>> 0; return h.toString(36); })();
+  function buildHash(t) { var h = 5381; for (var k = 0; k < t.length; k++) h = ((h * 33) ^ t.charCodeAt(k)) >>> 0; return h.toString(36); }
+  var BUILD = buildHash(PUBLISHED);
   var staleDraft = null;
   if (ADMIN) {
     try {
@@ -1213,6 +1288,16 @@
       dn.onclick = function () { markDone(item); commit(); };
       out.push(dn);
     }
+    if (item.lane === "active") {
+      var eng = withEng(item);
+      var hand = el("button", "btn small", eng ? "Start Design QA" : "Hand off to Eng"); hand.type = "button";
+      hand.onclick = function () {
+        item.stage = eng ? "DQA" : "Development"; item.changed = iso(today);
+        if (eng) item.priority = 999;
+        renumber(DATA, "active", null); commit();
+      };
+      out.push(hand);
+    }
     if (item.lane === "backlog") {
       var mv = el("button", "btn small primary", "Move to Top priorities"); mv.type = "button";
       mv.onclick = function () { openEditor(item, "active"); };
@@ -1275,19 +1360,17 @@
     return f && f.note ? f.note : "";
   }
 
-  function priRow(item) {
+  function priRow(item, rank) {
     var open = !!expanded[item.id];
-    var eng = withEng(item);
-    var row = el("article", "card pri-row " + item.pod + (eng ? " with-eng" : "") + (open ? " open" : ""));
+    var row = el("article", "card pri-row " + item.pod + (open ? " open" : ""));
     row.id = item.id;
     var line = el("div", "pri-line");
     var name = el("div", "pri-name");
-    name.appendChild(el("span", "pri-rank", String(item.priority)));
+    name.appendChild(el("span", "pri-rank", String(rank)));
     var dot = el("span", "pdot pdot-" + item.pod);
     dot.setAttribute("role", "img"); dot.setAttribute("aria-label", podName(item.pod)); dot.title = podName(item.pod);
     name.appendChild(dot);
     name.appendChild(el("h3", null, item.name));
-    if (eng) name.appendChild(el("span", "tag", "With Eng"));
     if (itemChanged(item)) name.appendChild(changeDot());
     var st = el("div", "pri-status");
     st.appendChild(pill(item.status));
@@ -1299,13 +1382,10 @@
       wk.appendChild(el("span", wkNote ? "wk-note" : "wk-note muted", wkNote || "Add this week's outcome"));
     }
     var nx = el("div", "pri-next");
-    if (eng) nx.appendChild(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
-    else {
-      var due = dueInfo(item);
-      var dr = labelRow("Design deliverable", fmt(item.end) + " - ");
-      dr.appendChild(el("span", due.warn ? "warn" : null, due.text));
-      nx.appendChild(dr);
-    }
+    var due = dueInfo(item);
+    var dr = labelRow("Design deliverable", fmt(item.end) + " - ");
+    dr.appendChild(el("span", due.warn ? "warn" : null, due.text));
+    nx.appendChild(dr);
     [name, st, wk, nx, toggleBtn(item, true)].forEach(function (n) { line.appendChild(n); });
     row.appendChild(line);
     var acts = adminBtns(item);
@@ -1317,10 +1397,41 @@
     if (open) {
       var body = itemBody(item) || el("div", "card-body");
       var dl = el("div", "pl-line");
-      if (eng) dl.appendChild(labelRow("Handed to Eng", fmt(item.end)));
-      else dl.appendChild(labelRow("Design deliverable", fmt(item.end)));
-      if (item.dqaStart || eng) dl.appendChild(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
+      dl.appendChild(labelRow("Design deliverable", fmt(item.end)));
+      if (item.dqaStart) dl.appendChild(labelRow("Design QA", "starts " + fmt(item.dqaStart)));
       if (item.launch) dl.appendChild(labelRow("Launch", launchText(item)));
+      body.insertBefore(dl, body.firstChild);
+      row.appendChild(body);
+    }
+    return row;
+  }
+
+  // Handed off and in development: out of Top priorities, but not done until Design QA wraps.
+  function holdRow(item) {
+    var open = !!expanded[item.id];
+    var row = el("article", "card hold-row " + item.pod + (open ? " open" : ""));
+    row.id = item.id;
+    var line = el("div", "hold-line");
+    var name = el("div", "pri-name");
+    var dot = el("span", "pdot pdot-" + item.pod);
+    dot.setAttribute("role", "img"); dot.setAttribute("aria-label", podName(item.pod)); dot.title = podName(item.pod);
+    name.appendChild(dot);
+    name.appendChild(el("h3", null, item.name));
+    if (itemChanged(item)) name.appendChild(changeDot());
+    var qa = el("div", "hold-qa"); qa.appendChild(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
+    var ln = el("div", "hold-launch"); if (item.launch) ln.appendChild(labelRow("Launch", launchText(item)));
+    [name, qa, ln, toggleBtn(item, true)].forEach(function (n) { line.appendChild(n); });
+    row.appendChild(line);
+    var acts = adminBtns(item);
+    if (acts.length) {
+      var ab = el("div", "card-actions");
+      acts.forEach(function (b) { ab.appendChild(b); });
+      row.appendChild(ab);
+    }
+    if (open) {
+      var body = itemBody(item) || el("div", "card-body");
+      var dl = el("div", "pl-line");
+      dl.appendChild(labelRow("Handed to Eng", fmt(item.end)));
       body.insertBefore(dl, body.firstChild);
       row.appendChild(body);
     }
@@ -1481,7 +1592,8 @@
   function renderTimeline() {
     var tl = document.getElementById("tl");
     tl.textContent = "";
-    var rows = items("active").sort(byPriority).concat(items("backlog").filter(function (i) { return i.start; }).sort(byPriority));
+    var act = items("active").sort(byPriority);
+    var rows = act.filter(function (i) { return !withEng(i); }).concat(items("backlog").filter(function (i) { return i.start; }).sort(byPriority), act.filter(withEng));
     if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
     tl.style.paddingLeft = "";
 
@@ -1610,7 +1722,9 @@
     renderRecap();
 
     document.getElementById("attention-count").textContent = "(" + flags.length + ")";
-    document.getElementById("active-title").textContent = priTitle(active.length);
+    var prios = active.filter(function (i) { return !withEng(i); });
+    var hold = active.filter(withEng);
+    document.getElementById("active-title").textContent = priTitle(prios.length);
     document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
 
     var flagNodes = [];
@@ -1620,7 +1734,9 @@
     document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
     fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
-    fill("active", active.map(priRow), "Nothing in progress for this pod.");
+    fill("active", prios.map(function (i, n) { return priRow(i, n + 1); }), "Nothing in progress for this pod.");
+    $("hold-section").hidden = !hold.length;
+    fill("hold", hold.map(holdRow), "");
     makeSortable($("active"), "active");
     renderTimeline();
     renderParked();
@@ -1701,7 +1817,8 @@
     var L = [];
     var long = today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     L.push("Weekly update - " + long);
-    var active = DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority);
+    var inDev = DATA.items.filter(function (i) { return i.lane === "active" && withEng(i); }).sort(byPriority);
+    var active = DATA.items.filter(function (i) { return i.lane === "active" && !withEng(i); }).sort(byPriority);
     L.push("", priTitle(active.length) + ":");
     if (!active.length) L.push("- None");
     active.forEach(function (i) {
@@ -1709,6 +1826,10 @@
       if (focusNote(i)) L.push("    This week: " + focusNote(i));
       if (i.next) L.push("    Next step: " + i.next);
     });
+    if (inDev.length) {
+      L.push("", "In development, awaiting Design QA:");
+      inDev.forEach(function (i) { L.push("- " + i.name + ", handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") + (i.launch ? ", launch " + fmt(i.launch) : "")); });
+    }
     if (DATA.notThisWeek) L.push("Not this week: " + DATA.notThisWeek);
     if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push("", (DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
     var groups = flagGroups(DATA.items.filter(function (i) { return i.lane !== "done"; }));
@@ -1991,10 +2112,12 @@
     if (!recapSnapOpen) return wrap;
     var body = el("div", "recap-snap-body");
     var ol = el("ol");
+    var ol2 = el("ol");
     DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
-      ol.appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
+      (withEng(i) ? ol2 : ol).appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
     });
     if (ol.children.length) { body.appendChild(el("h4", null, "Priorities")); body.appendChild(ol); }
+    if (ol2.children.length) { body.appendChild(el("h4", null, "In development, awaiting Design QA")); body.appendChild(ol2); }
     var fl = [];
     DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
     if (fl.length) {
@@ -2111,7 +2234,7 @@
   // Reorders one lane. While a pod filter hides some items, the visible ones swap among their own slots.
   function moveItem(lane, id, targetId, after) {
     var full = DATA.items.filter(function (i) { return i.lane === lane; }).sort(byPriority);
-    var seen = function (i) { return podFilter === "all" || i.pod === podFilter; };
+    var seen = function (i) { return (podFilter === "all" || i.pod === podFilter) && !(lane === "active" && withEng(i)); };
     var vis = full.filter(seen);
     var moved = vis.filter(function (i) { return i.id === id; })[0];
     var rest = vis.filter(function (i) { return i.id !== id; });
@@ -2242,6 +2365,55 @@
     render();
   }
 
+  // Publish commits the data block of index.html to the repo with a token kept only in this browser.
+  var TOKEN_KEY = "tracker_gh_token", REPO = "marlowemerritt/tracker", DATA_RE = /(id="tracker-data" type="application\/json">)([\s\S]*?)(<\/script>)/;
+  var publishMsg = "";
+  function setPublishMsg(t) { publishMsg = t; renderAdminBar(); }
+  function toB64(str) {
+    var bytes = new TextEncoder().encode(str), bin = "";
+    for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function fromB64(b64) {
+    var bin = atob(b64.replace(/\n/g, "")), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function isDirty() { return JSON.stringify(DATA) !== JSON.stringify(prepare(JSON.parse(PUBLISHED))); }
+  function openToken(msg) { $("t-token").value = ""; $("t-err").textContent = msg || ""; $("dlg-token").showModal(); }
+
+  async function publish() {
+    var token = localStorage.getItem(TOKEN_KEY);
+    if (!token) { openToken(); return; }
+    if (!isDirty()) { setPublishMsg("Nothing to publish. The live page already has these changes."); return; }
+    if (!confirm("Publish these changes to the live page now?")) return;
+    setPublishMsg("Publishing...");
+    var api = "https://api.github.com/repos/" + REPO + "/contents/index.html";
+    var h = { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" };
+    try {
+      var r = await fetch(api + "?ref=main", { headers: h, cache: "no-store" });
+      if (r.status === 401 || r.status === 403 || r.status === 404) { setPublishMsg(""); openToken("GitHub did not accept the saved token (" + r.status + "). Check it can read and write Contents on " + REPO + ", or paste a new one."); return; }
+      if (!r.ok) throw new Error("GitHub answered " + r.status);
+      var f = await r.json(), html = fromB64(f.content), m = DATA_RE.exec(html);
+      if (!m) throw new Error("The data block was not found in the live file.");
+      if (m[2] !== PUBLISHED) { setPublishMsg("The live page changed after you opened this one, so nothing was published. Reload the page and repeat your edits."); return; }
+      var text = "\n" + JSON.stringify(DATA, null, 2).replace(/<\//g, "<\\/") + "\n";
+      var out = html.slice(0, m.index) + m[1] + text + m[3] + html.slice(m.index + m[0].length);
+      var put = await fetch(api, { method: "PUT", headers: Object.assign({ "Content-Type": "application/json" }, h),
+        body: JSON.stringify({ message: "Update tracker data (Publish button)", content: toB64(out), sha: f.sha, branch: "main" }) });
+      if (put.status === 401 || put.status === 403 || put.status === 404) { setPublishMsg(""); openToken("GitHub did not allow the change (" + put.status + "). The token needs Contents: Read and write on " + REPO + "."); return; }
+      if (put.status === 409 || put.status === 422) { setPublishMsg("The live page changed while publishing, so nothing was published. Try Publish again."); return; }
+      if (!put.ok) throw new Error("GitHub answered " + put.status);
+      PUBLISHED = text; BUILD = buildHash(text);
+      localStorage.removeItem(DRAFT_KEY);
+      DATA = prepare(JSON.parse(PUBLISHED));
+      publishMsg = "Published. It goes live in about a minute.";
+      render();
+    } catch (e) {
+      setPublishMsg("Publish failed: " + (e && e.message ? e.message : "no connection") + ". Your draft is still saved here.");
+    }
+  }
+
   function renderAdminBar() {
     var bar = $("adminbar");
     bar.hidden = !ADMIN;
@@ -2257,11 +2429,14 @@
       bar.appendChild(useNew); bar.appendChild(keep);
       return;
     }
-    var dirty = JSON.stringify(DATA) !== JSON.stringify(prepare(JSON.parse(PUBLISHED)));
+    var dirty = isDirty();
     bar.appendChild(el("span", "msg", dirty
       ? "Admin mode. " + ver + ". You have unpublished draft changes, saved in this browser only. Copy the JSON to publish them."
       : "Admin mode. " + ver + ". Edits are drafts saved in this browser only. Viewers see the published data."));
-    var add = el("button", "btn primary", "+ Add project"); add.type = "button"; add.onclick = function () { openEditor(null); };
+    if (publishMsg) bar.appendChild(el("span", "pubmsg", publishMsg));
+    var pub = el("button", "btn primary", "Publish"); pub.type = "button"; pub.onclick = publish;
+    var tok = el("button", "btn", "Publish token"); tok.type = "button"; tok.onclick = function () { openToken(); };
+    var add = el("button", "btn", "+ Add project"); add.type = "button"; add.onclick = function () { openEditor(null); };
     var copy = el("button", "btn", "Copy data JSON"); copy.type = "button";
     copy.onclick = function () {
       var text = JSON.stringify(DATA, null, 2);
@@ -2281,7 +2456,7 @@
       (navigator.clipboard ? navigator.clipboard.writeText(weeklyUpdate()) : Promise.reject()).then(function () { upd.textContent = "Copied"; setTimeout(function () { upd.textContent = "Copy weekly update"; }, 1500); },
         function () { prompt("Copy this update:", weeklyUpdate()); });
     };
-    [add, wk, upd, copy, reset].forEach(function (b) { bar.appendChild(b); });
+    [pub, add, wk, upd, copy, tok, reset].forEach(function (b) { bar.appendChild(b); });
   }
 
   function opt(sel, value, label) { var o = el("option", null, label || value); o.value = value; sel.appendChild(o); }
@@ -2503,6 +2678,14 @@
       $("dlg-settings").close(); commit();
     });
 
+    $("t-cancel").onclick = function () { $("dlg-token").close(); };
+    $("t-forget").onclick = function () { localStorage.removeItem(TOKEN_KEY); $("dlg-token").close(); setPublishMsg("Saved token removed."); };
+    $("token-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var t = $("t-token").value.trim();
+      if (!t) { $("t-err").textContent = "Paste the token first."; return; }
+      localStorage.setItem(TOKEN_KEY, t); $("dlg-token").close(); publish();
+    });
     $("p-cancel").onclick = function () { $("dlg-pod").close(); };
     $("pod-form").addEventListener("submit", function (ev) {
       ev.preventDefault();
