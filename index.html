@@ -1578,7 +1578,8 @@
     var tl = document.getElementById("tl");
     tl.textContent = "";
     var act = items("active").sort(byPriority);
-    var rows = act.filter(function (i) { return !withEng(i); }).concat(items("backlog").filter(function (i) { return i.start; }).sort(byPriority), act.filter(withEng));
+    // Priorities first, then handed-off work, with planned (not started) projects last.
+    var rows = act.filter(function (i) { return !withEng(i); }).concat(act.filter(withEng), items("backlog").filter(function (i) { return i.start; }).sort(byPriority));
     if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
     tl.style.paddingLeft = "";
 
