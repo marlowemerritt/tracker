@@ -576,7 +576,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-14",
+  "updated": "2026-10-20",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -632,9 +632,9 @@
       "name": "NECL Marketing Planner",
       "pod": "insights",
       "lane": "active",
-      "priority": 2,
+      "priority": 3,
       "status": "On Track",
-      "stage": "Finalizing specs",
+      "stage": "Development",
       "start": "2026-09-14",
       "end": "2026-10-16",
       "summary": "Full-year calendar of upcoming marketing campaigns with content previews and a single opt-in action for customers, plus an internal CSM view to manage participation. Nov 16 is the tentative release the pod is aiming for, so we can test and be ready for full customer release.",
@@ -668,7 +668,7 @@
       "links": [
         {
           "label": "Figma",
-          "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=255-32403&t=R4MkAXNWXXz00t2N-1"
+          "url": "https://www.figma.com/design/ZBNrxiXoX3CM76g5po6bNV/NECL-Marketing-Planner?node-id=63-8875&t=EpWwHCSgGVKFHyk4-1"
         },
         {
           "label": "PRD",
@@ -697,19 +697,24 @@
         {
           "label": "Marketing member engagement plan (deck)",
           "url": "https://docs.google.com/presentation/d/1eDUO-LW77jvLleji6abfp9rYJY3YowUBjGC3guoOz6g/edit"
+        },
+        {
+          "label": "Slack Project Channel",
+          "url": "https://springhealth.enterprise.slack.com/archives/C0A1P921J67"
         }
       ],
       "launch": "2026-11-16",
       "flags": [],
-      "next": "Iterate the designs on the Marketing and CSM feedback, align on placement with design team and Ramya.",
-      "changed": "2026-10-14"
+      "next": "DQA",
+      "changed": "2026-10-20",
+      "dqaStart": "2026-10-23"
     },
     {
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
       "lane": "active",
-      "priority": 3,
+      "priority": 1,
       "stage": "Iteration",
       "start": "2026-10-13",
       "end": "2026-10-23",
@@ -726,9 +731,9 @@
           "done": false
         },
         {
-          "name": "Share initial directions in MX crit",
+          "name": "Share initial directions/thoughts/concerns in MX crit",
           "date": "2026-10-15",
-          "done": false
+          "done": true
         }
       ],
       "links": [
@@ -768,7 +773,7 @@
           "date": "2026-10-14"
         }
       ],
-      "changed": "2026-10-14",
+      "changed": "2026-10-20",
       "status": "Needs Support",
       "launch": "2026-10-30"
     },
@@ -804,7 +809,7 @@
       "name": "Thoughtful Integration into Marketplace",
       "pod": "channel-partners",
       "lane": "backlog",
-      "priority": 2,
+      "priority": 1,
       "summary": "Still to be defined, so it stays in Up next until there is more clarity. Regina is keeping track as the previous team transitions it off.",
       "milestones": [],
       "links": [
@@ -834,14 +839,25 @@
       "id": "business-review-builder",
       "name": "QBR Business review builder",
       "pod": "insights",
-      "lane": "backlog",
-      "priority": 1,
+      "lane": "active",
+      "priority": 2,
       "summary": "Self-serve business review (QBR) generation in Spring Insights to cut the time CSMs spend preparing them.",
-      "milestones": [],
+      "milestones": [
+        {
+          "name": "CSM workshop",
+          "date": "2026-10-21",
+          "done": false
+        },
+        {
+          "name": "Share framework with ENG",
+          "date": "2026-10-23",
+          "done": false
+        }
+      ],
       "links": [
         {
           "label": "PRD",
-          "url": "https://springhealth.atlassian.net/wiki/x/HoB9-Q"
+          "url": "https://springhealth.atlassian.net/wiki/x/mwBdCgE"
         },
         {
           "label": "FigJam (CS x CV AI workshop)",
@@ -854,13 +870,32 @@
         {
           "label": "Figma board / MVP exploration",
           "url": "https://www.figma.com/board/BdZULB88cW5ruecPz9mBzv/CS-x-CV--AI-Opportunities-Workshop?node-id=520-950&p=f&t=t1ylxifAYN5j6RYB-0"
+        },
+        {
+          "label": "Claude design from Andrea",
+          "url": "https://claude.ai/design/p/43df1e23-465b-4c7f-97fd-d705ddfc9487?file=QBR+Builder.dc.html&via=share"
+        },
+        {
+          "label": "Working deck template",
+          "url": "https://docs.google.com/presentation/d/1_pQOUd8qo91aAwJIUaOdkm_3xQIsMKGdVAao7VOjCDs/edit?slide=id.g3f8e15dd512_0_0#slide=id.g3f8e15dd512_0_0"
+        },
+        {
+          "label": "HEX business review builder",
+          "url": "https://springhealth.hex.tech/global/app/Business-Review-Presentation-Builder-030M8DMGyAo7fUXYWvXlKm/latest"
+        },
+        {
+          "label": "Slack Project Channel",
+          "url": "https://springhealth.enterprise.slack.com/archives/C0BPQ185508"
         }
       ],
-      "stage": "Awaiting kickoff",
+      "stage": "Discovery",
       "start": "2026-10-19",
       "flags": [],
-      "changed": "2026-10-14",
-      "end": "2026-10-30"
+      "changed": "2026-10-20",
+      "end": "2026-10-30",
+      "next": "Meet with CSM, Discovery + Research",
+      "launch": "2026-11-20",
+      "status": "On Track"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -886,7 +921,7 @@
       "name": "ME M1v1 DQA-Web+Native",
       "pod": "benefits-me",
       "lane": "active",
-      "priority": 1,
+      "priority": 5,
       "summary": "",
       "flags": [
         {
@@ -928,9 +963,9 @@
       ],
       "start": "2026-10-08",
       "end": "2026-10-16",
-      "status": "On Track",
+      "status": "Awaiting review",
       "stage": "DQA",
-      "changed": "2026-10-14",
+      "changed": "2026-10-20",
       "launch": "2026-10-30",
       "dqaStart": "2026-10-08",
       "next": "Deliver Web/MWeb"
@@ -993,12 +1028,16 @@
   ],
   "focus": [
     {
+      "id": "business-review-builder",
+      "note": "Initial framework for ENG discussion"
+    },
+    {
       "id": "me-design-qa-web-native",
       "note": "First pass of Design QA"
     },
     {
       "id": "necl-marketing-planner",
-      "note": "Designs ready for ENG"
+      "note": "Supporting as questions come up via Eng/Marketing/Notifications"
     },
     {
       "id": "gottman-marketplace",
