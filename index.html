@@ -576,7 +576,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-20",
+  "updated": "2026-10-22",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -1162,6 +1162,8 @@
 
   var now = new Date();
   var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // A tab left open overnight must not keep stamping edits with the day it loaded.
+  function refreshToday() { var n = new Date(); today = new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
 
   function pd(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
   function daysBetween(a, b) { return Math.round((b - a) / DAY); }
@@ -1190,6 +1192,9 @@
     return { text: Math.abs(left) + (left === -1 ? " day" : " days") + " past end date", warn: true };
   }
 
+  // Design is delivered once a project is in Development or DQA, so its deliverable date can no longer be overdue.
+  function designDelivered(item) { return item.stage === "Development" || item.stage === "DQA" || item.stage === "Complete"; }
+  function qaWhen(item) { return item.dqaStart ? (pd(item.dqaStart) <= today ? "started " : "starts ") + fmt(item.dqaStart) : "in progress"; }
   // Handed off to Eng: design is done, work continues in dev until Design QA brings it back.
   function withEng(item) { return item.lane === "active" && item.stage === "Development"; }
 
@@ -1215,7 +1220,7 @@
     if (!out.length && (item.status === "Needs Support" || item.status === "Blocked")) {
       out.push({ type: item.status === "Blocked" ? "Blocked" : "Needs support", text: "Details to be added." });
     }
-    if (!withEng(item) && daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
+    if (!designDelivered(item) && daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
     (item.milestones || []).forEach(function (m) {
       if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push({ type: "Overdue", text: 'Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.' });
     });
@@ -1478,10 +1483,13 @@
       wk.appendChild(el("span", wkNote ? "wk-note" : "wk-note muted", wkNote || "Add this week's outcome"));
     }
     var nx = el("div", "pri-next");
-    var due = dueInfo(item);
-    var dr = labelRow("Design deliverable", fmt(item.end) + " - ");
-    dr.appendChild(el("span", due.warn ? "warn" : null, due.text));
-    nx.appendChild(dr);
+    if (item.stage === "DQA") nx.appendChild(labelRow("Design QA", qaWhen(item)));
+    else {
+      var due = dueInfo(item);
+      var dr = labelRow("Design deliverable", fmt(item.end) + " - ");
+      dr.appendChild(el("span", due.warn ? "warn" : null, due.text));
+      nx.appendChild(dr);
+    }
     [idBlock(item, String(rank)), wk, nx, toggleBtn(item, true)].forEach(function (n) { line.appendChild(n); });
     row.appendChild(line);
     var acts = adminBtns(item);
@@ -1494,7 +1502,7 @@
       var body = itemBody(item) || el("div", "card-body");
       var dl = el("div", "pl-line");
       dl.appendChild(labelRow("Design deliverable", fmt(item.end)));
-      if (item.dqaStart) dl.appendChild(labelRow("Design QA", "starts " + fmt(item.dqaStart)));
+      if (item.dqaStart) dl.appendChild(labelRow("Design QA", qaWhen(item)));
       if (item.launch) dl.appendChild(labelRow("Launch", launchText(item)));
       body.insertBefore(dl, body.firstChild);
       row.appendChild(body);
@@ -1790,6 +1798,7 @@
   }
 
   function render() {
+    refreshToday();
     var upd = pd(DATA.updated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     var age = daysBetween(pd(DATA.updated), today);
     var updEl = document.getElementById("updated");
@@ -2073,6 +2082,7 @@
         if (to && caretOffsetIn(b) === n) { b.dataset.t = to; stripLeading(b, n); setCaret(b, 0); }
       }
       if ((m = /^\/d /.exec(txt)) && caretOffsetIn(b) === 3) {
+        refreshToday();
         var stamp = today.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + ":\u00a0";
         stripLeading(b, 3); b.insertBefore(document.createTextNode(stamp), b.firstChild);
         var tn = b.firstChild; setCaret(tn, stamp.length);
@@ -2248,6 +2258,7 @@
   }
 
   function newWeek() {
+    refreshToday();
     var fr = nextFriday();
     var ex = (DATA.recaps || []).filter(function (r) { return r.week === fr; })[0];
     if (ex) {
@@ -2434,6 +2445,7 @@
   }
 
   function saveDraft() {
+    refreshToday();
     DATA.updated = iso(today);
     staleDraft = null;
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: BUILD, data: DATA }));
@@ -2466,6 +2478,7 @@
     var token = localStorage.getItem(TOKEN_KEY);
     if (!token) { openToken(); return; }
     if (!isDirty()) { setPublishMsg("Nothing to publish. The live page already has these changes."); return; }
+    refreshToday(); DATA.updated = iso(today);
     if (!confirm("Publish these changes to the live page now?")) return;
     setPublishMsg("Publishing...");
     var api = "https://api.github.com/repos/" + REPO + "/contents/index.html";
@@ -2799,6 +2812,12 @@
     if (panel && panel.hidden) { setTab(panel.id.replace("panel-", "")); t.scrollIntoView(); }
   }
   window.addEventListener("hashchange", openHashTab);
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "visible") return;
+    var before = iso(today); refreshToday();
+    if (iso(today) !== before) render();
+  });
 
   render();
   openHashTab();
