@@ -590,7 +590,7 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 4,
+      "priority": 3,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
@@ -632,9 +632,9 @@
       "name": "NECL Marketing Planner",
       "pod": "insights",
       "lane": "active",
-      "priority": 3,
+      "priority": 5,
       "status": "On Track",
-      "stage": "Development",
+      "stage": "DQA",
       "start": "2026-09-14",
       "end": "2026-10-16",
       "summary": "Full-year calendar of upcoming marketing campaigns with content previews and a single opt-in action for customers, plus an internal CSM view to manage participation. Nov 16 is the tentative release the pod is aiming for, so we can test and be ready for full customer release.",
@@ -707,7 +707,7 @@
       "flags": [],
       "next": "DQA",
       "changed": "2026-10-20",
-      "dqaStart": "2026-10-23"
+      "dqaStart": "2026-10-26"
     },
     {
       "id": "gottman-marketplace",
@@ -718,12 +718,12 @@
       "stage": "Iteration",
       "start": "2026-10-13",
       "end": "2026-10-23",
-      "summary": "Kicking off designs Oct 13. Using assets from Gottman and previous iterations to handoff direction/concept by EOW. Will use next week to finalize visual design/polish.",
+      "summary": "Kicking off designs Oct 13. Using assets from Gottman and previous iterations to handoff direction/concept by 10/23",
       "milestones": [
         {
           "name": "Design concept handoff - direction, placement, overview",
           "date": "2026-10-16",
-          "done": false
+          "done": true
         },
         {
           "name": "Finalize visual/polish",
@@ -758,23 +758,23 @@
           "url": "https://springhealth.atlassian.net/wiki/spaces/CARE/pages/4364107798/PRD+BoB+Gottman+Institute+to+Care+Marketplace"
         }
       ],
-      "next": "Share in MX Crit",
+      "next": "Finalize MVP requirements, copy, flow",
       "flags": [
         {
-          "type": "Risk",
+          "type": "FYI",
           "text": "Ask to bump up 'Design ready for eng' to this week",
           "rec": "* Deliver direction with room to polish design/vision details into next week",
           "date": "2026-10-13"
         },
         {
-          "type": "Risk",
+          "type": "FYI",
           "text": "Questions around hierarchy and where this should live-how much time/effort should I put into this?",
           "rec": "I would like to think of this from a holistic perspective, but may not be within scope. Recommendation for how to handle this - will share in Crit",
           "date": "2026-10-14"
         }
       ],
       "changed": "2026-10-20",
-      "status": "Needs Support",
+      "status": "On Track",
       "launch": "2026-10-30"
     },
     {
@@ -890,12 +890,19 @@
       ],
       "stage": "Discovery",
       "start": "2026-10-19",
-      "flags": [],
+      "flags": [
+        {
+          "type": "Open question",
+          "text": "Weighing effort and value, questioning what we could do to make this lean, if there are opportunities to build with the customer end in mind.",
+          "rec": "Researching and will have more thoughts later",
+          "date": "2026-10-20"
+        }
+      ],
       "changed": "2026-10-20",
       "end": "2026-10-30",
       "next": "Meet with CSM, Discovery + Research",
       "launch": "2026-11-20",
-      "status": "On Track"
+      "status": "Needs Support"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -921,13 +928,13 @@
       "name": "ME M1v1 DQA-Web+Native",
       "pod": "benefits-me",
       "lane": "active",
-      "priority": 5,
+      "priority": 4,
       "summary": "",
       "flags": [
         {
-          "type": "Risk",
-          "text": "Native design QA - short turnaround considering short week and time it was received",
-          "rec": "Goal to deliver by EOW, but flagging in case it is not fully complete and moves into next week",
+          "type": "FYI",
+          "text": "Delivered Web+MWeb but need additional time for native",
+          "rec": "Considering other priorities and teams bandwidth i am moving this out to this Friday",
           "date": "2026-10-13"
         }
       ],
@@ -939,7 +946,7 @@
         },
         {
           "name": "Native first pass delivered",
-          "date": "2026-10-16",
+          "date": "2026-10-23",
           "done": false
         }
       ],
@@ -962,9 +969,9 @@
         }
       ],
       "start": "2026-10-08",
-      "end": "2026-10-16",
+      "end": "2026-10-23",
       "status": "Awaiting review",
-      "stage": "DQA",
+      "stage": "Development",
       "changed": "2026-10-20",
       "launch": "2026-10-30",
       "dqaStart": "2026-10-08",
@@ -1009,7 +1016,7 @@
     }
   },
   "capacity": {
-    "level": "",
+    "level": "At capacity",
     "note": "Wednesdays are my protected heads-down focus day. Monday, Tuesday and Thursday are meeting-heavy."
   },
   "recaps": [
@@ -1028,6 +1035,10 @@
   ],
   "focus": [
     {
+      "id": "gottman-marketplace",
+      "note": "Full Gottman integration flows"
+    },
+    {
       "id": "business-review-builder",
       "note": "Initial framework for ENG discussion"
     },
@@ -1038,13 +1049,8 @@
     {
       "id": "necl-marketing-planner",
       "note": "Supporting as questions come up via Eng/Marketing/Notifications"
-    },
-    {
-      "id": "gottman-marketplace",
-      "note": "Concept/directional designs for ENG"
     }
-  ],
-  "notThisWeek": "Channel Partners"
+  ]
 }
 </script>
 
