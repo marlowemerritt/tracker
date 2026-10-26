@@ -67,34 +67,7 @@
 
   .timeline { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
   .tl { --lab: 230px; position: relative; min-width: 760px; padding-left: var(--lab); }
-  .tl-head { position: relative; overflow: hidden; height: 28px; font-size: 13px; color: var(--muted); }
-  .tl-month { position: absolute; top: 0; bottom: 0; padding: 6px 6px; border-left: 1px solid var(--line); }
-  .tl-headline { position: absolute; left: 0; right: 0; top: 27px; height: 1px; background: var(--line); }
-  .tl-row { position: relative; height: 52px; border-bottom: 1px solid #f0eee9; }
-  .tl-row.last { height: 68px; border-bottom: 0; }
-  .tl-row.last .tl-name { bottom: 16px; }
-  .tl-name { position: absolute; left: calc(-1 * var(--lab)); width: var(--lab); padding: 0 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink); overflow: hidden; }
-  .tl-name span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.25; }
-  .tl-bar { position: absolute; top: 15px; height: 22px; border-radius: 4px; background: var(--other); color: #fff; font-size: 13px; padding: 0 7px; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-decoration: none; }
-  .tl-bar.planned { background: transparent; border: 2px dashed var(--other); color: var(--ink); }
-  .tl-bar.benefits-me { background: var(--benefits-me); border-color: var(--benefits-me); } .tl-bar.payer-global { background: var(--payer-global); border-color: var(--payer-global); }
-  .tl-bar.insights { background: var(--insights); border-color: var(--insights); } .tl-bar.channel-partners { background: var(--channel-partners); border-color: var(--channel-partners); }
-  .tl-bar.planned { background: transparent; }
-  .tl-ms { position: absolute; top: 20px; width: 12px; height: 12px; margin-left: -6px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
-  .tl-ms.done { background: var(--ink); }
-  .tl-start { position: absolute; top: 17px; margin-left: -9px; height: 18px; display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--ink); font-size: 13px; white-space: nowrap; }
-  .tl-start::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--other); border: 3px solid var(--card); box-shadow: 0 0 0 2px var(--other); flex-shrink: 0; }
-  .tl-start.benefits-me::before { box-shadow: 0 0 0 2px var(--benefits-me); } .tl-start.payer-global::before { background: var(--payer-global); box-shadow: 0 0 0 2px var(--payer-global); }
-  .tl-start.insights::before { background: var(--insights); box-shadow: 0 0 0 2px var(--insights); } .tl-start.channel-partners::before { background: var(--channel-partners); box-shadow: 0 0 0 2px var(--channel-partners); }
-  .tl-dev { position: absolute; top: 21px; height: 10px; border-radius: 5px; border: 1px solid var(--c, var(--other)); background: repeating-linear-gradient(135deg, var(--c, var(--other)) 0 3px, transparent 3px 7px); opacity: .5; text-decoration: none; }
-  .tl-dev.benefits-me { --c: var(--benefits-me); } .tl-dev.payer-global { --c: var(--payer-global); }
-  .tl-dev.insights { --c: var(--insights); } .tl-dev.channel-partners { --c: var(--channel-partners); }
   .card.with-eng .stepper i.done, .card.with-eng .stepper i.current { opacity: .55; }
-  .tl-launch { position: absolute; top: 12px; height: 28px; width: 2px; background: var(--ink); }
-  .tl-launch span { position: absolute; top: -1px; left: 3px; font-size: 13px; font-weight: 700; background: var(--card); padding: 0 3px; border-radius: 2px; white-space: nowrap; }
-  .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
-  .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 13px; font-weight: 700; color: var(--today); }
-  .tl-legend { font-size: 13px; color: var(--muted); margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
 
   .kind { font-size: 13px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: .02em; }
   .kind.bug { background: #fbe3df; color: #9b2f1f; } .kind.learning { background: #eeece6; color: #46453f; }
@@ -178,7 +151,7 @@
 
 
 
-  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .tl { padding-left: 120px; } .tl-name { left: -120px; width: 120px; } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
 
   .rows { display: grid; grid-template-columns: 1fr; gap: 10px; }
   .rows .card-head { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 8px 28px; align-items: start; }
@@ -221,12 +194,12 @@
   .recap-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
   .recap-head h3 { margin: 0; font-size: 16px; }
   .pubmsg { flex: 1 1 100%; font-weight: 600; color: #fff; }
-  /* Priorities, Awaiting DQA and Flags share these columns so everything lines up. */
+  /* Priorities, Overseeing and supporting, and Flags share these columns so everything lines up. */
   :root { --rowcols: minmax(250px, 1.6fr) minmax(190px, 2fr) minmax(210px, 1.4fr) 72px; }
-  .pri-row, .hold-row { padding: 10px 14px; }
-  .pri-line, .hold-line, .flag-head, .flag-detail { display: grid; grid-template-columns: var(--rowcols); gap: 6px 16px; align-items: center; }
-  .pri-line > *, .hold-line > *, .flag-head > * { min-width: 0; }
-  .pri-line > .toggle, .hold-line > .toggle, .flag-head > .toggle { justify-self: end; }
+  .pri-row, .assist-row { padding: 10px 14px; }
+  .pri-line, .assist-line, .flag-head, .flag-detail { display: grid; grid-template-columns: var(--rowcols); gap: 6px 16px; align-items: center; }
+  .pri-line > *, .assist-line > *, .flag-head > * { min-width: 0; }
+  .pri-line > .toggle, .assist-line > .toggle, .flag-head > .toggle { justify-self: end; }
   .pri-id { display: grid; grid-template-columns: 14px minmax(0, 1fr); column-gap: 8px; align-items: start; }
   .pri-id h3 { margin: 0; font-size: 15px; }
   .pri-id .pill, .pri-id .pri-stage { grid-column: 2; justify-self: start; }
@@ -236,26 +209,110 @@
   .pri-week .k { color: var(--muted); font-size: 13px; }
   .pri-week .wk-note { font-size: 14px; }
   .pri-next { font-size: 13px; }
+  .pri-stance { margin-top: 2px; font-size: 13px; }
+  .pri-stance .k { color: var(--muted); }
   .pri-next .row { margin: 0; }
-  .pri-row .card-actions, .hold-row .card-actions { margin-top: 8px; }
-  #attention { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 2px 14px 2px 18px; }
+  .pri-row .card-actions, .assist-row .card-actions { margin-top: 8px; }
+  #attention, #tidy, #feed { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 2px 14px 2px 18px; }
   .is-admin #attention { padding-left: 36px; }
-  .is-admin .hold-row { padding-left: 32px; }
+  .is-admin .assist-row { padding-left: 32px; }
   .flag-line { padding: 10px 0; }
   .flag-line + .flag-line { border-top: 1px solid var(--line); }
   .flag-head { font-size: 13px; }
   .flag-id { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
   .flag-proj { font-weight: 600; }
   .flag-first { grid-column: 2 / 4; }
+  .flag-meta { margin-top: 2px; color: var(--muted); }
+  .flag-head > .btn { justify-self: end; }
+  .assist-role { font-weight: 600; }
+  .feed-line { display: grid; grid-template-columns: 150px 96px minmax(0, 1fr) auto; gap: 6px 16px; align-items: baseline; padding: 8px 0; font-size: 13px; }
+  .feed-line + .feed-line { border-top: 1px solid var(--line); }
+  .feed-date { color: var(--muted); }
+  .feed-tie { color: var(--muted); }
+  .feed-line .ftype { justify-self: start; }
+  @media (max-width: 720px) { .feed-line { grid-template-columns: minmax(0, 1fr) auto; } .feed-line .feed-text { grid-column: 1 / -1; } }
+  .adminbar.dirty { background: #5a3d12; }
+  .unpub { flex: 1 1 100%; font-weight: 700; color: #fff; }
+  .blk[data-t="auto"] { margin: 6px 0; }
+  .blk[data-t="auto"] .recap-snap-body { margin: 0; }
+  .recap-updates { margin-top: 14px; font-size: 13px; }
+  .recap-updates h4 { margin: 0 0 4px; font-size: 13px; }
   .flag-detail { margin-top: 8px; align-items: start; }
   .flag-detail-in { grid-column: 2 / 4; }
   @media (max-width: 960px) {
-    .pri-line, .hold-line, .flag-head { grid-template-columns: minmax(0, 1fr) auto; }
+    .pri-line, .assist-line, .flag-head { grid-template-columns: minmax(0, 1fr) auto; }
     .pri-week, .pri-next, .flag-first { grid-column: 1 / -1; }
-    .pri-line > .toggle, .hold-line > .toggle, .flag-head > .toggle { grid-column: 2; grid-row: 1; }
+    .pri-line > .toggle, .assist-line > .toggle, .flag-head > .toggle { grid-column: 2; grid-row: 1; }
     .pri-week:empty, .pri-next:empty { display: none; }
     .flag-detail { grid-template-columns: 1fr; }
     .flag-detail-in { grid-column: 1; }
+  }
+  .tl-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; margin-bottom: 8px; }
+  .tl-top h2 { margin: 0; }
+  .coming { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 10px 0 0; font-size: 13px; }
+  .coming-label { color: var(--muted); font-weight: 600; }
+  .coming-list { display: inline-flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+  .ce { display: inline-flex; align-items: center; gap: 6px; }
+  .ce + .ce::before { content: "\00B7"; color: var(--muted); margin-right: 6px; }
+  .ce-dia { width: 8px; height: 8px; border: 2px solid var(--ink); transform: rotate(45deg); flex-shrink: 0; }
+  .ce b { font-weight: 700; }
+  .ce-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--other); flex-shrink: 0; }
+  .ce-dot.benefits-me { background: var(--benefits-me); } .ce-dot.payer-global { background: var(--payer-global); }
+  .ce-dot.insights { background: var(--insights); } .ce-dot.channel-partners { background: var(--channel-partners); }
+  .coming-wrap { position: relative; }
+  .coming-pop { position: absolute; right: 0; top: 100%; z-index: 20; min-width: 300px; max-height: 320px; overflow: auto; padding: 8px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.15); display: grid; gap: 6px; }
+  .tl-head { position: relative; overflow: hidden; height: 28px; font-size: 13px; color: var(--muted); }
+  .tl-month { position: absolute; top: 0; bottom: 0; padding: 6px 6px; border-left: 1px solid var(--line); }
+  .tl-tick { position: absolute; bottom: 0; width: 1px; height: 6px; background: #cfcbc2; }
+  .tl-headline { position: absolute; left: 0; right: 0; top: 27px; height: 1px; background: var(--line); }
+  .tl-row { position: relative; height: 44px; border-bottom: 1px solid #f0eee9; }
+  .tl-row.last { height: 60px; border-bottom: 0; }
+  .tl-row.last .tl-name { bottom: 16px; }
+  .tl-row.last .tl-lab { bottom: 16px; }
+  .tl-name { position: absolute; left: calc(-1 * var(--lab)); width: var(--lab); padding: 0 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink); overflow: hidden; }
+  .tl-name span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.25; }
+  .tl-bar { position: absolute; top: 15px; height: 14px; border-radius: 3px; background: var(--other); }
+  .tl-bar.benefits-me, .tl-start.benefits-me, .wk-bar.benefits-me { background: var(--benefits-me); }
+  .tl-bar.payer-global, .tl-start.payer-global, .wk-bar.payer-global { background: var(--payer-global); }
+  .tl-bar.insights, .tl-start.insights, .wk-bar.insights { background: var(--insights); }
+  .tl-bar.channel-partners, .tl-start.channel-partners, .wk-bar.channel-partners { background: var(--channel-partners); }
+  .tl-start { position: absolute; top: 16px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--other); }
+  .tl-lab { position: absolute; top: 0; bottom: 0; z-index: 3; display: flex; align-items: center; padding: 0 4px; background: var(--card); font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .tl-ms { position: absolute; top: 17px; width: 10px; height: 10px; margin-left: -5px; background: #fff; border: 2px solid var(--ink); transform: rotate(45deg); }
+  .tl-ms.done { background: var(--ink); }
+  .tl-today { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--today); z-index: 2; }
+  .tl-today::after { content: "Today"; position: absolute; bottom: 2px; left: 5px; font-size: 13px; font-weight: 700; color: var(--today); }
+  .wk { --wkcols: 220px repeat(5, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  .wk > * { min-width: 640px; }
+  .wk-tools { margin-bottom: 8px; }
+  .wk-due.risk { color: #8a4a12; font-weight: 600; }
+  .linkish { font: inherit; font-size: 13px; padding: 0; border: 0; background: none; color: var(--brand); cursor: pointer; text-decoration: underline; }
+  .wk-row { display: grid; grid-template-columns: var(--wkcols); border-top: 1px solid var(--line); }
+  .wk-row:first-child { border-top: 0; }
+  .wk-head { font-size: 13px; color: var(--muted); }
+  .wk-lab { grid-row: 1; grid-column: 1; padding: 8px 10px; font-size: 13px; }
+  .wk-cell { grid-row: 1; padding: 8px 4px; text-align: center; border-left: 1px solid var(--line); font-size: 13px; }
+  .wk-cell.today { background: #f1f7f4; }
+  .wk-cell.off { background: repeating-linear-gradient(135deg, #f3f2ee 0 6px, #ebe9e3 6px 12px); color: var(--muted); }
+  .wk-off { display: block; font-size: 13px; }
+  .wk-note-s, .wk-due { color: var(--muted); font-size: 13px; }
+  .wk-dia { position: static; display: inline-block; margin: 6px 6px 0; }
+  .wk-task .wk-lab { color: var(--ink); padding-left: 24px; }
+  .wk-bar { grid-row: 1; align-self: center; height: 14px; border-radius: 3px; background: var(--other); margin: 0 4px; z-index: 1; }
+  #assist { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 2px 14px 2px 18px; }
+  .is-admin #assist { padding-left: 36px; }
+  .at-head, .at-line { display: grid; grid-template-columns: minmax(200px, 1.2fr) 200px 130px minmax(0, 1fr) 72px; gap: 6px 16px; align-items: center; }
+  .at-head { padding: 8px 0 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .at-item { padding: 8px 0; border-top: 1px solid var(--line); }
+  .at-name { font-weight: 600; font-size: 14px; }
+  .at-role, .at-next { font-size: 13px; }
+  .at-line > .toggle { justify-self: end; }
+  .at-detail { margin-top: 8px; }
+  @media (max-width: 960px) {
+    .at-head { display: none; }
+    .at-line { grid-template-columns: minmax(0, 1fr) auto; }
+    .at-role, .at-status, .at-next { grid-column: 1 / -1; }
+    .at-line > .toggle { grid-column: 2; grid-row: 1; }
   }
   .recap-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
   .recap-top h2 { margin: 0 0 4px; }
@@ -288,7 +345,7 @@
   .blk[data-t="todo"][data-done]::before { background: var(--brand); border-color: var(--brand); }
   .blk[data-t="todo"][data-done]::after { content: "\2713"; position: absolute; left: 6px; top: 2px; color: #fff; font-size: 12px; font-weight: 700; }
   .blk[data-t="todo"][data-done] { color: var(--muted); text-decoration: line-through; }
-  @media (max-width: 560px) { .tl { --lab: 100px; min-width: 520px; } .tl-row { height: 76px; } .tl-row.last { height: 92px; } .tl-name span { -webkit-line-clamp: 3; } .tl-bar { top: 27px; } .tl-ms { top: 32px; } .tl-start { top: 29px; } .tl-dev { top: 33px; } .tl-launch { top: 23px; } }
+  @media (max-width: 560px) { .tl { --lab: 100px; min-width: 520px; } .tl-row { height: 56px; } .tl-row.last { height: 72px; } .tl-name span { -webkit-line-clamp: 3; } .tl-bar { top: 21px; } .tl-ms { top: 23px; } .tl-start { top: 22px; } }
 
   .focus-not { margin-top: 10px; font-size: 13px; color: var(--muted); }
   .focus-not b { color: var(--ink); }
@@ -325,15 +382,17 @@
     </div>
     <div class="hdr-right">
       <div class="updated" id="updated"></div>
+      <div class="updated" id="changed-wk"></div>
       <button type="button" class="toggle" id="legend-btn" aria-expanded="false" aria-controls="legend">Legend</button>
     </div>
   </header>
 
   <div class="legend" id="legend" hidden>
     <p><b>Status:</b> On track = progressing as planned. Needs support = I need help from someone to keep moving. Awaiting review = waiting on feedback or approval. Blocked = cannot proceed.</p>
-    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question, FYI, Overdue. Everything except an open question or FYI comes with my recommendation.</p>
-    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete. A project in Development is handed off, so it moves from Top priorities to Awaiting DQA.</p>
-    <p><b>Timeline:</b> Bars run from start to design deliverable date (solid = active, dashed = planned). Diamonds are milestones (filled when done). A hatched line means handed off and with Eng; the bar is solid again when Design QA starts. A flag marks the launch date, and a dot marks a planned start where the design handoff is still TBD. Select a bar to jump to its card.</p>
+    <p><b>Involvement:</b> Designing, Overseeing, Supporting.</p>
+    <p><b>Flags:</b> Blocker, Risk, Direction change, Decision needed, Open question. FYI items show under Updates. Everything except an open question or FYI comes with my recommendation.</p>
+    <p><b>Stages:</b> Awaiting kickoff, Discovery, Iteration, Finalizing specs, Development, DQA, Complete.</p>
+    <p><b>Timeline:</b> Bars show the projects I am designing, from start to design deliverable date. Diamonds are milestones (filled when done). Key dates lists launch dates. Overseeing and supporting work sits behind Show supporting, as a thin line with diamonds for Design QA start and launch. A dot marks a project that has started with no end date yet. Select a bar to jump to its card.</p>
     <p><b>Colors:</b> The dot on a pod label and the left edge of a card show the pod: Benefits / ME teal, Payer &amp; Global orange, Insights blue, Channel Partners purple. Red and amber mean something needs attention, green means on track, and gray labels are just types.</p>
   </div>
 
@@ -343,8 +402,20 @@
 
   <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
     <section id="timeline-section" class="first">
-      <h2>Timeline</h2>
-      <div class="timeline"><div class="tl" id="tl"></div></div>
+      <div class="tl-top">
+        <h2>Timeline</h2>
+        <div class="seg" id="view-seg" role="group" aria-label="Overview view"></div>
+      </div>
+      <div id="timeline-box"><div class="timeline"><div class="tl" id="tl"></div></div></div>
+      <div class="coming" id="coming" hidden>
+        <span class="coming-label">Coming up</span>
+        <span class="coming-list" id="coming-list"></span>
+        <span class="coming-wrap">
+          <button type="button" class="toggle" id="coming-all" aria-expanded="false" aria-controls="coming-pop"></button>
+          <div class="coming-pop" id="coming-pop" hidden></div>
+        </span>
+      </div>
+      <div id="weekview" hidden></div>
     </section>
 
     <section id="active-section">
@@ -353,19 +424,32 @@
       <div class="rows" id="active"></div>
     </section>
 
-    <section id="hold-section" hidden>
-      <h2>Awaiting DQA</h2>
-      <p class="hint">Projects in development. I support questions and comments as they come up until they are ready for the full Design QA pass.</p>
-      <div class="rows" id="hold"></div>
+    <section id="assist-section" hidden>
+      <h2>Overseeing and supporting</h2>
+      <div id="assist"></div>
     </section>
 
     <section id="attention-section">
-      <h2><button type="button" class="h2btn" id="flags-toggle" aria-expanded="true" aria-controls="flags-wrap">Flags and FYI <span class="count" id="attention-count"></span> <span id="flags-chev" aria-hidden="true">&#9662;</span></button></h2>
+      <h2><button type="button" class="h2btn" id="flags-toggle" aria-expanded="true" aria-controls="flags-wrap">Flags <span class="count" id="attention-count"></span> <span id="flags-chev" aria-hidden="true">&#9662;</span></button></h2>
       <div id="flags-wrap">
-      <p class="hint">Risks, blockers, open questions and decisions I need, plus anything overdue. FYI marks things I am keeping an eye on that are not urgent yet.</p>
+      <p class="hint">Risks, blockers, open questions and decisions I need.</p>
       <div id="attention-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-flag">+ Add flag</button></div>
       <div class="rows" id="attention"></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="flags-more" hidden></button></div>
     </div>
+    </section>
+
+    <section id="tidy-section" hidden>
+      <h2>Tidy-up</h2>
+      <p class="hint">Only you see these: passed dates and placeholders to clear.</p>
+      <div id="tidy"></div>
+    </section>
+
+    <section id="feed-section" hidden>
+      <h2>Updates</h2>
+      <div id="feed-tools" style="margin-bottom:10px" hidden><button type="button" class="btn small primary" id="add-feed">+ Add update</button></div>
+      <div id="feed"></div>
+      <div style="margin-top:8px"><button type="button" class="btn small" id="feed-more" hidden>See all</button></div>
     </section>
 
     <section id="week-notes">
@@ -441,6 +525,10 @@
     <label class="f">Type<select id="ff-type"></select></label>
     <label class="f">What is going on?<textarea id="ff-text"></textarea></label>
     <label class="f">My recommendation or next step<textarea id="ff-rec"></textarea></label>
+    <div class="f2">
+      <label class="f">Owner (who I need it from)<input type="text" id="ff-owner"></label>
+      <label class="f">Need by<input type="date" id="ff-needby"></label>
+    </div>
     <div class="err" id="ff-err" role="alert"></div>
     <div class="dlg-actions">
       <button type="button" class="btn" id="ff-cancel">Cancel</button>
@@ -457,6 +545,9 @@
       <label class="f">Capacity note<input type="text" id="s-capnote" placeholder="e.g. New asks go to Up next unless something moves"></label>
     </div>
     <label class="f">Not this week (one line)<input type="text" id="s-not" placeholder="e.g. Channel Partners"></label>
+    <label class="f">Off my plate this week (one line)<input type="text" id="s-offplate"></label>
+    <label class="f">Focus blocks this week (one line)<input type="text" id="s-focus"></label>
+    <label class="f">Days off (one per line, like 2026-11-02 Off)<textarea id="s-daysoff"></textarea></label>
     <div class="dlg-actions">
       <button type="button" class="btn" id="s-cancel">Cancel</button>
       <button type="submit" class="btn primary">Save</button>
@@ -485,10 +576,51 @@
   </form>
 </dialog>
 
+<dialog id="dlg-feed" aria-labelledby="feed-title">
+  <form method="dialog" id="feed-form">
+    <h2 id="feed-title">Update</h2>
+    <div class="f2">
+      <label class="f">Date<input type="date" id="fd-date"></label>
+      <label class="f">Kind<select id="fd-kind"></select></label>
+    </div>
+    <label class="f">What happened<input type="text" id="fd-text"></label>
+    <label class="f">Project or pod (optional)<select id="fd-tie"></select></label>
+    <div class="err" id="fd-err" role="alert"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="fd-delete">Delete</button>
+      <button type="button" class="btn" id="fd-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlg-task" aria-labelledby="task-title">
+  <form method="dialog" id="task-form">
+    <h2 id="task-title">Add to this week</h2>
+    <label class="f">Title<input type="text" id="tk-name"></label>
+    <label class="f">Priority group<select id="tk-project"></select></label>
+    <div class="f2">
+      <label class="f">Day (or first day)<input type="date" id="tk-start"></label>
+      <label class="f">Last day (optional)<input type="date" id="tk-end"></label>
+    </div>
+    <div class="f2">
+      <label class="f"><span><input type="checkbox" id="tk-deadline"> Deadline</span></label>
+      <label class="f"><span><input type="checkbox" id="tk-risk"> At risk</span></label>
+    </div>
+    <div class="err" id="tk-err" role="alert"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn danger" id="tk-delete">Delete</button>
+      <button type="button" class="btn" id="tk-cancel">Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
 <dialog id="dlg-pod" aria-labelledby="pod-title">
   <form method="dialog" id="pod-form">
     <h2 id="pod-title">Edit pod</h2>
     <label class="f">Goal for this pod<textarea id="p-goal"></textarea></label>
+    <label class="f">Why it matters<input type="text" id="p-why"><span class="help">One qualitative line, no numbers</span></label>
     <label class="f">PM and key partners<input type="text" id="p-partners"></label>
     <label class="f">Status or note<textarea id="p-note"></textarea></label>
     <div class="dlg-actions">
@@ -511,9 +643,10 @@
         <option value="active">In progress</option><option value="backlog">Up next (backlog)</option><option value="done">Completed</option><option value="ongoing">Also on my plate (no dates)</option>
       </select></label>
     </div>
+    <label class="f" id="w-involve">Involvement<select id="f-involve"></select><span class="help">Designing shows under Top priorities. Overseeing and Supporting show in their own group.</span></label>
     <div class="f3">
       <label class="f" id="w-status">Status<select id="f-status"></select><span class="help">How it is going: on track, needs support, awaiting review, blocked</span></label>
-      <label class="f" id="w-stage">Stage<select id="f-stage"></select><span class="help">Where it is in the process. Development moves it out of Top priorities.</span></label>
+      <label class="f" id="w-stage">Stage<select id="f-stage"></select><span class="help">Where it is in the process</span></label>
       <label class="f" id="w-kind">Type<select id="f-kind"></select></label>
     </div>
 
@@ -531,6 +664,19 @@
 
     <div class="dlg-sec">What people see</div>
     <label class="f">Summary<textarea id="f-summary"></textarea><span class="help">One or two sentences anyone can follow</span></label>
+    <div class="f2">
+      <label class="f">Short name<input type="text" id="f-short"><span class="help">Used in Coming up, the timeline and the table</span></label>
+      <label class="f" id="w-stance">Stance<input type="text" id="f-stance"><span class="help">My recommendation, one line. Shows on Top priorities.</span></label>
+    </div>
+    <label class="f">Why it matters<input type="text" id="f-why"><span class="help">One qualitative line, no numbers</span></label>
+    <div class="f2">
+      <label class="f">Value type<select id="f-valuetype"></select></label>
+      <label class="f">Confidence<select id="f-confidence"></select></label>
+    </div>
+    <div class="f2" id="w-supmode">
+      <label class="f">Support<select id="f-supmode"></select></label>
+      <label class="f">Until (if temporary)<input type="date" id="f-supuntil"></label>
+    </div>
     <div class="f2">
       <label class="f" id="w-week">This week's outcome<input type="text" id="f-week"><span class="help">Shows as "This week" on the priority card</span></label>
       <label class="f">Next step<input type="text" id="f-next"></label>
@@ -576,7 +722,7 @@
 
 <script id="tracker-data" type="application/json">
 {
-  "updated": "2026-10-22",
+  "updated": "2026-10-26",
   "pods": {
     "benefits-me": "Benefits / ME",
     "payer-global": "Payer & Global Experience",
@@ -625,7 +771,14 @@
       "launch": "2026-11-02",
       "flags": [],
       "changed": "2026-10-14",
-      "dqaStart": "2026-10-20"
+      "dqaStart": "2026-10-20",
+      "involvement": "Supporting",
+      "shortName": "Global T2",
+      "why": "Gives global members a booking flow and restricted-market experience.",
+      "valueType": "Customer experience",
+      "confidence": "Unquantified",
+      "supportMode": "Temporary",
+      "supportUntil": "2026-11-02"
     },
     {
       "id": "necl-marketing-planner",
@@ -707,7 +860,14 @@
       "flags": [],
       "next": "DQA",
       "changed": "2026-10-20",
-      "dqaStart": "2026-10-26"
+      "dqaStart": "2026-10-26",
+      "involvement": "Supporting",
+      "shortName": "NECL",
+      "why": "Lets Marketing share campaigns with customers and lets customers opt in.",
+      "valueType": "Customer experience",
+      "confidence": "Unquantified",
+      "supportMode": "Temporary",
+      "supportUntil": "2026-11-16"
     },
     {
       "id": "gottman-marketplace",
@@ -715,7 +875,7 @@
       "pod": "channel-partners",
       "lane": "active",
       "priority": 1,
-      "stage": "Iteration",
+      "stage": "Development",
       "start": "2026-10-13",
       "end": "2026-10-23",
       "summary": "Kicking off designs Oct 13. Using assets from Gottman and previous iterations to handoff direction/concept by 10/23",
@@ -734,6 +894,11 @@
           "name": "Share initial directions/thoughts/concerns in MX crit",
           "date": "2026-10-15",
           "done": true
+        },
+        {
+          "name": "Usable code, ready to use internally",
+          "date": "2026-11-06",
+          "done": false
         }
       ],
       "links": [
@@ -758,7 +923,7 @@
           "url": "https://springhealth.atlassian.net/wiki/spaces/CARE/pages/4364107798/PRD+BoB+Gottman+Institute+to+Care+Marketplace"
         }
       ],
-      "next": "Finalize MVP requirements, copy, flow",
+      "next": "support through marketing review and accessibility checks",
       "flags": [
         {
           "type": "FYI",
@@ -775,7 +940,14 @@
       ],
       "changed": "2026-10-20",
       "status": "On Track",
-      "launch": "2026-10-30"
+      "launch": "2027-01-01",
+      "involvement": "Supporting",
+      "shortName": "Gottman",
+      "why": "Adds partner programs to Care Marketplace ahead of the Jan 1 launch.",
+      "valueType": "Revenue",
+      "confidence": "Unquantified",
+      "supportMode": "Temporary",
+      "supportUntil": "2027-01-01"
     },
     {
       "id": "ibx-remediation",
@@ -833,7 +1005,12 @@
       ],
       "changed": "2026-10-14",
       "start": "2026-11-03",
-      "end": "2026-11-20"
+      "end": "2026-11-20",
+      "involvement": "Designing",
+      "shortName": "Thoughtful",
+      "why": "Adds another partner to Care Marketplace.",
+      "valueType": "Revenue",
+      "confidence": "Unquantified"
     },
     {
       "id": "business-review-builder",
@@ -895,14 +1072,21 @@
           "type": "Open question",
           "text": "Weighing effort and value, questioning what we could do to make this lean, if there are opportunities to build with the customer end in mind.",
           "rec": "Researching and will have more thoughts later",
-          "date": "2026-10-20"
+          "date": "2026-10-20",
+          "owner": "Andrea and Ramya",
+          "needBy": "2026-10-27"
         }
       ],
       "changed": "2026-10-20",
       "end": "2026-10-30",
       "next": "Meet with CSM, Discovery + Research",
-      "launch": "2026-11-20",
-      "status": "Needs Support"
+      "status": "Needs Support",
+      "involvement": "Designing",
+      "shortName": "QBR",
+      "stance": "Lean MVP built around flexible time periods and breakouts, so the capability can also serve customers. Confirming scope with Andrea on Monday.",
+      "why": "Cuts the time CSMs spend preparing business reviews.",
+      "valueType": "Efficiency",
+      "confidence": "Modeled"
     },
     {
       "id": "provider-membership-summary-on-coverage-tab",
@@ -975,7 +1159,14 @@
       "changed": "2026-10-20",
       "launch": "2026-10-30",
       "dqaStart": "2026-10-08",
-      "next": "Deliver Web/MWeb"
+      "next": "Deliver Web/MWeb",
+      "involvement": "Supporting",
+      "shortName": "ME DQA",
+      "why": "Quality check ahead of the Benefits/ME launch.",
+      "valueType": "Customer experience",
+      "confidence": "Unquantified",
+      "supportMode": "Temporary",
+      "supportUntil": "2026-10-30"
     },
     {
       "id": "insurance-filter-sales-demo",
@@ -998,8 +1189,8 @@
     {
       "id": "insights-verdant-vui-migration",
       "name": "Insights Verdant <> VUI migration",
-      "pod": "other",
-      "lane": "backlog",
+      "pod": "insights",
+      "lane": "active",
       "priority": 2,
       "summary": "",
       "flags": [],
@@ -1007,7 +1198,28 @@
       "milestones": [],
       "links": [],
       "start": "2026-10-27",
-      "stage": "Scoping"
+      "stage": "Scoping",
+      "involvement": "Overseeing",
+      "shortName": "VUI",
+      "why": "Moves Insights to the shared component system for a consistent experience and faster builds.",
+      "valueType": "Customer experience",
+      "confidence": "Unquantified",
+      "supportMode": "Ongoing"
+    },
+    {
+      "id": "insights-2027-sprint",
+      "name": "Insights 2027 sprint",
+      "pod": "insights",
+      "lane": "active",
+      "involvement": "Designing",
+      "priority": 0.5,
+      "stage": "Awaiting kickoff",
+      "start": "2026-10-26",
+      "end": "2026-10-30",
+      "summary": "",
+      "milestones": [],
+      "links": [],
+      "flags": []
     }
   ],
   "podInfo": {
@@ -1016,15 +1228,15 @@
       "partners": "PM: Andrea Rohan, EM: Guru Kalra"
     },
     "channel-partners": {
-      "goal": "",
+      "goal": "Grow Care Marketplace as the home for partner programs",
       "partners": "PM: Regina, EM: James Bruno"
     },
     "payer-global": {
-      "goal": "",
+      "goal": "Keep global booking healthy and support payer partners",
       "partners": "PM: Regina, EM: Jasmine. Slack: #pod-global-and-payer-experience"
     },
     "benefits-me": {
-      "goal": "",
+      "goal": "Deliver the ME experience through design QA and launch",
       "partners": "PM: Vera, EM: Carie / Eden",
       "note": "Moving off this pod once Design QA wraps. No other designer is assigned until the pod disperses, so I stay on as support until then."
     }
@@ -1068,7 +1280,67 @@
       "id": "necl-marketing-planner",
       "note": "Supporting as questions come up via Eng/Marketing/Notifications"
     }
-  ]
+  ],
+  "feed": [
+    {
+      "id": "f-global-h1",
+      "date": "2026-10-21",
+      "kind": "Kickoff",
+      "text": "Global H1 discovery kicked off",
+      "pod": "payer-global"
+    },
+    {
+      "id": "f-gottman-eng",
+      "date": "2026-10-23",
+      "kind": "Handoff",
+      "text": "Handed Gottman designs to Eng",
+      "project": "gottman-marketplace"
+    },
+    {
+      "id": "f-vui-plan",
+      "date": "2026-10-27",
+      "kind": "Milestone",
+      "text": "VUI plan meeting with Eng and Palisades",
+      "project": "insights-verdant-vui-migration",
+      "short": "VUI plan meeting"
+    }
+  ],
+  "daysOff": [
+    {
+      "date": "2026-10-30",
+      "label": "Half day out"
+    },
+    {
+      "date": "2026-11-02",
+      "label": "Off"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t-necl-qa",
+      "project": "necl-marketing-planner",
+      "name": "Design QA starts",
+      "start": "2026-10-26"
+    },
+    {
+      "id": "t-vui-plan",
+      "project": "insights-verdant-vui-migration",
+      "name": "VUI plan meeting with Eng and Palisades",
+      "start": "2026-10-27"
+    },
+    {
+      "id": "t-qbr-due",
+      "project": "business-review-builder",
+      "name": "Design deliverable",
+      "start": "2026-10-30",
+      "deadline": true,
+      "risk": true
+    }
+  ],
+  "week": {
+    "offPlate": "New Channel Partners work beyond Gottman support. Thoughtful starts Nov 3.",
+    "focus": "Wednesday (all day), Friday (half day)"
+  }
 }
 </script>
 
@@ -1149,6 +1421,11 @@
       else if (draftData) staleDraft = draftData;
     } catch (e) { /* use published */ }
   }
+  var VALUE_TYPES = ["Efficiency", "Revenue", "Customer experience", "Strategic"];
+  var CONFIDENCES = ["Proven", "Modeled", "Unquantified"];
+  var SUPPORT_MODES = ["Temporary", "Ongoing"];
+  var INVOLVEMENTS = ["Designing", "Overseeing", "Supporting"];
+  var FEED_KINDS = ["Kickoff", "Decision", "Handoff", "Milestone", "FYI", "Raised the bar", "Led", "Crit"];
   var FLAG_TYPES = ["Blocker", "Risk", "Direction change", "Decision needed", "Open question", "FYI"];
   function needsRec(type) { return type !== "Open question" && type !== "FYI"; }
   var UPDATE_KINDS = ["Decided", "Requested", "Timing", "FYI"];
@@ -1196,6 +1473,11 @@
   function designDelivered(item) { return item.stage === "Development" || item.stage === "DQA" || item.stage === "Complete"; }
   function qaWhen(item) { return item.dqaStart ? (pd(item.dqaStart) <= today ? "started " : "starts ") + fmt(item.dqaStart) : "in progress"; }
   // Handed off to Eng: design is done, work continues in dev until Design QA brings it back.
+  function supportNote(item) {
+    return item.supportMode === "Temporary" ? "Temporary" + (item.supportUntil ? " until " + fmt(item.supportUntil) : "") : item.supportMode === "Ongoing" ? "Ongoing" : "";
+  }
+  function involvementOf(item) { return item.involvement || "Designing"; }
+  function isAssist(item) { return item.lane === "active" && involvementOf(item) !== "Designing"; }
   function withEng(item) { return item.lane === "active" && item.stage === "Development"; }
 
   function launchText(item) {
@@ -1214,18 +1496,22 @@
   function ftypePill(type) { return el("span", "ftype " + slug(type), type); }
 
   function attentionFor(item) {
-    var out = (item.flags || []).map(function (f, idx) { return { type: f.type, text: f.text, rec: f.rec, date: f.date, manual: true, idx: idx }; });
+    var out = (item.flags || []).map(function (f, idx) { return { type: f.type, text: f.text, rec: f.rec, date: f.date, owner: f.owner, needBy: f.needBy, manual: true, idx: idx }; });
     if (item.decision && item.lane !== "done") out.push({ type: "Decision needed", text: item.decision });
     if (item.lane !== "active") return out;
     if (!out.length && (item.status === "Needs Support" || item.status === "Blocked")) {
-      out.push({ type: item.status === "Blocked" ? "Blocked" : "Needs support", text: "Details to be added." });
+      out.push({ type: item.status === "Blocked" ? "Blocked" : "Needs support", text: "Details to be added.", hk: true });
     }
-    if (!designDelivered(item) && daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
+    if (item.end && !designDelivered(item) && daysBetween(today, pd(item.end)) < 0) out.push({ type: "Overdue", hk: true, text: "Design deliverable date " + fmt(item.end) + " has passed and the project is still open." });
     (item.milestones || []).forEach(function (m) {
-      if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push({ type: "Overdue", text: 'Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.' });
+      if (!m.done && daysBetween(today, pd(m.date)) < 0) out.push({ type: "Overdue", hk: true, text: 'Milestone "' + m.name + '" was due ' + fmt(m.date) + ' and is not marked done.' });
     });
     return out;
   }
+
+  // Overdue dates and placeholders are housekeeping: only the admin sees them, in the tidy-up list.
+  function realFlags(item) { return attentionFor(item).filter(function (f) { return !f.hk && f.type !== "FYI"; }); }
+  function tidyFlags(item) { return attentionFor(item).filter(function (f) { return f.hk; }); }
 
   function lines(text) {
     return String(text || "").split(/\n+/).map(function (l) { return l.replace(/^\s*[-\u2022*]\s*/, "").trim(); }).filter(Boolean);
@@ -1250,7 +1536,7 @@
   function flagGroups(list) {
     var groups = [];
     list.forEach(function (i) {
-      var fl = attentionFor(i).slice().sort(function (a, b) { return sevOf(a.type) - sevOf(b.type); });
+      var fl = realFlags(i).slice().sort(function (a, b) { return sevOf(a.type) - sevOf(b.type); });
       if (fl.length) groups.push({ item: i, flags: fl, sev: sevOf(fl[0].type) });
     });
     groups.sort(function (a, b) { return (a.sev - b.sev) || byPriority(a.item, b.item); });
@@ -1293,6 +1579,14 @@
   }
 
   function infoRows(parent, item) {
+    if (item.why) { var w = el("div", "info"); w.appendChild(el("span", "k", "Why it matters: ")); w.appendChild(document.createTextNode(item.why)); parent.appendChild(w); }
+    if (item.valueType || item.confidence) {
+      var tg = el("div", "meta");
+      if (item.valueType) tg.appendChild(el("span", "tag", item.valueType));
+      if (item.confidence) tg.appendChild(el("span", "tag", item.confidence));
+      parent.appendChild(tg);
+    }
+    if (supportNote(item)) { var sp = el("div", "info"); sp.appendChild(el("span", "k", "Support: ")); sp.appendChild(document.createTextNode(supportNote(item))); parent.appendChild(sp); }
     if (item.next) {
       var n = el("div", "info"); n.appendChild(el("span", "k", "Next step: ")); n.appendChild(document.createTextNode(item.next)); parent.appendChild(n);
     }
@@ -1361,7 +1655,7 @@
     var m2 = el("div", "meta");
     (extra || []).forEach(function (t) { m2.appendChild(el("span", "tag", t)); });
     var seen = {};
-    attentionFor(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m2.appendChild(ftypePill(f.type)); } });
+    realFlags(item).forEach(function (f) { if (!seen[f.type]) { seen[f.type] = 1; m2.appendChild(ftypePill(f.type)); } });
     if (m2.children.length) wrap.appendChild(m2);
     return wrap;
   }
@@ -1391,14 +1685,20 @@
       out.push(dn);
     }
     if (item.lane === "active") {
-      var eng = withEng(item);
-      var hand = el("button", "btn small", eng ? "Start Design QA" : "Hand off to Eng"); hand.type = "button";
-      hand.onclick = function () {
-        item.stage = eng ? "DQA" : "Development"; item.changed = iso(today);
-        if (eng) item.priority = 999;
-        renumber(DATA, "active", null); commit();
-      };
-      out.push(hand);
+      if (involvementOf(item) === "Designing") {
+        var hand = el("button", "btn small", "Hand off to Eng"); hand.type = "button";
+        hand.onclick = function () { item.stage = "Development"; item.involvement = "Supporting"; item.changed = iso(today); renumber(DATA, "active", null); commit(); };
+        out.push(hand);
+      } else {
+        if (item.stage === "Development") {
+          var qa = el("button", "btn small", "Start Design QA"); qa.type = "button";
+          qa.onclick = function () { item.stage = "DQA"; item.changed = iso(today); commit(); };
+          out.push(qa);
+        }
+        var back = el("button", "btn small", "Back to Designing"); back.type = "button";
+        back.onclick = function () { item.involvement = "Designing"; item.priority = 999; item.changed = iso(today); renumber(DATA, "active", null); commit(); };
+        out.push(back);
+      }
     }
     if (item.lane === "backlog") {
       var mv = el("button", "btn small primary", "Move to Top priorities"); mv.type = "button";
@@ -1482,6 +1782,7 @@
       wk.appendChild(el("span", "k", "This week: "));
       wk.appendChild(el("span", wkNote ? "wk-note" : "wk-note muted", wkNote || "Add this week's outcome"));
     }
+    if (item.stance) { var stn = el("div", "pri-stance"); stn.appendChild(el("span", "k", "Stance: ")); stn.appendChild(el("span", null, item.stance)); wk.appendChild(stn); }
     var nx = el("div", "pri-next");
     if (item.stage === "DQA") nx.appendChild(labelRow("Design QA", qaWhen(item)));
     else {
@@ -1510,30 +1811,51 @@
     return row;
   }
 
-  // Handed off and in development: out of Top priorities, but not done until Design QA wraps.
-  function holdRow(item) {
+  // The soonest upcoming date for a project: Design QA, a milestone, launch, or its start.
+  function nextDate(item) {
+    var t = iso(today), c = [];
+    if (item.start && item.start > t) c.push({ d: item.start, l: "Start" });
+    if (item.dqaStart && item.dqaStart >= t) c.push({ d: item.dqaStart, l: "Design QA" });
+    (item.milestones || []).forEach(function (m) { if (!m.done && m.date >= t) c.push({ d: m.date, l: m.name }); });
+    if (item.end && item.end >= t && involvementOf(item) === "Designing") c.push({ d: item.end, l: "Design deliverable" });
+    if (item.launch && item.launch >= t) c.push({ d: item.launch, l: "Launch" });
+    c.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
+    return c[0] ? fmt(c[0].d) + " - " + c[0].l : "";
+  }
+
+  // Overseeing and supporting: one compact table row per project.
+  function assistRow(item) {
     var open = !!expanded[item.id];
-    var row = el("article", "card hold-row " + item.pod + (open ? " open" : ""));
-    row.id = item.id;
-    var line = el("div", "hold-line");
-    var qa = el("div", "pri-next"); qa.appendChild(labelRow("Design QA", item.dqaStart ? "starts " + fmt(item.dqaStart) : "date to be set"));
-    var ln = el("div", "pri-next"); if (item.launch) ln.appendChild(labelRow("Launch", launchText(item)));
-    [idBlock(item, ""), qa, ln, toggleBtn(item, true)].forEach(function (n) { line.appendChild(n); });
-    row.appendChild(line);
-    var acts = adminBtns(item);
-    if (acts.length) {
-      var ab = el("div", "card-actions");
-      acts.forEach(function (b) { ab.appendChild(b); });
-      row.appendChild(ab);
+    var box = el("div", "at-item");
+    box.id = item.id;
+    var line = el("div", "at-line");
+    var an = el("div", "at-name", item.shortName || item.name); an.title = item.name; line.appendChild(an);
+    var rl = el("div", "at-role", involvementOf(item));
+    if (supportNote(item)) rl.appendChild(el("div", "autosave", supportNote(item)));
+    line.appendChild(rl);
+    var st = el("div", "at-status"); if (item.status) st.appendChild(pill(item.status));
+    line.appendChild(st);
+    line.appendChild(el("div", "at-next", nextDate(item)));
+    line.appendChild(toggleBtn(item, true));
+    box.appendChild(line);
+    if (open || ADMIN) {
+      var det = el("div", "at-detail");
+      var acts = adminBtns(item);
+      if (acts.length) { var ab = el("div", "card-actions"); acts.forEach(function (b) { ab.appendChild(b); }); det.appendChild(ab); }
+      if (open) {
+        var body = itemBody(item) || el("div", "card-body");
+        var dl = el("div", "pl-line");
+        if (item.stage) dl.appendChild(labelRow("Stage", item.stage));
+        if (item.start) dl.appendChild(labelRow("Start", fmt(item.start)));
+        if (item.end) dl.appendChild(labelRow("Design deliverable", fmt(item.end)));
+        if (item.dqaStart) dl.appendChild(labelRow("Design QA", qaWhen(item)));
+        if (item.launch) dl.appendChild(labelRow("Launch", launchText(item)));
+        body.insertBefore(dl, body.firstChild);
+        det.appendChild(body);
+      }
+      box.appendChild(det);
     }
-    if (open) {
-      var body = itemBody(item) || el("div", "card-body");
-      var dl = el("div", "pl-line");
-      dl.appendChild(labelRow("Handed to Eng", fmt(item.end)));
-      body.insertBefore(dl, body.firstChild);
-      row.appendChild(body);
-    }
-    return row;
+    return box;
   }
 
   function backlogRow(item, rank) {
@@ -1587,6 +1909,86 @@
     return h;
   }
 
+  function tidyLine(item, f) {
+    var box = el("div", "flag-line");
+    var top = el("div", "flag-head");
+    var id = el("div", "flag-id");
+    id.appendChild(ftypePill(f.type));
+    id.appendChild(el("span", "flag-proj", item.name));
+    top.appendChild(id);
+    top.appendChild(el("div", "flag-first", f.text));
+    var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { openEditor(item); };
+    top.appendChild(ed);
+    box.appendChild(top);
+    return box;
+  }
+
+  // ---- Updates feed: dated one-liners that are not flags ----
+  var feedAll = false, editingFeed = null;
+  // The feed plus any FYI flags, newest first. Pod filter applies to anything tied to a project or pod.
+  function feedSorted() {
+    var out = (DATA.feed || []).slice();
+    DATA.items.forEach(function (item) {
+      if (item.lane === "done") return;
+      (item.flags || []).forEach(function (f) {
+        if (f.type === "FYI") out.push({ id: "fyi-" + item.id + "-" + (f.date || "") + "-" + lines(f.text)[0], date: f.date || DATA.updated, kind: "FYI", text: lines(f.text)[0] || "", project: item.id, fromFlag: true, item: item });
+      });
+    });
+    out = out.filter(function (u) {
+      if (podFilter === "all") return true;
+      var it = u.project && DATA.items.filter(function (i) { return i.id === u.project; })[0];
+      return it ? it.pod === podFilter : u.pod ? u.pod === podFilter : true;
+    });
+    return out.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+  }
+  function feedTie(u) {
+    var item = u.project && DATA.items.filter(function (i) { return i.id === u.project; })[0];
+    return item ? item.name : u.pod ? podName(u.pod) : "";
+  }
+  function feedLine(u) {
+    var box = el("div", "feed-line");
+    box.appendChild(el("span", "feed-date", fmt(u.date) + (u.date > iso(today) ? " (upcoming)" : "")));
+    box.appendChild(el("span", "ftype", u.kind));
+    var t = el("span", "feed-text", u.text);
+    var tie = feedTie(u);
+    if (tie) t.appendChild(el("span", "feed-tie", " - " + tie));
+    box.appendChild(t);
+    if (ADMIN) { var ed = el("button", "btn small", "Edit"); ed.type = "button"; ed.onclick = function () { if (u.fromFlag) openEditor(u.item); else openFeed(u); }; box.appendChild(ed); }
+    return box;
+  }
+  function renderFeed() {
+    var all = feedSorted();
+    $("feed-section").hidden = !all.length && !ADMIN;
+    $("feed-tools").hidden = !ADMIN;
+    fill("feed", (feedAll ? all : all.slice(0, 3)).map(feedLine), "No updates yet.");
+    $("feed-more").hidden = all.length <= 3;
+    $("feed-more").textContent = feedAll ? "Show 3" : "See all (" + all.length + ")";
+  }
+  function openFeed(u) {
+    editingFeed = u;
+    $("feed-title").textContent = u ? "Edit update" : "Add update";
+    $("fd-delete").hidden = !u;
+    var e = u || { date: iso(today), kind: "FYI" };
+    $("fd-date").value = e.date; $("fd-kind").value = e.kind; $("fd-text").value = e.text || "";
+    var sel = $("fd-tie"); sel.textContent = "";
+    opt(sel, "", "(none)");
+    Object.keys(DATA.pods).forEach(function (k) { if (k !== "other") opt(sel, "pod:" + k, "Pod: " + DATA.pods[k]); });
+    DATA.items.forEach(function (i) { opt(sel, "item:" + i.id, i.name); });
+    sel.value = e.project ? "item:" + e.project : e.pod ? "pod:" + e.pod : "";
+    $("fd-err").textContent = "";
+    $("dlg-feed").showModal();
+  }
+  function weekUpdates(week) {
+    var lo = iso(new Date(pd(week).getFullYear(), pd(week).getMonth(), pd(week).getDate() - 6));
+    return feedSorted().filter(function (u) { return u.date >= lo && u.date <= week; }).reverse();
+  }
+  function renderChangedWeek() {
+    var box = $("changed-wk");
+    var names = DATA.items.filter(function (i) { return i.lane !== "done" && itemChanged(i); }).map(function (i) { return i.name; });
+    box.hidden = !names.length;
+    box.textContent = names.length ? "Changed this week: " + names.slice(0, 4).join(", ") + (names.length > 4 ? " and " + (names.length - 4) + " more" : "") : "";
+  }
+
   function flagLine(item, f, n) {
     var key = item.id + "|" + n + "|" + f.type;
     var open = flagOpen[key] === true;
@@ -1596,7 +1998,12 @@
     id.appendChild(ftypePill(f.type));
     id.appendChild(el("span", "flag-proj", item.name));
     top.appendChild(id);
-    top.appendChild(el("div", "flag-first", lines(f.text)[0] || ""));
+    var ff = el("div", "flag-first", lines(f.text)[0] || "");
+    var meta = [];
+    if (f.owner) meta.push("Owner: " + f.owner);
+    if (f.needBy) meta.push("Need by " + fmt(f.needBy));
+    if (meta.length) ff.appendChild(el("div", "flag-meta", meta.join(" \u00B7 ")));
+    top.appendChild(ff);
     var tg = el("button", "toggle", open ? "Collapse " : "Expand ");
     tg.type = "button"; tg.setAttribute("aria-expanded", String(open));
     tg.appendChild(el("span", null, open ? "\u25B4" : "\u25BE"));
@@ -1685,12 +2092,16 @@
     box.appendChild(sel);
   }
 
+  var ovView = "timeline", flagsAll = false;
+
+  // ---- Timeline: Designing projects as solid bars; supporting work behind a toggle ----
   function renderTimeline() {
     var tl = document.getElementById("tl");
     tl.textContent = "";
     var act = items("active").sort(byPriority);
-    // Priorities first, then handed-off work, with planned (not started) projects last.
-    var rows = act.filter(function (i) { return !withEng(i); }).concat(act.filter(withEng), items("backlog").filter(function (i) { return i.start; }).sort(byPriority));
+    var designing = act.filter(function (i) { return !isAssist(i); }).concat(items("backlog").filter(function (i) { return i.start && involvementOf(i) === "Designing"; }).sort(byPriority));
+    var rows = designing.slice(0, 3);
+    renderComing();
     if (!rows.length) { tl.style.paddingLeft = "0"; tl.appendChild(el("div", "empty", "Nothing dated to show.")); return; }
     tl.style.paddingLeft = "";
 
@@ -1717,78 +2128,52 @@
       head.appendChild(lab);
       m = new Date(m.getFullYear(), m.getMonth() + 1, 1);
     }
+    var wk = new Date(base.getFullYear(), base.getMonth(), base.getDate());
+    while (wk <= max) {
+      if (wk >= min) { var tk = el("div", "tl-tick"); tk.style.left = pct(wk) + "%"; head.appendChild(tk); }
+      wk = new Date(wk.getFullYear(), wk.getMonth(), wk.getDate() + 7);
+    }
     tl.appendChild(head);
     tl.appendChild(el("div", "tl-headline"));
 
+    function diamond(row, dt, label, done) {
+      if (!inWin(dt)) return;
+      var d = el("div", "tl-ms" + (done ? " done" : ""));
+      d.style.left = pct(dt) + "%"; d.title = label + " - " + fmt(iso(dt)) + (done ? " (done)" : "");
+      row.appendChild(d);
+    }
+    function label(row, atDate, text) {
+      var l = el("span", "tl-lab", text);
+      l.style.left = "calc(" + cl(atDate) + "% + 14px)";
+      row.appendChild(l);
+    }
     rows.forEach(function (item, idx) {
       var row = el("div", "tl-row" + (idx === rows.length - 1 ? " last" : ""));
       var name = el("a", "tl-name");
-      name.href = "#" + item.id;
-      name.title = item.name;
-      name.appendChild(el("span", null, item.name));
+      name.href = "#" + item.id; name.title = item.name;
+      name.appendChild(el("span", null, item.shortName || item.name));
       row.appendChild(name);
       var s0 = pd(item.start);
       if (item.end) {
         var e0 = pd(item.end);
         if (overlaps(s0, e0)) {
-          var bar = el("a", "tl-bar " + item.pod + (item.lane === "backlog" ? " planned" : ""), item.lane === "backlog" ? "Planned" : withEng(item) ? "Design" : item.stage);
+          var bar = el("a", "tl-bar " + item.pod);
           bar.href = "#" + item.id;
-          bar.style.left = cl(s0) + "%";
-          bar.style.width = Math.max(1, cl(e0) - cl(s0)) + "%";
+          bar.style.left = cl(s0) + "%"; bar.style.width = Math.max(0.6, cl(e0) - cl(s0)) + "%";
           bar.title = item.name + ": " + fmt(item.start) + " to " + fmt(item.end);
           row.appendChild(bar);
+          // A launch further out gets a diamond with its date; the stage label is dropped when it would collide.
+          var far = item.launch && pd(item.launch) > e0 && inWin(pd(item.launch));
+          if (!far || cl(pd(item.launch)) - cl(e0) > 12) label(row, e0, item.lane === "backlog" ? "Planned" : item.stage);
+          if (far) { diamond(row, pd(item.launch), "Launch", false); label(row, pd(item.launch), fmt(item.launch)); }
         }
+        (item.milestones || []).forEach(function (ms) { diamond(row, pd(ms.date), ms.name, ms.done); });
       } else if (inWin(s0)) {
         var dot = el("a", "tl-start " + item.pod);
-        dot.href = "#" + item.id;
-        dot.style.left = pct(s0) + "%";
-        dot.title = item.name + ": starts " + fmt(item.start) + ", design handoff TBD";
-        dot.appendChild(el("span", null, "Starts " + fmt(item.start) + " - handoff TBD"));
-        row.appendChild(dot);
+        dot.href = "#" + item.id; dot.style.left = pct(s0) + "%";
+        dot.title = item.name + ": starts " + fmt(item.start);
+        row.appendChild(dot); label(row, s0, "Starts " + fmt(item.start));
       }
-      var devTo = item.dqaStart || item.launch;
-      if (item.end && devTo && item.lane === "active" && pd(devTo) > pd(item.end) && overlaps(pd(item.end), pd(devTo))) {
-        var dev = el("div", "tl-dev " + item.pod);
-        dev.style.left = cl(pd(item.end)) + "%";
-        dev.style.width = Math.max(0.5, cl(pd(devTo)) - cl(pd(item.end))) + "%";
-        dev.title = item.name + ": with Eng " + fmt(item.end) + " to " + fmt(devTo);
-        row.appendChild(dev);
-      }
-      // An item already in DQA is drawn by its main bar; a second Design QA bar would overlap it.
-      if (item.dqaStart && item.lane === "active" && item.stage !== "DQA") {
-        var q0 = pd(item.dqaStart);
-        if (item.launch && pd(item.launch) > q0) {
-          if (overlaps(q0, pd(item.launch))) {
-            var qb = el("a", "tl-bar " + item.pod, "Design QA");
-            qb.href = "#" + item.id;
-            qb.style.left = cl(q0) + "%";
-            qb.style.width = Math.max(1, cl(pd(item.launch)) - cl(q0)) + "%";
-            qb.title = item.name + ": Design QA " + fmt(item.dqaStart) + " to " + fmt(item.launch);
-            row.appendChild(qb);
-          }
-        } else if (inWin(q0)) {
-          var qd = el("a", "tl-start " + item.pod);
-          qd.href = "#" + item.id;
-          qd.style.left = pct(q0) + "%";
-          qd.title = item.name + ": Design QA starts " + fmt(item.dqaStart);
-          qd.appendChild(el("span", null, "Design QA " + fmt(item.dqaStart)));
-          row.appendChild(qd);
-        }
-      }
-      if (item.launch && inWin(pd(item.launch))) {
-        var fl = el("div", "tl-launch");
-        fl.style.left = pct(pd(item.launch)) + "%";
-        fl.title = "Launch - " + fmt(item.launch);
-        fl.appendChild(el("span", null, "Launch"));
-        row.appendChild(fl);
-      }
-      (item.milestones || []).forEach(function (ms) {
-        if (!inWin(pd(ms.date))) return;
-        var d = el("div", "tl-ms" + (ms.done ? " done" : ""));
-        d.style.left = pct(pd(ms.date)) + "%";
-        d.title = ms.name + " - " + fmt(ms.date) + (ms.done ? " (done)" : "");
-        row.appendChild(d);
-      });
       tl.appendChild(row);
     });
 
@@ -1797,12 +2182,182 @@
     tl.appendChild(line);
   }
 
+  // Dated events across projects: launches, Design QA starts, and upcoming updates.
+  function upcomingEvents(podOnly) {
+    var t = iso(today), out = [];
+    DATA.items.forEach(function (i) {
+      if ((i.lane !== "active" && i.lane !== "backlog") || (podOnly ? i.pod !== podOnly : podFilter !== "all" && i.pod !== podFilter)) return;
+      var sn = i.shortName || i.name;
+      if (i.launch && i.launch >= t) out.push({ date: i.launch, text: sn + " launch", pod: i.pod });
+      if (i.dqaStart && i.dqaStart >= t) out.push({ date: i.dqaStart, text: sn + " Design QA starts", pod: i.pod });
+      if (involvementOf(i) !== "Designing") (i.milestones || []).forEach(function (ms) { if (!ms.done && ms.date >= t) out.push({ date: ms.date, text: sn + ": " + ms.name, pod: i.pod }); });
+    });
+    (DATA.feed || []).forEach(function (u) {
+      if (u.date < t) return;
+      var it = u.project && DATA.items.filter(function (i) { return i.id === u.project; })[0];
+      var pod = it ? it.pod : u.pod;
+      if (podOnly ? pod !== podOnly : podFilter !== "all" && pod && pod !== podFilter) return;
+      out.push({ date: u.date, text: u.short || u.text, pod: pod });
+    });
+    return out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  }
+  function eventNode(e) {
+    var n = el("span", "ce");
+    n.appendChild(el("span", "ce-dia"));
+    var d = pd(e.date);
+    var sameMonth = d.getMonth() === today.getMonth() && d.getFullYear() === today.getFullYear();
+    n.appendChild(el("b", null, d.toLocaleDateString("en-US", { weekday: "short" }) + " " + (sameMonth ? d.getDate() : d.toLocaleDateString("en-US", { month: "short", day: "numeric" }))));
+    if (e.pod) n.appendChild(el("span", "ce-dot " + e.pod));
+    n.appendChild(document.createTextNode(e.text));
+    return n;
+  }
+  function renderComing() {
+    var box = $("coming"), list = $("coming-list"), pop = $("coming-pop"), btn = $("coming-all");
+    var ev = upcomingEvents();
+    list.textContent = ""; pop.textContent = "";
+    box.hidden = !ev.length;
+    if (!ev.length) return;
+    ev.slice(0, 4).forEach(function (e) { list.appendChild(eventNode(e)); });
+    ev.forEach(function (e) { pop.appendChild(eventNode(e)); });
+    btn.hidden = ev.length <= 4;
+    btn.textContent = "All dates (" + ev.length + ")";
+    pop.hidden = true; btn.setAttribute("aria-expanded", "false");
+  }
+
+  // ---- This week: Mon-Fri rows for my priorities ----
+  function weekDays() {
+    var dow = today.getDay(), off = dow === 0 ? 1 : dow === 6 ? 2 : -(dow - 1);
+    var mon = new Date(today.getFullYear(), today.getMonth(), today.getDate() + off);
+    return [0, 1, 2, 3, 4].map(function (n) { return iso(new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + n)); });
+  }
+  function offMap() {
+    var m = {};
+    (DATA.daysOff || []).forEach(function (o) { if (typeof o === "string") m[o] = "Off"; else m[o.date] = o.label || "Off"; });
+    return m;
+  }
+  var editingTask = null;
+  function renderWeek() {
+    var box = $("weekview");
+    box.textContent = "";
+    var days = weekDays(), off = offMap(), wkInfo = DATA.week || {};
+    if (ADMIN) {
+      var add = el("button", "btn small primary", "+ Add to this week"); add.type = "button"; add.onclick = function () { openTask(null); };
+      var tools = el("div", "wk-tools"); tools.appendChild(add); box.appendChild(tools);
+    }
+    [["Off my plate this week", wkInfo.offPlate], ["Focus blocks this week", wkInfo.focus]].forEach(function (x) {
+      if (!x[1]) return;
+      var ln = el("div", "snapshot"); ln.appendChild(el("span", "snap-label", x[0])); ln.appendChild(el("span", "snap-note", x[1])); box.appendChild(ln);
+    });
+    var wrap = el("div", "wk");
+    function cells(row, fn) {
+      days.forEach(function (d, n) {
+        var c = el("div", "wk-cell" + (d === iso(today) ? " today" : "") + (off[d] ? " off" : ""));
+        c.style.gridColumn = String(n + 2);
+        if (fn) fn(c, d);
+        row.appendChild(c);
+      });
+    }
+    var hd = el("div", "wk-row wk-head");
+    hd.appendChild(el("div", "wk-lab", "Week of " + fmt(days[0])));
+    days.forEach(function (d) {
+      var c = el("div", "wk-cell" + (d === iso(today) ? " today" : "") + (off[d] ? " off" : ""));
+      c.appendChild(el("b", null, pd(d).toLocaleDateString("en-US", { weekday: "short" }) + " " + pd(d).getDate()));
+      if (off[d]) c.appendChild(el("span", "wk-off", off[d]));
+      hd.appendChild(c);
+    });
+    wrap.appendChild(hd);
+    var tasks = (DATA.tasks || []).filter(function (t) { return t.start <= days[4] && (t.end || t.start) >= days[0]; });
+    var prios = items("active").filter(function (i) { return !isAssist(i); }).sort(byPriority).slice(0, 3);
+    var groups = prios.map(function (i) { return { item: i, prio: true }; });
+    tasks.forEach(function (t) {
+      var it = t.project && DATA.items.filter(function (i) { return i.id === t.project; })[0];
+      var key = it ? it.id : "";
+      if (!groups.some(function (g) { return (g.item ? g.item.id : "") === key; })) groups.push({ item: it || null, prio: false });
+    });
+    if (!groups.length) wrap.appendChild(el("div", "empty", "Nothing planned this week."));
+    groups.forEach(function (g) {
+      var key = g.item ? g.item.id : "";
+      var mine = tasks.filter(function (t) { return (t.project || "") === key; });
+      var deadlines = [];
+      mine.filter(function (t) { return t.deadline; }).forEach(function (t) { deadlines.push({ date: t.start, label: t.name + (t.risk ? " (at risk)" : ""), task: t }); });
+      if (g.prio) {
+        var it = g.item, auto = [];
+        (it.milestones || []).forEach(function (ms) { auto.push({ date: ms.date, label: ms.name, done: ms.done }); });
+        if (it.end) auto.push({ date: it.end, label: "Design deliverable" });
+        if (it.dqaStart) auto.push({ date: it.dqaStart, label: "Design QA starts" });
+        if (it.launch) auto.push({ date: it.launch, label: "Launch" });
+        auto.filter(function (a) { return days.indexOf(a.date) > -1 && !deadlines.some(function (d) { return d.date === a.date; }); }).forEach(function (a) { deadlines.push(a); });
+      }
+      deadlines.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+      var row = el("div", "wk-row wk-group");
+      var lab = el("div", "wk-lab");
+      lab.appendChild(el("b", null, g.item ? (g.item.shortName || g.item.name) : "General"));
+      var note = g.item && focusNote(g.item);
+      if (g.prio && note) lab.appendChild(el("div", "wk-note-s", "This week: " + note));
+      deadlines.forEach(function (d) {
+        var ln = el("div", "wk-due" + (d.task && d.task.risk ? " risk" : ""), fmt(d.date) + " - " + d.label);
+        if (ADMIN && d.task) { var e1 = el("button", "linkish", " Edit"); e1.type = "button"; e1.onclick = function () { openTask(d.task); }; ln.appendChild(e1); }
+        lab.appendChild(ln);
+      });
+      row.appendChild(lab);
+      cells(row, function (c, d) {
+        deadlines.filter(function (x) { return x.date === d; }).forEach(function (x) {
+          var dm = el("span", "tl-ms wk-dia" + (x.done ? " done" : "")); dm.title = x.label + " - " + fmt(x.date); c.appendChild(dm);
+        });
+      });
+      wrap.appendChild(row);
+      mine.filter(function (t) { return !t.deadline; }).forEach(function (t) {
+        var tr = el("div", "wk-row wk-task");
+        var tl = el("div", "wk-lab wk-tname", t.name + (t.risk ? " (at risk)" : ""));
+        if (ADMIN) { var e2 = el("button", "linkish", " Edit"); e2.type = "button"; e2.onclick = function () { openTask(t); }; tl.appendChild(e2); }
+        tr.appendChild(tl);
+        cells(tr);
+        var a = t.start < days[0] ? 0 : days.indexOf(t.start), endD = t.end || t.start;
+        var z = endD >= days[4] ? 4 : days.indexOf(endD);
+        if (a < 0 || z < 0) return;
+        var b = el("div", "wk-bar" + (g.item ? " " + g.item.pod : "")); b.style.gridColumn = (a + 2) + " / " + (z + 3); b.title = t.name;
+        tr.appendChild(b);
+        wrap.appendChild(tr);
+      });
+    });
+    box.appendChild(wrap);
+  }
+
+  function openTask(t) {
+    editingTask = t;
+    $("task-title").textContent = t ? "Edit this week item" : "Add to this week";
+    $("tk-delete").hidden = !t;
+    var days = weekDays(), e = t || { start: days.indexOf(iso(today)) > -1 ? iso(today) : days[0] };
+    $("tk-name").value = e.name || ""; $("tk-start").value = e.start; $("tk-end").value = e.end || "";
+    $("tk-deadline").checked = !!e.deadline; $("tk-risk").checked = !!e.risk;
+    var sel = $("tk-project"); sel.textContent = "";
+    opt(sel, "", "General");
+    DATA.items.filter(function (i) { return i.lane !== "done"; }).sort(function (a, b) { return (isAssist(a) - isAssist(b)) || byPriority(a, b); }).forEach(function (i) { opt(sel, i.id, i.name); });
+    sel.value = e.project || "";
+    $("tk-err").textContent = "";
+    $("dlg-task").showModal();
+  }
+
+  function renderOvControls() {
+    var seg = $("view-seg"); seg.textContent = "";
+    [["timeline", "Timeline"], ["week", "This week"]].forEach(function (v) {
+      var b = el("button", null, v[1]); b.type = "button";
+      b.setAttribute("aria-pressed", String(ovView === v[0]));
+      b.onclick = function () { ovView = v[0]; render(); };
+      seg.appendChild(b);
+    });
+    var wk = ovView === "week";
+    $("timeline-box").hidden = wk; $("coming").hidden = wk || $("coming").hidden; $("weekview").hidden = !wk;
+    if (wk) renderWeek();
+  }
+
+
   function render() {
     refreshToday();
     var upd = pd(DATA.updated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     var age = daysBetween(pd(DATA.updated), today);
     var updEl = document.getElementById("updated");
-    updEl.textContent = "Last updated " + upd + (age > 7 ? " (" + age + " days ago)" : "");
+    updEl.textContent = "Last published " + upd + (age > 7 ? " (" + age + " days ago)" : "");
     updEl.className = "updated" + (age > 7 ? " stale" : "");
     renderFilters();
     renderAdminBar();
@@ -1812,7 +2367,7 @@
     var ongoing = items("ongoing").sort(byPriority);
     var done = items("done").sort(function (a, b) { return (b.completed || "") < (a.completed || "") ? -1 : 1; });
     var flags = [];
-    active.concat(backlog, ongoing).forEach(function (i) { attentionFor(i).forEach(function (f) { flags.push({ item: i, flag: f }); }); });
+    active.concat(backlog, ongoing).forEach(function (i) { realFlags(i).forEach(function (f) { flags.push({ item: i, flag: f }); }); });
 
     renderTabs(flags.length);
     renderSnapshot();
@@ -1820,23 +2375,35 @@
     renderRecap();
 
     document.getElementById("attention-count").textContent = "(" + flags.length + ")";
-    var prios = active.filter(function (i) { return !withEng(i); });
-    var hold = active.filter(withEng);
+    var prios = active.filter(function (i) { return !isAssist(i); });
+    var assist = active.filter(isAssist);
     document.getElementById("active-title").textContent = priTitle(prios.length);
     document.getElementById("backlog-count").textContent = "(" + backlog.length + ")";
 
     var flagNodes = [];
     flagGroups(active.concat(backlog, ongoing)).forEach(function (g) { g.flags.forEach(function (f, n) { flagNodes.push(flagLine(g.item, f, n)); }); });
-    fill("attention", flagNodes, "Nothing flagged right now.");
+    fill("attention", flagsAll ? flagNodes : flagNodes.slice(0, 3), "Nothing flagged right now.");
+    $("flags-more").hidden = flagNodes.length <= 3;
+    $("flags-more").textContent = flagsAll ? "Show 3" : "See all (" + flagNodes.length + ")";
 
     document.getElementById("ongoing-section").hidden = !ongoing.length && !ADMIN;
     document.getElementById("ongoing-count").textContent = "(" + ongoing.length + ")";
     fill("ongoing", ongoing.map(ongoingRow), "Nothing noted yet. Use Add project and choose \"Also on my plate\".");
     fill("active", prios.map(function (i, n) { return priRow(i, n + 1); }), "Nothing in progress for this pod.");
-    $("hold-section").hidden = !hold.length;
-    fill("hold", hold.map(holdRow), "");
+    $("assist-section").hidden = !assist.length;
+    var head = el("div", "at-head");
+    ["Project", "Role", "Status", "Next date"].forEach(function (h) { head.appendChild(el("div", null, h)); });
+    head.appendChild(el("div"));
+    fill("assist", assist.length ? [head].concat(assist.map(assistRow)) : [], "");
+    var tidy = [];
+    if (ADMIN) active.concat(backlog, ongoing).forEach(function (i) { tidyFlags(i).forEach(function (f) { tidy.push({ item: i, flag: f }); }); });
+    $("tidy-section").hidden = !tidy.length;
+    fill("tidy", tidy.map(function (t) { return tidyLine(t.item, t.flag); }), "");
+    renderFeed();
+    renderChangedWeek();
     makeSortable($("active"), "active");
     renderTimeline();
+    renderOvControls();
     renderParked();
     fill("backlog", backlog.map(function (i, n) { return backlogRow(i, n + 1); }), "Nothing queued for this pod.");
     makeSortable($("backlog"), "backlog");
@@ -1874,6 +2441,9 @@
       var pi = info[k] || {};
       var c3 = [];
       if (pi.goal) c3.push(labelRow("Goal", pi.goal));
+      if (pi.why) c3.push(labelRow("Why it matters", pi.why));
+      var pe = k === "other" ? [] : upcomingEvents(k).slice(0, 4);
+      if (pe.length) { var kd = el("div", "coming"); kd.appendChild(el("span", "coming-label", "Key dates")); var kl = el("span", "coming-list"); pe.forEach(function (e) { kl.appendChild(eventNode(e)); }); kd.appendChild(kl); c3.push(kd); }
       if (pi.note) c3.push(labelRow("Note", pi.note));
       var mine = DATA.items.filter(function (i) { return i.pod === k && i.lane !== "done"; });
       var order = { active: 0, backlog: 1, ongoing: 2 };
@@ -1883,8 +2453,8 @@
         mine.forEach(function (i) {
           var li = el("li");
           li.appendChild(el("b", null, i.name));
-          li.appendChild(document.createTextNode(i.lane === "active" ? i.stage + ", " + statusLabel(i.status) : i.lane === "backlog" ? "up next" : "ongoing"));
-          attentionFor(i).forEach(function (f, n, arr) { if (arr.findIndex(function (x) { return x.type === f.type; }) === n) li.appendChild(ftypePill(f.type)); });
+          li.appendChild(document.createTextNode(i.lane === "active" ? i.stage + (i.status ? ", " + statusLabel(i.status) : "") : i.lane === "backlog" ? "up next" : "ongoing"));
+          realFlags(i).forEach(function (f, n, arr) { if (arr.findIndex(function (x) { return x.type === f.type; }) === n) li.appendChild(ftypePill(f.type)); });
           ul.appendChild(li);
         });
         c3.push(ul);
@@ -1906,18 +2476,18 @@
     var L = [];
     var long = today.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
     L.push("Weekly update - " + long);
-    var inDev = DATA.items.filter(function (i) { return i.lane === "active" && withEng(i); }).sort(byPriority);
-    var active = DATA.items.filter(function (i) { return i.lane === "active" && !withEng(i); }).sort(byPriority);
+    var inDev = DATA.items.filter(isAssist).sort(byPriority);
+    var active = DATA.items.filter(function (i) { return i.lane === "active" && !isAssist(i); }).sort(byPriority);
     L.push("", priTitle(active.length) + ":");
     if (!active.length) L.push("- None");
     active.forEach(function (i) {
-      L.push("- " + i.name + " (" + i.stage + ", " + statusLabel(i.status) + "), " + (withEng(i) ? "handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") : "design deliverable " + fmt(i.end)) + (i.launch ? ", launch " + fmt(i.launch) : ""));
+      L.push("- " + i.name + " (" + i.stage + ", " + (i.status ? statusLabel(i.status) : "no status") + "), " + (withEng(i) ? "handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") : "design deliverable " + fmt(i.end)) + (i.launch ? ", launch " + fmt(i.launch) : ""));
       if (focusNote(i)) L.push("    This week: " + focusNote(i));
       if (i.next) L.push("    Next step: " + i.next);
     });
     if (inDev.length) {
-      L.push("", "Awaiting DQA:");
-      inDev.forEach(function (i) { L.push("- " + i.name + ", handed to Eng " + fmt(i.end) + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") + (i.launch ? ", launch " + fmt(i.launch) : "")); });
+      L.push("", "Overseeing and supporting:");
+      inDev.forEach(function (i) { L.push("- " + i.name + " (" + involvementOf(i).toLowerCase() + ", " + i.stage + ")" + (i.dqaStart ? ", Design QA " + fmt(i.dqaStart) : "") + (i.launch ? ", launch " + fmt(i.launch) : "")); });
     }
     if (DATA.notThisWeek) L.push("Not this week: " + DATA.notThisWeek);
     if (DATA.capacity && (DATA.capacity.level || DATA.capacity.note)) L.push("", (DATA.capacity.level ? "Capacity: " + DATA.capacity.level : "My time") + (DATA.capacity.note ? (DATA.capacity.level ? " - " : ": ") + DATA.capacity.note : ""));
@@ -1932,6 +2502,7 @@
     if (rc && rc.doc) {
       L.push("", "Notes for the week ending " + fmt(rc.week) + ":");
       parseDoc(rc.doc).forEach(function (p) {
+        if (p.t === "auto") return;
         var t = plainOf(p.s);
         if (p.t === "h") { if (t.trim()) L.push("", t + ":"); }
         else if (t.trim()) L.push(p.t === "p" ? t : "- " + (p.t === "todo" && p.done ? "(done) " : "") + t);
@@ -1956,9 +2527,9 @@
   }
 
   // Each week is one markdown string: "## heading", "- bullet", "- [ ] todo", plain lines, **bold**, [text](https://url).
-  var TEMPLATE = ["## This week's focus", "- ", "- ", "- ", "## Not this week", "- ",
-    "## Insights", "- ", "## Benefits / ME", "- ", "## Payer & Global", "- ", "## Channel Partners", "- ",
-    "## Decisions and asks", "- ", "## Calendar and focus time", "- "].join("\n");
+  var AUTO = "{{priorities-and-risks}}";
+  var TEMPLATE = ["## What I want from this meeting", "- ", "## What I'm proud of", "- ", "## What I need help with", "- ",
+    "## My recommendations", "- ", "## Priorities and risks", AUTO, "## Next week", "- "].join("\n");
 
   function podOfHeading(t) {
     var x = t.toLowerCase();
@@ -1968,6 +2539,7 @@
   function parseDoc(md) {
     return String(md || "").split("\n").map(function (line) {
       var m;
+      if ((m = /^\{\{([a-z-]+)\}\}$/.exec(line))) return { t: "auto", s: m[1] };
       if ((m = /^#{1,3}\s+(.*)$/.exec(line))) return { t: "h", s: m[1] };
       if ((m = /^[-*]\s+\[( |x|X)\]\s?(.*)$/.exec(line))) return { t: "todo", done: m[1] !== " ", s: m[2] };
       if ((m = /^[-*](?:\s(.*))?$/.exec(line))) return { t: "li", s: m[1] || "" };
@@ -2008,15 +2580,23 @@
     return out;
   }
   function blockMd(b) {
-    var t = b.dataset.t, s = inlineMd(b);
+    var t = b.dataset.t;
+    if (t === "auto") return "{{" + b.dataset.auto + "}}";
+    var s = inlineMd(b);
     return t === "h" ? "## " + s : t === "li" ? "- " + s : t === "todo" ? "- [" + (b.dataset.done ? "x" : " ") + "] " + s : s;
   }
   function docMd(box) { return Array.prototype.map.call(box.children, blockMd).join("\n"); }
 
   function fixEmpty(b) { if (!b.textContent) { b.textContent = ""; b.appendChild(document.createElement("br")); } }
-  function buildBlock(p) {
+  function buildBlock(p, live) {
     var d = el("div", "blk");
     d.dataset.t = p.t;
+    if (p.t === "auto") {
+      d.dataset.auto = p.s; d.contentEditable = "false";
+      if (live) d.appendChild(summaryBody());
+      else d.appendChild(el("div", "autosave", "Priorities and risks are shown for the latest week only."));
+      return d;
+    }
     if (p.t === "todo" && p.done) d.dataset.done = "1";
     parseInline(p.s, d);
     if (p.t === "h") { var pk = podOfHeading(d.textContent); if (pk) d.dataset.pod = pk; }
@@ -2025,7 +2605,7 @@
   }
   function plainOf(s) { var d = document.createElement("div"); parseInline(s, d); return d.textContent; }
   function firstLine(md) {
-    var ps = parseDoc(md).filter(function (p) { return p.s.trim(); });
+    var ps = parseDoc(md).filter(function (p) { return p.s.trim() && p.t !== "auto"; });
     var p = ps.filter(function (x) { return x.t !== "h"; })[0] || ps[0];
     return p ? plainOf(p.s) : "";
   }
@@ -2148,6 +2728,7 @@
         var prev = b.previousElementSibling;
         if (!prev) return;
         e.preventDefault();
+        if (prev.dataset.t === "auto") return;
         if (!prev.textContent) { prev.remove(); setCaret(b, 0); schedule(); return; }
         var lastBr = prev.lastChild; if (lastBr && lastBr.nodeName === "BR") prev.removeChild(lastBr);
         var at = prev.childNodes.length;
@@ -2167,12 +2748,12 @@
     });
   }
 
-  function renderDoc(md, rec, saved) {
+  function renderDoc(md, rec, saved, live) {
     var box = el("div", "doc");
     var parsed = parseDoc(md);
     if (ADMIN) {
       if (!parsed.length) parsed = [{ t: "p", s: "" }];
-      parsed.forEach(function (p) { box.appendChild(buildBlock(p)); });
+      parsed.forEach(function (p) { box.appendChild(buildBlock(p, live)); });
       box.contentEditable = "true";
       box.setAttribute("role", "textbox"); box.setAttribute("aria-multiline", "true");
       box.setAttribute("aria-label", "Notes for the week ending " + fmt(rec.week));
@@ -2183,12 +2764,12 @@
     var pend = null, kept = [];
     parsed.forEach(function (p) {
       if (p.t === "h") { pend = p.s.trim() ? p : null; return; }
-      if (!p.s.trim()) return;
+      if (p.t === "auto" ? !live : !p.s.trim()) return;
       if (pend) { kept.push(pend); pend = null; }
       kept.push(p);
     });
     if (!kept.length) box.appendChild(el("div", "empty", "No notes yet."));
-    kept.forEach(function (p) { box.appendChild(buildBlock(p)); });
+    kept.forEach(function (p) { box.appendChild(buildBlock(p, live)); });
     return box;
   }
 
@@ -2200,24 +2781,30 @@
     tg.onclick = function () { recapSnapOpen = !recapSnapOpen; renderRecap(); };
     wrap.appendChild(tg);
     if (!recapSnapOpen) return wrap;
+    wrap.appendChild(summaryBody());
+    return wrap;
+  }
+
+  function summaryBody() {
     var body = el("div", "recap-snap-body");
-    var ol = el("ol");
-    var ol2 = el("ol");
-    DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority).forEach(function (i) {
-      (withEng(i) ? ol2 : ol).appendChild(el("li", null, i.name + " - " + i.stage + ", " + statusLabel(i.status) + (i.launch ? ", launch " + fmt(i.launch) : "")));
-    });
-    if (ol.children.length) { body.appendChild(el("h4", null, "Priorities")); body.appendChild(ol); }
-    if (ol2.children.length) { body.appendChild(el("h4", null, "Awaiting DQA")); body.appendChild(ol2); }
+    var act = DATA.items.filter(function (i) { return i.lane === "active"; }).sort(byPriority);
+    function list(items) {
+      var ol = el("ol");
+      items.forEach(function (i) { ol.appendChild(el("li", null, i.name + " - " + i.stage + (i.status ? ", " + statusLabel(i.status) : "") + (isAssist(i) ? ", " + involvementOf(i).toLowerCase() : "") + (i.launch ? ", launch " + fmt(i.launch) : ""))); });
+      return ol;
+    }
+    var mine = act.filter(function (i) { return !isAssist(i); }), others = act.filter(isAssist);
+    if (mine.length) { body.appendChild(el("h4", null, "Priorities")); body.appendChild(list(mine)); }
+    if (others.length) { body.appendChild(el("h4", null, "Overseeing and supporting")); body.appendChild(list(others)); }
     var fl = [];
-    DATA.items.forEach(function (i) { attentionFor(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
+    DATA.items.forEach(function (i) { realFlags(i).forEach(function (f) { fl.push(i.name + " - [" + f.type + "] " + lines(f.text).join(" ") + (f.rec ? " Recommendation: " + lines(f.rec).join(" ") : "")); }); });
     if (fl.length) {
       var fu = el("ul", "bul");
       fl.forEach(function (t) { fu.appendChild(el("li", null, t)); });
       body.appendChild(el("h4", null, "Open flags")); body.appendChild(fu);
     }
     if (!body.children.length) body.appendChild(el("div", "empty", "Nothing to show."));
-    wrap.appendChild(body);
-    return wrap;
+    return body;
   }
 
   function weekCard(r, isLatest) {
@@ -2252,8 +2839,16 @@
       hd.appendChild(saved); hd.appendChild(del);
     }
     card.appendChild(hd);
-    if (isLatest) card.appendChild(snapshotBlock());
-    card.appendChild(renderDoc(r.doc, r, saved));
+    if (isLatest && String(r.doc).indexOf(AUTO) < 0) card.appendChild(snapshotBlock());
+    card.appendChild(renderDoc(r.doc, r, saved, isLatest));
+    var wu = weekUpdates(r.week);
+    if (wu.length) {
+      var ub = el("div", "recap-updates");
+      ub.appendChild(el("h4", null, "Updates this week"));
+      var ul = el("ul", "bul");
+      wu.forEach(function (u) { ul.appendChild(el("li", null, fmt(u.date) + " - " + u.kind + ": " + u.text + (feedTie(u) ? " (" + feedTie(u) + ")" : ""))); });
+      ub.appendChild(ul); card.appendChild(ub);
+    }
     return card;
   }
 
@@ -2307,7 +2902,7 @@
     editingPod = key;
     var pi = (DATA.podInfo || {})[key] || {};
     $("pod-title").textContent = "Edit pod: " + podName(key);
-    $("p-goal").value = pi.goal || ""; $("p-partners").value = pi.partners || ""; $("p-note").value = pi.note || "";
+    $("p-goal").value = pi.goal || ""; $("p-partners").value = pi.partners || ""; $("p-note").value = pi.note || ""; $("p-why").value = pi.why || "";
     $("dlg-pod").showModal();
   }
 
@@ -2315,6 +2910,9 @@
     var cap = DATA.capacity || {};
     $("s-cap").value = cap.level || ""; $("s-capnote").value = cap.note || "";
     $("s-not").value = DATA.notThisWeek || "";
+    var wi = DATA.week || {};
+    $("s-offplate").value = wi.offPlate || ""; $("s-focus").value = wi.focus || "";
+    $("s-daysoff").value = (DATA.daysOff || []).map(function (o) { return typeof o === "string" ? o + " Off" : o.date + " " + (o.label || "Off"); }).join("\n");
     $("dlg-settings").showModal();
   }
 
@@ -2325,7 +2923,7 @@
   // Reorders one lane. While a pod filter hides some items, the visible ones swap among their own slots.
   function moveItem(lane, id, targetId, after) {
     var full = DATA.items.filter(function (i) { return i.lane === lane; }).sort(byPriority);
-    var seen = function (i) { return (podFilter === "all" || i.pod === podFilter) && !(lane === "active" && withEng(i)); };
+    var seen = function (i) { return (podFilter === "all" || i.pod === podFilter) && !(lane === "active" && isAssist(i)); };
     var vis = full.filter(seen);
     var moved = vis.filter(function (i) { return i.id === id; })[0];
     var rest = vis.filter(function (i) { return i.id !== id; });
@@ -2392,7 +2990,7 @@
     var sel = $("ff-item"); sel.textContent = "";
     DATA.items.filter(function (i) { return i.lane !== "done"; }).forEach(function (i) { opt(sel, i.id, i.name); });
     if (id) sel.value = id;
-    $("ff-text").value = ""; $("ff-rec").value = ""; $("ff-err").textContent = ""; $("dlg-flag").showModal();
+    $("ff-text").value = ""; $("ff-rec").value = ""; $("ff-owner").value = ""; $("ff-needby").value = ""; $("ff-err").textContent = ""; $("dlg-flag").showModal();
   }
 
   var PARK_KINDS = ["Other", "Fast follow", "Will not do"];
@@ -2512,6 +3110,7 @@
     bar.hidden = !ADMIN;
     if (!ADMIN) return;
     bar.textContent = "";
+    bar.classList.toggle("dirty", isDirty());
     var ver = "Published " + fmt(JSON.parse(PUBLISHED).updated) + " (build " + BUILD + ")";
     if (staleDraft) {
       bar.appendChild(el("span", "msg", "Admin mode. " + ver + ". This browser holds an older draft saved before the page was last published, so it is not applied."));
@@ -2524,8 +3123,9 @@
     }
     var dirty = isDirty();
     bar.appendChild(el("span", "msg", dirty
-      ? "Admin mode. " + ver + ". You have unpublished draft changes, saved in this browser only. Copy the JSON to publish them."
+      ? "Admin mode. " + ver + ". Your draft is saved in this browser only."
       : "Admin mode. " + ver + ". Edits are drafts saved in this browser only. Viewers see the published data."));
+    if (dirty) bar.appendChild(el("span", "unpub", "Unpublished changes. Press Publish to make them live."));
     if (publishMsg) bar.appendChild(el("span", "pubmsg", publishMsg));
     var pub = el("button", "btn primary", "Publish"); pub.type = "button"; pub.onclick = publish;
     var tok = el("button", "btn", "Publish token"); tok.type = "button"; tok.onclick = function () { openToken(); };
@@ -2587,7 +3187,12 @@
     function sync() { s2.textContent = needsRec(t.value) ? "My recommendation (required)" : "My recommendation (optional for " + (t.value === "FYI" ? "an FYI" : "an open question") + ")"; }
     t.onchange = sync; sync();
     var cols = el("div", "f2"); cols.appendChild(l1); cols.appendChild(l2);
-    r.appendChild(top); r.appendChild(cols);
+    var ow = el("input"); ow.type = "text"; ow.value = f.owner || "";
+    var nb = el("input"); nb.type = "date"; nb.value = f.needBy || "";
+    var l3 = el("label", "f"); l3.appendChild(el("span", null, "Owner (who I need it from)")); l3.appendChild(ow);
+    var l4 = el("label", "f"); l4.appendChild(el("span", null, "Need by")); l4.appendChild(nb);
+    var cols2 = el("div", "f2"); cols2.appendChild(l3); cols2.appendChild(l4);
+    r.appendChild(top); r.appendChild(cols); r.appendChild(cols2);
     $("f-flags").appendChild(r);
   }
 
@@ -2595,6 +3200,9 @@
     var lane = $("f-lane").value;
     $("w-status").hidden = lane !== "active";
     $("w-week").hidden = lane !== "active";
+    $("w-involve").hidden = lane !== "active" && lane !== "backlog";
+    $("w-stance").hidden = lane !== "active";
+    $("w-supmode").hidden = (lane !== "active" && lane !== "backlog") || $("f-involve").value === "Designing";
     $("w-stage").hidden = lane === "done" || lane === "ongoing";
     $("w-kind").hidden = lane !== "ongoing";
     $("w-dates").hidden = lane === "ongoing";
@@ -2612,6 +3220,10 @@
     $("f-pod").value = it.pod;
     $("f-lane").value = toLane || it.lane;
     $("f-status").value = it.status || "On Track";
+    $("f-involve").value = it.involvement || "Designing";
+    $("f-short").value = it.shortName || ""; $("f-stance").value = it.stance || ""; $("f-why").value = it.why || "";
+    $("f-valuetype").value = it.valueType || ""; $("f-confidence").value = it.confidence || "";
+    $("f-supmode").value = it.supportMode || ""; $("f-supuntil").value = it.supportUntil || "";
     $("f-kind").value = it.kind || "Bug";
     $("f-stage").value = STAGES.indexOf(it.stage) > -1 || (it.stage === "Scoping" && !toLane) ? it.stage : "Awaiting kickoff";
     $("f-launch").value = it.launch || "";
@@ -2644,7 +3256,7 @@
     var name = $("f-name").value.trim(), lane = $("f-lane").value;
     var start = $("f-start").value, end = $("f-end").value;
     if (!name) { err.textContent = "Name is required."; return; }
-    if (lane === "active" && (!start || !end)) { err.textContent = "In-progress projects need a start and end date."; return; }
+    if (lane === "active" && (!start || (!end && $("f-involve").value === "Designing"))) { err.textContent = "In-progress projects need a start date, and Designing projects also need an end date."; return; }
     if (start && end && end < start) { err.textContent = "End date is before the start date."; return; }
 
     var milestones = [], links = [];
@@ -2666,15 +3278,26 @@
       var tx = r.querySelectorAll("textarea"), txt = tx[0].value.trim(), rec = tx[1].value.trim(), type = r.querySelector("select").value;
       if (!txt) return;
       if (!rec && needsRec(type)) noRec = true;
-      flags.push({ type: type, text: txt, rec: rec, date: r.dataset.date });
+      var fo = r.querySelector('input[type="text"]').value.trim(), fn = r.querySelector('input[type="date"]').value;
+      var nf = { type: type, text: txt, rec: rec, date: r.dataset.date };
+      if (fo) nf.owner = fo;
+      if (fn) nf.needBy = fn;
+      flags.push(nf);
     });
     if (noRec) { err.textContent = "Every flag except an open question or FYI needs a recommendation."; return; }
 
     var oldLane = editing ? editing.lane : null;
     var it = editing || { id: uniqueId(name) };
     it.name = name; it.pod = $("f-pod").value; it.lane = lane;
+    if (lane === "active" || lane === "backlog") it.involvement = $("f-involve").value; else delete it.involvement;
     if (!editing || oldLane !== lane) it.priority = 999;
     it.summary = $("f-summary").value.trim(); it.flags = flags; it.changed = iso(today);
+    [["shortName", "f-short"], ["stance", "f-stance"], ["why", "f-why"], ["valueType", "f-valuetype"], ["confidence", "f-confidence"]].forEach(function (k) {
+      var v = $(k[1]).value.trim(); if (v) it[k[0]] = v; else delete it[k[0]];
+    });
+    var designingIt = $("f-involve").value === "Designing" || (lane !== "active" && lane !== "backlog");
+    if (!designingIt && $("f-supmode").value) { it.supportMode = $("f-supmode").value; if ($("f-supmode").value === "Temporary" && $("f-supuntil").value) it.supportUntil = $("f-supuntil").value; else delete it.supportUntil; } else { delete it.supportMode; delete it.supportUntil; }
+    if (lane !== "active") delete it.stance;
     var wk = $("f-week").value.trim();
     DATA.focus = (DATA.focus || []).filter(function (f) { return f.id !== it.id; });
     if (lane === "active" && wk) DATA.focus.push({ id: it.id, note: wk });
@@ -2704,6 +3327,29 @@
   if (ADMIN) {
     Object.keys(DATA.pods).forEach(function (k) { opt($("f-pod"), k, DATA.pods[k]); });
     KINDS.forEach(function (k) { opt($("f-kind"), k); });
+    INVOLVEMENTS.forEach(function (k) { opt($("f-involve"), k); });
+    [["f-valuetype", VALUE_TYPES], ["f-confidence", CONFIDENCES], ["f-supmode", SUPPORT_MODES]].forEach(function (x) { opt($(x[0]), "", "(not set)"); x[1].forEach(function (k) { opt($(x[0]), k); }); });
+    $("f-involve").onchange = syncLaneFields;
+    FEED_KINDS.forEach(function (k) { opt($("fd-kind"), k); });
+    $("add-feed").onclick = function () { openFeed(null); };
+    $("fd-cancel").onclick = function () { $("dlg-feed").close(); };
+    $("fd-delete").onclick = function () {
+      if (!editingFeed || !confirm("Delete this update?")) return;
+      DATA.feed = DATA.feed.filter(function (x) { return x !== editingFeed; });
+      $("dlg-feed").close(); commit();
+    };
+    $("feed-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var text = $("fd-text").value.trim();
+      if (!text || !$("fd-date").value) { $("fd-err").textContent = "Add a date and what happened."; return; }
+      var x = editingFeed || { id: "f" + Date.now() };
+      x.date = $("fd-date").value; x.kind = $("fd-kind").value; x.text = text;
+      delete x.project; delete x.pod;
+      var tie = $("fd-tie").value;
+      if (tie.indexOf("item:") === 0) x.project = tie.slice(5); else if (tie.indexOf("pod:") === 0) x.pod = tie.slice(4);
+      if (!editingFeed) (DATA.feed = DATA.feed || []).push(x);
+      $("dlg-feed").close(); commit();
+    });
     Object.keys(STATUS_CLASS).forEach(function (s) { opt($("f-status"), s, statusLabel(s)); });
     ["Scoping"].concat(STAGES.slice(0, -1)).forEach(function (s) { opt($("f-stage"), s); });
     $("f-lane").onchange = syncLaneFields;
@@ -2741,7 +3387,10 @@
       var txt = $("ff-text").value.trim(), rec = $("ff-rec").value.trim();
       if (!it) return;
       if (!txt || (!rec && needsRec($("ff-type").value))) { $("ff-err").textContent = "Add what is going on and your recommendation (not needed for an open question or FYI)."; return; }
-      (it.flags = it.flags || []).push({ type: $("ff-type").value, text: txt, rec: rec, date: iso(today) });
+      var nf = { type: $("ff-type").value, text: txt, rec: rec, date: iso(today) };
+      if ($("ff-owner").value.trim()) nf.owner = $("ff-owner").value.trim();
+      if ($("ff-needby").value) nf.needBy = $("ff-needby").value;
+      (it.flags = it.flags || []).push(nf);
       it.changed = iso(today);
       $("dlg-flag").close(); commit();
     });
@@ -2768,9 +3417,34 @@
       if (lvl || capNote) DATA.capacity = { level: lvl, note: capNote }; else delete DATA.capacity;
       var nt = $("s-not").value.trim();
       if (nt) DATA.notThisWeek = nt; else delete DATA.notThisWeek;
+      var wk = { offPlate: $("s-offplate").value.trim(), focus: $("s-focus").value.trim() };
+      if (wk.offPlate || wk.focus) DATA.week = wk; else delete DATA.week;
+      var offs = [];
+      $("s-daysoff").value.split("\n").forEach(function (ln) { var m = /^\s*(\d{4}-\d{2}-\d{2})\s*(.*)$/.exec(ln); if (m) offs.push({ date: m[1], label: m[2].trim() || "Off" }); });
+      if (offs.length) DATA.daysOff = offs; else delete DATA.daysOff;
       $("dlg-settings").close(); commit();
     });
 
+    $("tk-cancel").onclick = function () { $("dlg-task").close(); };
+    $("tk-delete").onclick = function () {
+      if (!editingTask || !confirm("Delete this item?")) return;
+      DATA.tasks = DATA.tasks.filter(function (x) { return x !== editingTask; });
+      $("dlg-task").close(); commit();
+    };
+    $("task-form").addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var name = $("tk-name").value.trim(), start = $("tk-start").value, end = $("tk-end").value;
+      if (!name || !start) { $("tk-err").textContent = "Add a title and a day."; return; }
+      if (end && end < start) { $("tk-err").textContent = "The last day is before the first day."; return; }
+      var x = editingTask || { id: "t" + Date.now() };
+      x.name = name; x.start = start; x.project = $("tk-project").value;
+      if (end) x.end = end; else delete x.end;
+      if ($("tk-deadline").checked) x.deadline = true; else delete x.deadline;
+      if ($("tk-risk").checked) x.risk = true; else delete x.risk;
+      if (!x.project) delete x.project;
+      if (!editingTask) (DATA.tasks = DATA.tasks || []).push(x);
+      $("dlg-task").close(); ovView = "week"; commit();
+    });
     $("t-cancel").onclick = function () { $("dlg-token").close(); };
     $("t-forget").onclick = function () { localStorage.removeItem(TOKEN_KEY); $("dlg-token").close(); setPublishMsg("Saved token removed."); };
     $("token-form").addEventListener("submit", function (ev) {
@@ -2784,6 +3458,7 @@
       ev.preventDefault();
       DATA.podInfo = DATA.podInfo || {};
       DATA.podInfo[editingPod] = { goal: $("p-goal").value.trim(), partners: $("p-partners").value.trim(), note: $("p-note").value.trim() };
+      if ($("p-why").value.trim()) DATA.podInfo[editingPod].why = $("p-why").value.trim();
       $("dlg-pod").close(); currentTab = "work"; commit();
     });
   }
@@ -2802,6 +3477,15 @@
       applyFlags();
     };
     applyFlags();
+    $("flags-more").onclick = function () { flagsAll = !flagsAll; render(); };
+    $("coming-all").onclick = function (ev) {
+      ev.stopPropagation();
+      var pop = $("coming-pop"), open = pop.hidden;
+      pop.hidden = !open; this.setAttribute("aria-expanded", String(open));
+    };
+    document.addEventListener("click", function (ev) { var pop = $("coming-pop"); if (!pop.hidden && !pop.contains(ev.target)) { pop.hidden = true; $("coming-all").setAttribute("aria-expanded", "false"); } });
+    document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !$("coming-pop").hidden) { $("coming-pop").hidden = true; $("coming-all").setAttribute("aria-expanded", "false"); $("coming-all").focus(); } });
+    $("feed-more").onclick = function () { feedAll = !feedAll; renderFeed(); };
     $("legend-btn").onclick = function () { var h = $("legend").hidden; $("legend").hidden = !h; this.setAttribute("aria-expanded", String(h)); };
   })();
 
