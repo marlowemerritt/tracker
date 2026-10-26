@@ -736,7 +736,7 @@
       "name": "Global T2: WPO Direct Scheduling",
       "pod": "payer-global",
       "lane": "active",
-      "priority": 3,
+      "priority": 5,
       "status": "On Track",
       "stage": "Development",
       "start": "2026-09-09",
@@ -768,9 +768,9 @@
           "url": "https://springhealth.atlassian.net/browse/MG-54"
         }
       ],
-      "launch": "2026-11-02",
+      "launch": "2026-11-13",
       "flags": [],
-      "changed": "2026-10-14",
+      "changed": "2026-10-26",
       "dqaStart": "2026-10-20",
       "involvement": "Supporting",
       "shortName": "Global T2",
@@ -785,7 +785,7 @@
       "name": "NECL Marketing Planner",
       "pod": "insights",
       "lane": "active",
-      "priority": 5,
+      "priority": 7,
       "status": "On Track",
       "stage": "DQA",
       "start": "2026-09-14",
@@ -859,22 +859,20 @@
       "launch": "2026-11-16",
       "flags": [],
       "next": "DQA",
-      "changed": "2026-10-20",
+      "changed": "2026-10-26",
       "dqaStart": "2026-10-26",
       "involvement": "Supporting",
       "shortName": "NECL",
-      "why": "Lets Marketing share campaigns with customers and lets customers opt in.",
+      "why": "Marketing shares upcoming and past monthly NECL campaigns with customers to encourage engagement and showcase value to increase opt-ins.",
       "valueType": "Customer experience",
-      "confidence": "Unquantified",
-      "supportMode": "Temporary",
-      "supportUntil": "2026-11-16"
+      "confidence": "Unquantified"
     },
     {
       "id": "gottman-marketplace",
       "name": "Adding Gottman into Marketplace",
       "pod": "channel-partners",
       "lane": "active",
-      "priority": 1,
+      "priority": 2,
       "stage": "Development",
       "start": "2026-10-13",
       "end": "2026-10-23",
@@ -888,7 +886,7 @@
         {
           "name": "Finalize visual/polish",
           "date": "2026-10-23",
-          "done": false
+          "done": true
         },
         {
           "name": "Share initial directions/thoughts/concerns in MX crit",
@@ -938,16 +936,17 @@
           "date": "2026-10-14"
         }
       ],
-      "changed": "2026-10-20",
+      "changed": "2026-10-26",
       "status": "On Track",
-      "launch": "2027-01-01",
+      "launch": "2026-11-09",
       "involvement": "Supporting",
       "shortName": "Gottman",
       "why": "Adds partner programs to Care Marketplace ahead of the Jan 1 launch.",
       "valueType": "Revenue",
       "confidence": "Unquantified",
       "supportMode": "Temporary",
-      "supportUntil": "2027-01-01"
+      "supportUntil": "2027-01-01",
+      "dqaStart": "2026-11-03"
     },
     {
       "id": "ibx-remediation",
@@ -1017,7 +1016,7 @@
       "name": "QBR Business review builder",
       "pod": "insights",
       "lane": "active",
-      "priority": 2,
+      "priority": 3,
       "summary": "Self-serve business review (QBR) generation in Spring Insights to cut the time CSMs spend preparing them.",
       "milestones": [
         {
@@ -1112,7 +1111,7 @@
       "name": "ME M1v1 DQA-Web+Native",
       "pod": "benefits-me",
       "lane": "active",
-      "priority": 4,
+      "priority": 6,
       "summary": "",
       "flags": [
         {
@@ -1191,7 +1190,7 @@
       "name": "Insights Verdant <> VUI migration",
       "pod": "insights",
       "lane": "active",
-      "priority": 2,
+      "priority": 4,
       "summary": "",
       "flags": [],
       "changed": "2026-10-20",
@@ -1212,14 +1211,37 @@
       "pod": "insights",
       "lane": "active",
       "involvement": "Designing",
-      "priority": 0.5,
+      "priority": 1,
       "stage": "Awaiting kickoff",
       "start": "2026-10-26",
-      "end": "2026-10-30",
-      "summary": "",
-      "milestones": [],
-      "links": [],
-      "flags": []
+      "end": "2026-12-04",
+      "summary": "Business problem: New-business bookings are tracking to about $75M against a $113M goal. Several large enterprise deals are slipping, and the company’s mental health pitch isn’t landing with employers focused on medical cost.\n\nBusiness value: Spring wants a pre-sales tool that shows an HR leader how mental health need drives their health plan spend. The aim is to win more new business by making the savings case concrete before a customer signs. It supports the 2027 narrative: buying Spring saves money on medical spend.\n\nGoal of the sprint: Two weeks of learning, ending in a grounded prototype by 12/2. It should test three things: whether we can get the data, whether the story is convincing, and what go-to-market path to recommend. It isn’t meant to be production-ready.",
+      "milestones": [
+        {
+          "name": "Kickoff",
+          "date": "2026-10-26",
+          "done": false
+        }
+      ],
+      "links": [
+        {
+          "label": "Differentiator kickoff doc",
+          "url": "https://docs.google.com/document/d/1i7X7WE3y_-a3jmad-OS-hUr3M_uST3ItRIP52fGmAOk/edit?usp=sharing"
+        },
+        {
+          "label": "2027 differentiator cost story deck",
+          "url": "https://docs.google.com/presentation/d/1Mah9QNzhE6xGnmc1zXGJ3lgMkw4kKF1uGMs0J1Zthw0/edit?usp=sharing"
+        },
+        {
+          "label": "Ramya's Value Intelligence Mock",
+          "url": "https://cuddly-doodle-zg8n97k.pages.github.io/pr-110/#/spring-insights/value-intelligence-3-page"
+        }
+      ],
+      "flags": [],
+      "changed": "2026-10-26",
+      "why": "Right now employers see mental health as a separate benefit, so Spring loses deals to a story about medical cost they can’t yet see, and this sprint is about making that hidden cost visible before they sign.",
+      "valueType": "Revenue",
+      "status": "On Track"
     }
   ],
   "podInfo": {
@@ -1265,10 +1287,6 @@
   ],
   "focus": [
     {
-      "id": "gottman-marketplace",
-      "note": "Full Gottman integration flows"
-    },
-    {
       "id": "business-review-builder",
       "note": "Initial framework for ENG discussion"
     },
@@ -1279,6 +1297,10 @@
     {
       "id": "necl-marketing-planner",
       "note": "Supporting as questions come up via Eng/Marketing/Notifications"
+    },
+    {
+      "id": "gottman-marketplace",
+      "note": "Full Gottman integration flows"
     }
   ],
   "feed": [
